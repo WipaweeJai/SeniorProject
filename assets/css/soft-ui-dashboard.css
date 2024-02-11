@@ -20960,7 +20960,7 @@ fieldset:disabled .btn {
 }
 
 .card .card-body {
-  font-family: "Open Sans";
+  font-family: 'Prompt', sans-serif;
   padding: 1.5rem;
 }
 

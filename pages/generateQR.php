@@ -43,7 +43,7 @@
     //     $referenceNumber = $_GET['ref'];
         $referenceNumber = '100120242713116330200076';
         // สร้าง URL ที่ต้องการไป
-        $targetURL = 'http://localhost/project/pages/index.php';
+        $targetURL = 'http://localhost/project/pages/check_certificate.php';
 
         // สร้างไฟล์ QR code
         $qrCodeFilePath = 'qrcodes/' . $referenceNumber . '.png';
