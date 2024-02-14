@@ -129,7 +129,7 @@
                       } elseif ($status == 'Pending') {
                           echo '<span class="badge badge-sm bg-gradient-warning">Pending</span>';
                       } elseif ($status == 'Closed') {
-                          echo '<span class="badge badge-sm bg-gradient-info">Closed</span>';
+                          echo '<span class="badge badge-sm bg-gradient-secondary">Closed</span>';
                       }
                       ?>
                       <!-- dropdown เพื่อเลือกแก้ไขสถานะ -->
