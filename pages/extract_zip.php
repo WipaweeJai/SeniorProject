@@ -33,9 +33,10 @@ if (isset($_FILES['zip_file']) && isset($_POST["upload_btn"])) {
             $zip = new ZipArchive;
             if ($zip->open($target_file) === TRUE) {
                 // สร้างโฟลเดอร์ถ้ายังไม่มี
-                if (!file_exists($target_dir)) {
+                if (!is_dir($target_dir)) {
                     mkdir($target_dir, 0755, true);
                 }
+                $zip->extractTo($target_dir);
                 // เรียกใช้ไฟล์ที่แตกแล้ว
                 for ($i = 0; $i < $zip->numFiles; $i++) {
                     $file_name = $zip->getNameIndex($i); // ดึงชื่อไฟล์ใน zip
