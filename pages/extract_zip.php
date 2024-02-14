@@ -33,6 +33,8 @@ if (isset($_FILES['zip_file']) && isset($_POST["upload_btn"])) {
             $zip = new ZipArchive;
             if ($zip->open($target_file) === TRUE) {
                 // สร้างโฟลเดอร์ถ้ายังไม่มี
+                $activity_name = $_POST['activity_name']; //รับค่าชื่อกิจกรรมจาก Form
+                $target_dir = "../assets/img/zip/" . $activity_name . "/"; //Rename Folderตามชื่อกิจกรรม
                 if (!is_dir($target_dir)) {
                     mkdir($target_dir, 0755, true);
                 }
