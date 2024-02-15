@@ -116,7 +116,7 @@
                     <p class="text-dark text-lg font-weight-normal ">
                         อีเมล
                         <span class="text-dark ms-sm-2 font-weight-bold">
-                            <input class="form-control custom-width" type="text" id="sender_email" placeholder="สำหรับการติดต่อและแจ้งข่าว">
+                            <input class="form-control custom-width" type="email" id="sender_email" placeholder="สำหรับการติดต่อและแจ้งข่าว">
                         </span>
                     </p>
                     <p class="text-dark text-lg font-weight-normal ">
@@ -143,14 +143,14 @@
                         อัปโหลดภาพหัวข่าว ขนาด 1200 x 630 พิกเซล (ไม่เกิน 2MB)
                         <div class="mb-3">
                             <p class="text-dark text-sm font-weight-normal ">หากไม่อัปโหลดภาพให้ตรงตามขนาด หรือไม่อัปโหลดภาพนี้เข้ามาให้ถูกต้อง ทางเพจจะไม่เพิ่มลงเว็บให้</p>
-                            <input class="form-control custom-width" type="file" id="event_banner">
+                            <input class="form-control custom-width" type="file" id="event_banner" name="event_banner">
                         </div>
                     </p>
                     <p class="text-dark text-lg font-weight-normal ">
                         ชื่อกิจกรรม
                         <span class="text-dark ms-sm-2 font-weight-bold">
                             <p class="text-sm font-weight-light ">จำกัดจำนวนตัวอักษร 60 ตัว</p>
-                            <input class="form-control custom-width" type="email" id="event_name" placeholder="กรุณาพิมพ์ชื่อกิจกรรม"  maxlength="60">
+                            <input class="form-control custom-width" type="text" id="event_name" placeholder="กรุณาพิมพ์ชื่อกิจกรรม"  maxlength="60">
                         </span>
                     </p>
                     <p class="text-dark text-lg font-weight-normal ">
@@ -276,7 +276,7 @@
                         อัปโหลดภาพโปสเตอร์เพิ่มเติม (ไม่เกิน 2MB)
                         <div class="mb-3">
                             <p class="text-dark text-sm font-weight-normal ">หากคุณมีภาพโปสเตอร์ค่ายไซส์ A2 หรือสี่เหลี่ยมจัตุรัส</p>
-                            <input class="form-control custom-width" type="file" id="event_poster">
+                            <input class="form-control custom-width" type="file" id="event_poster" name="event_poster">
                         </div>
                     </p>
                     <p class="text-dark text-lg font-weight-normal ">
