@@ -33,8 +33,8 @@ if (isset($_FILES['zip_file']) && isset($_POST["upload_btn"])) {
             $zip = new ZipArchive;
             if ($zip->open($target_file) === TRUE) {
                 // สร้างโฟลเดอร์ถ้ายังไม่มี
-                $activity_name = $_POST['activity_name']; //รับค่าชื่อกิจกรรมจาก Form
-                $target_dir = "../assets/img/zip/" . $activity_name . "/"; //Rename Folderตามชื่อกิจกรรม
+                $event_name = $_POST['event_name']; //รับค่าชื่อกิจกรรมจาก Form
+                $target_dir = "../assets/img/zip/" . $event_name . "/"; //Rename Folderตามชื่อกิจกรรม
                 if (!is_dir($target_dir)) {
                     mkdir($target_dir, 0755, true);
                 }
@@ -46,11 +46,11 @@ if (isset($_FILES['zip_file']) && isset($_POST["upload_btn"])) {
                     
                     // เพิ่มโค้ดที่ใช้ insert เข้า database
                     $file_path = $target_dir . $file_name;
-                    $activity_name = $_POST['activity_name'];
-                    $sql = "INSERT INTO tb_certificate_template (activity_name, path_cert_temp, upload_date) 
+                    $event_name = $_POST['event_name'];
+                    $sql = "INSERT INTO tb_certificate_template (event_name, path_cert_temp, upload_date) 
                             VALUES (?, ?, CURRENT_TIMESTAMP())";
                     $stmt = $conn->prepare($sql);
-                    $stmt->bind_param("ss", $activity_name, $file_path);
+                    $stmt->bind_param("ss", $event_name, $file_path);
                     if ($stmt->execute()) {
                         echo "บันทึกข้อมูล $file_name เข้าฐานข้อมูลเรียบร้อยแล้ว";
                     } else {

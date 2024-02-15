@@ -76,12 +76,23 @@
             <div class="container-fluid py-4">
                 <div class="row">
                     <div class="card mb-4">
+                      <?php
+                        require_once('../backend/dbcon.php');
+                        if(isset($_GET['id'])) {
+                            $activity_id = $_GET['id'];
+                            $sql = "SELECT event_name FROM tb_event WHERE activity_id = '$activity_id'";
+                            $result = mysqli_query($conn, $sql);
+                            if(mysqli_num_rows($result) > 0) {
+                                $row = mysqli_fetch_assoc($result);
+                                $event_name = $row['event_name'];
+                            }
+                        }
+                      ?>
                         <div class="card-body p-3">
-                            <p class="text-dark text-lg font-weight-normal ">
+                            <p class="text-dark text-lg font-weight-normal">
                                 ชื่อกิจกรรม
                                 <span class="text-dark ms-sm-2 font-weight-bold">
-                                    <p class="text-sm font-weight-light ">จำกัดจำนวนตัวอักษร 60 ตัว</p>
-                                    <input class="form-control custom-width" type="text" id="activity_name" placeholder="กรุณาพิมพ์ชื่อกิจกรรม"  maxlength="60" name="activity_name">
+                                    <input class="form-control custom-width" type="text" id="event_name" placeholder="กรุณาพิมพ์ชื่อกิจกรรม" maxlength="60" name="event_name" value="<?php echo $event_name; ?>" readonly>
                                 </span>
                             </p>
                             <p class="text-dark text-lg font-weight-normal ">

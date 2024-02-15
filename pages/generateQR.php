@@ -11,38 +11,9 @@
         <script src="generateReference.js"></script>
     </div>
     
-    <!-- อันเก่า -->
-    <?php
-        // require_once('qrlib.php');
-
-        // // ข้อมูลที่ให้มา
-        // $referenceNumber = 'COMSCI';
-
-        // // ตรวจสอบและสร้างโฟลเดอร์ qrcodes ถ้าไม่มี
-        // $directory = 'qrcodes';
-        // if (!file_exists($directory) && !is_dir($directory)) {
-        //     mkdir($directory);
-        // }
-
-        // // สร้าง URL ที่ต้องการไป
-        // $targetURL = 'http://localhost/project/pages/index.php';
-
-        // // สร้างไฟล์ QR code
-        // QRcode::png($targetURL . '?ref=' . urlencode($referenceNumber), $directory . '/' . $referenceNumber . '.png');
-
-        // // แสดง QR code
-        // echo '<img src="' . $directory . '/' . $referenceNumber . '.png" alt="QR Code">';
-    ?>
-
 <?php
     require_once('qrlib.php');
-
-    // ตรวจสอบว่ามีคีย์ 'ref' ใน $_GET
-    // if (isset($_GET['ref'])) {
-    //     // รับค่า referenceNumber จาก URL parameters
-    //     $referenceNumber = $_GET['ref'];
-        $referenceNumber = '100120242713116330200076';
-        // สร้าง URL ที่ต้องการไป
+        $referenceNumber = $_GET['ref'];
         $targetURL = 'http://localhost/project/pages/check_certificate.php';
 
         // สร้างไฟล์ QR code
@@ -80,12 +51,11 @@
         echo '<div style="width: 100%; max-width: 900px; margin: 0 auto;">';
         echo '<img src="' . $outputImagePath . '" alt="Modified Image with QR Code" style="width: 100%; height: auto;">';
         echo '</div>';
-    // } else {
-    //     echo 'Missing reference number in the request.';
-    // }
+
 ?>
 
 
 </body>
 </html>
+
 

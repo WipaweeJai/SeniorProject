@@ -71,6 +71,7 @@
     </nav>
     <!-- End Navbar -->
     <div class="container-fluid">
+      <!-- รูปภาพแบนเบอร์ของกิจกรรมยังไม่แก้ เพราะติดปัญหาการอัปโหลดภาพลงอยู่ -->
         <div class="page-header min-height-500 border-radius-xl mt-4" style="background-image: url('../assets/img/activity1.png'); background-position-y: 50%;">
         </div>
         <div class="card card-body blur shadow-blur mx-4 mt-n6 overflow-hidden">
@@ -78,10 +79,13 @@
             <div class="col-auto my-auto">
               <div class="h-100">
                 <?php
-                  $sql = "SELECT * FROM tb_event where activity_id = '1001'";
-                  $result = mysqli_query($conn, $sql);
-                  $row = mysqli_fetch_assoc($result);
+                  if(isset($_GET['id'])) {
+                    $activity_id = $_GET['id'];
+                    $sql = "SELECT * FROM tb_event WHERE activity_id = '$activity_id'";
+                    $result = mysqli_query($conn, $sql);
+                    $row = mysqli_fetch_assoc($result);
                   echo '<h5 class="mb-1">' . $row['event_name'] . '</h5>';
+                  }
                 ?>
               </div>
             </div>
@@ -89,9 +93,9 @@
               <div class="nav-wrapper position-relative end-0">
                 <ul class="nav nav-pills nav-fill p-1 bg-transparent" role="tablist">
                   <li class="nav-item"  style="padding-right: 10px;">
-                    <a class="nav-link mb-0 px-0 py-2 active "  href="form_cert_zip.php" role="tab">
-                      <i class="far fa-regular fa-paper-plane"></i>
-                      <span class="ms-1">อัพโหลดใบประกาศ</span>
+                    <a class="nav-link mb-0 px-0 py-2 active" href="form_cert_zip.php?id=<?php echo $activity_id; ?>" role="tab">
+                        <i class="far fa-regular fa-paper-plane"></i>
+                        <span class="ms-1">อัพโหลดใบประกาศ</span>
                     </a>
                   </li>
                   <li class="nav-item">
@@ -106,25 +110,6 @@
           </div>
         </div>
       </div>
-        <!-- <div class="col-12 mt-4">
-          <div class="card mb-4">
-            <div class="card-header pb-0 p-3">
-            </div>
-            <div class="card-body p-3">
-              <div class="row">
-                <div class="col-xl-3 col-md-6 mb-xl-0 mb-4">
-                  <div class="card card-blog card-plain">
-                    <div class="position-relative">
-                      <a class="d-block shadow-xl border-radius-xl">
-                        <img src="../assets/img/activity1.png" alt="img-blur-shadow" class="img-fluid shadow border-radius-xl">
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div> -->
 
     <div class="container-fluid py-4">
       <div class="row">
@@ -135,9 +120,13 @@
             </div>
             <div class="card-body p-3">
               <?php
-                  $sql = "SELECT * FROM tb_event where activity_id = '1001'";
+                if(isset($_GET['id'])) {
+                  $activity_id = $_GET['id'];
+                  
+                  $sql = "SELECT * FROM tb_event WHERE activity_id = '$activity_id'";
                   $result = mysqli_query($conn, $sql);
                   $row = mysqli_fetch_assoc($result);
+                  
                   echo '<p class="text-uppercase text-body text-sm font-weight-bolder ">รูปแบบกิจกรรม :
                     <span class="text-dark ms-sm-2 font-weight-bold">' . $row['type'] . '</span></p>';
                   echo '<p class="text-uppercase text-body text-sm font-weight-bolder ">วันที่จัดกิจกรรม : 
@@ -155,6 +144,7 @@
                   echo '<div class="divider"></div>';
                   echo '<img src="' . $row['event_poster'] . '" width="40%" >';
                   echo '<p class="mb-5">' . $row['event_detail_full'] . '</span></p>';
+                }
               ?>
             </div>
           </div>
