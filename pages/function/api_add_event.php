@@ -22,13 +22,13 @@ foreach ($imageTypes as $imageType) {
         $tmpName = $_FILES[$inputName]['tmp_name'];
         $fileName = basename($_FILES[$inputName]['name']);
         $uploadPath = ${'uploadDir' . ucfirst($imageType)} . $fileName;
-        move_uploaded_file($tmpName, $uploadPath);
-        $uploadedFiles[$imageType] = $uploadPath;
-    } else {
-        echo "เกิดข้อผิดพลาดในการอัปโหลดไฟล์ $imageType.<br>";
+        if (move_uploaded_file($tmpName, $uploadPath)) {
+            $uploadedFiles[$imageType] = $uploadPath;
+        } else {
+            echo "เกิดข้อผิดพลาดในการอัปโหลดไฟล์ $imageType.<br>";
+        }
     }
 }
-
 
 // รับข้อมูลอื่น ๆ จากฟอร์ม
 $sender_name = $_POST['sender_name'];
@@ -56,22 +56,15 @@ VALUES ('$sender_name', '$sender_email', '$sender_tel', '$event_banner', '$event
 '$event_reg_to', '$event_reg_detail', '$event_number', '$event_fee', '$event_require', '$event_location', '$event_download_url',
 '$event_detail_full')";
 
-
 $result_insert = mysqli_query($conn, $sql_insert);
 
 if (!$result_insert) {
     echo "เกิดข้อผิดพลาดในการบันทึกข้อมูล: " . $conn->error . "<br>";
 } else {
     echo "อัปโหลดไฟล์และบันทึกข้อมูลเรียบร้อยแล้ว<br>";
-    header("Location: form_event.php");
+    header("Location: add_event.php");
     exit();
 }
 
-if(!$result_insert){
-    echo 1;
-} else {
-    echo 2;
-}
 $conn->close();
-
 ?>
