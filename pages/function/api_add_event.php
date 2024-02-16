@@ -1,6 +1,6 @@
 <?php
 require_once('../../backend/dbcon.php');
-
+// Path ยังไม่ไป
 $uploadDirBanner = '../assets/img/upload_event/banner/';
 $uploadDirPoster = '../assets/img/upload_event/poster/';
 
@@ -34,6 +34,7 @@ foreach ($imageTypes as $imageType) {
 $sender_name = $_POST['sender_name'];
 $sender_email = $_POST['sender_email'];
 $sender_tel = $_POST['sender_tel'];
+//เก็บได้แค่ชื่อไฟล์
 $event_banner = isset($uploadedFiles['event_banner']) ? $uploadedFiles['event_banner'] : '';
 $event_poster = isset($uploadedFiles['event_poster']) ? $uploadedFiles['event_poster'] : '';
 $event_name = $_POST['event_name'];
@@ -55,6 +56,7 @@ event_date_to, event_reg_to, event_reg_detail, event_number, event_fee, event_re
 VALUES ('$sender_name', '$sender_email', '$sender_tel', '$event_banner', '$event_poster', '$event_name', '$event_detail_short', '$event_date_from', '$event_date_to',
 '$event_reg_to', '$event_reg_detail', '$event_number', '$event_fee', '$event_require', '$event_location', '$event_download_url',
 '$event_detail_full')";
+//รูปไม่รวมเป็น1recordกับข้อมูลอื่น
 
 $result_insert = mysqli_query($conn, $sql_insert);
 
@@ -62,9 +64,15 @@ if (!$result_insert) {
     echo "เกิดข้อผิดพลาดในการบันทึกข้อมูล: " . $conn->error . "<br>";
 } else {
     echo "อัปโหลดไฟล์และบันทึกข้อมูลเรียบร้อยแล้ว<br>";
-    header("Location: add_event.php");
+    // header("Location: add_event.php");
     exit();
 }
 
+if(!$result_insert){
+    echo 1;
+} else {
+    echo 2;
+}
 $conn->close();
+
 ?>
