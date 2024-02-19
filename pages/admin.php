@@ -75,23 +75,136 @@
       </div>
     </div>
 
-    <div class="container-fluid py-4">
+<div class="container-fluid py-4">
   <div class="row">
     <div class="col-12">
       <div class="card mb-4">
         <div class="card-header pb-0">
-          <h6>จัดการกิจกรรม</h6>
+          <h5 class="font-weight-bolder text-info text-gradient">จัดการกิจกรรม</h5>
         </div>
         <div class="card-body px-0 pt-0 pb-2">
           <div class="table-responsive p-0">
             <table class="table align-items-center mb-0">
               <thead>
                 <tr>
-                  <th class="text-center text-secondary text-xxs font-weight-bolder opacity-7">ชื่อกิจกรรม</th>
-                  <th class="text-center text-secondary text-xxs font-weight-bolder opacity-7 ps-2">รหัสกิจกรรม</th>
-                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
-                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">วันที่อัพเดทสถานะ</th>
-                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"></th>
+                  <th class="text-center text-secondary text-sm font-weight-bolder opacity-7">ชื่อกิจกรรม</th>
+                  <th class="text-center text-secondary text-sm font-weight-bolder opacity-7 ps-2">รหัสกิจกรรม</th>
+                  <th class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7">Status</th>
+                  <th class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7">วันที่อัพเดทสถานะ</th>
+                  <th class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Query Data -->
+                <?php
+                require_once('../backend/dbcon.php');
+                $sql = "SELECT * FROM tb_event";
+                $result = mysqli_query($conn, $sql);
+                while ($row = mysqli_fetch_assoc($result)) {
+                  // Query สถานะจากตาราง tb_event
+                  $status_sql = "SELECT status FROM tb_event WHERE activity_id = " . $row['activity_id'];
+                  $status_result = mysqli_query($conn, $status_sql);
+                  $status_row = mysqli_fetch_assoc($status_result);
+                  ?>
+                  <tr>
+                    <td>
+                      <div class="d-flex px-2 py-1">
+                        <div class="d-flex flex-column justify-content-center">
+                          <!-- แสดงชื่อกิจกรรม -->
+                          <h6 class="mb-0 text-sm"><?php echo $row['event_name']; ?></h6>
+                        </div>
+                      </div>
+                    </td>
+                    <!-- แสดงรหัสกิจกรรม -->
+                    <td>
+                      <p class="text-xs font-weight-bold mb-0"><?php echo $row['activity_id']; ?></p>
+                    </td>
+                    <!-- แสดงสถานะกิจกรรม -->
+                    <td class="align-middle text-center text-sm">
+                      <!-- แสดงสถานะจากฐานข้อมูล -->
+                      <?php
+                      $status = $status_row['status'];
+                      if ($status == 'Approved') {
+                          echo '<span class="badge badge-sm bg-gradient-success">Approve</span>';
+                      } elseif ($status == 'Pending') {
+                          echo '<span class="badge badge-sm bg-gradient-warning">Pending</span>';
+                      } elseif ($status == 'Closed') {
+                          echo '<span class="badge badge-sm bg-gradient-secondary">Closed</span>';
+                      }
+                      ?>
+                      <!-- dropdown เพื่อเลือกแก้ไขสถานะ -->
+                      <select class="form-select status-select" data-event-id="<?php echo $row['activity_id']; ?>">
+                        <option value="Approved" <?php if ($status_row['status'] == 'Approved') echo "selected"; ?>>Approved</option>
+                        <option value="Pending" <?php if ($status_row['status'] == 'Pending') echo "selected"; ?>>Pending</option>
+                        <option value="Closed" <?php if ($status_row['status'] == 'Closed') echo "selected"; ?>>Closed</option>
+                      </select>
+                    </td>
+                    <!-- แสดงวันที่และลิงก์ Edit -->
+                    <td class="align-middle text-center">
+                      <span class="text-secondary text-xs font-weight-bold">23/04/2018</span>
+                    </td>
+                    <td>
+                      <ul class="nav nav-pills nav-fill p-1 bg-transparent" role="tablist" onclick="saveStatus()">
+                      <a class="btn font-weight-light bg-gradient-dark mb-0 me-3" href="">
+                        บันทึก
+                      </a>
+                      </ul>
+                    </td>
+                  </tr>
+                <?php } ?>
+                <script>
+                  function saveStatus() {
+                  var selects = document.querySelectorAll('.status-select');
+                  selects.forEach(function(select) {
+                    var activityId = select.getAttribute('data-event-id');
+                    var newStatus = select.value;
+
+                    // ส่งข้อมูลไปยังไฟล์ PHP เพื่ออัพเดทสถานะในฐานข้อมูล
+                    $.ajax({
+                    url: 'updateStatus.php',
+                    method: 'POST',
+                    data: {
+                      activityId: activityId,
+                      newStatus: newStatus
+                    },
+                    success: function(response) {
+                      // ประมวลผลเมื่ออัพเดทสถานะสำเร็จ (ถ้าต้องการ)
+                      console.log(response);
+                    },
+                    error: function(xhr, status, error) {
+                      // ประมวลผลเมื่อเกิดข้อผิดพลาดในการอัพเดทสถานะ
+                      console.error(xhr.responseText);
+                    }
+                    });
+                  });
+                  }
+                </script>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>  
+</div>
+
+<div class="container-fluid py-4">
+  <div class="row">
+    <div class="col-12">
+      <div class="card mb-4">
+        <div class="card-header pb-0">
+          <h5 class="font-weight-bolder text-info text-gradient">จัดการรายชื่อและใบประกาศ</h5>
+        </div>
+        <div class="card-body px-0 pt-0 pb-2">
+          <div class="table-responsive p-0">
+            <table class="table align-items-center mb-0">
+              <thead>
+                <tr>
+                  <th class="text-center text-secondary text-sm font-weight-bolder opacity-7">ชื่อกิจกรรม</th>
+                  <th class="text-center text-secondary text-sm font-weight-bolder opacity-7 ps-2">รหัสกิจกรรม</th>
+                  <th class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7">Status</th>
+                  <th class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7">วันที่อัพเดทสถานะ</th>
+                  <th class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7"></th>
                 </tr>
               </thead>
               <tbody>
