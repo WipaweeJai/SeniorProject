@@ -90,22 +90,22 @@
                   <th class="text-center text-secondary text-sm font-weight-bolder opacity-7">ชื่อกิจกรรม</th>
                   <th class="text-center text-secondary text-sm font-weight-bolder opacity-7 ps-2">รหัสกิจกรรม</th>
                   <th class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7">Status</th>
-                  <th class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7">วันที่อัพเดทสถานะ</th>
+                  <th class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7">วันที่แก้ไข</th>
                   <th class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7"></th>
                 </tr>
               </thead>
               <tbody>
                 <!-- Query Data -->
                 <?php
-                require_once('../backend/dbcon.php');
-                $sql = "SELECT * FROM tb_event";
-                $result = mysqli_query($conn, $sql);
-                while ($row = mysqli_fetch_assoc($result)) {
-                  // Query สถานะจากตาราง tb_event
-                  $status_sql = "SELECT status FROM tb_event WHERE activity_id = " . $row['activity_id'];
-                  $status_result = mysqli_query($conn, $status_sql);
-                  $status_row = mysqli_fetch_assoc($status_result);
-                  ?>
+                  require_once('../backend/dbcon.php');
+                  $sql = "SELECT * FROM tb_event";
+                  $result = mysqli_query($conn, $sql);
+                  while ($row = mysqli_fetch_assoc($result)) {
+                    // Query สถานะจากตาราง tb_event
+                    $status_sql = "SELECT status FROM tb_event WHERE activity_id = " . $row['activity_id'];
+                    $status_result = mysqli_query($conn, $status_sql);
+                    $status_row = mysqli_fetch_assoc($status_result);
+                ?>
                   <tr>
                     <td>
                       <div class="d-flex px-2 py-1">
@@ -123,32 +123,34 @@
                     <td class="align-middle text-center text-sm">
                       <!-- แสดงสถานะจากฐานข้อมูล -->
                       <?php
-                      $status = $status_row['status'];
-                      if ($status == 'Approved') {
-                          echo '<span class="badge badge-sm bg-gradient-success">Approve</span>';
-                      } elseif ($status == 'Pending') {
-                          echo '<span class="badge badge-sm bg-gradient-warning">Pending</span>';
-                      } elseif ($status == 'Closed') {
-                          echo '<span class="badge badge-sm bg-gradient-secondary">Closed</span>';
-                      }
+                        $status = $status_row['status'];
+                        if ($status == 'Approved') {
+                            echo '<span class="badge badge-sm bg-gradient-success">Approve</span>';
+                        } elseif ($status == 'Pending') {
+                            echo '<span class="badge badge-sm bg-gradient-warning">Pending</span>';
+                        } elseif ($status == 'Closed') {
+                            echo '<span class="badge badge-sm bg-gradient-secondary">Closed</span>';
+                        }
                       ?>
                       <!-- dropdown เพื่อเลือกแก้ไขสถานะ -->
-                      <select class="form-select status-select" data-event-id="<?php echo $row['activity_id']; ?>">
+                      <!-- <select class="form-select status-select" data-event-id="<?php echo $row['activity_id']; ?>">
                         <option value="Approved" <?php if ($status_row['status'] == 'Approved') echo "selected"; ?>>Approved</option>
                         <option value="Pending" <?php if ($status_row['status'] == 'Pending') echo "selected"; ?>>Pending</option>
                         <option value="Closed" <?php if ($status_row['status'] == 'Closed') echo "selected"; ?>>Closed</option>
-                      </select>
+                      </select> -->
                     </td>
                     <!-- แสดงวันที่และลิงก์ Edit -->
                     <td class="align-middle text-center">
                       <span class="text-secondary text-xs font-weight-bold">23/04/2018</span>
                     </td>
                     <td>
-                      <ul class="nav nav-pills nav-fill p-1 bg-transparent" role="tablist" onclick="saveStatus()">
-                      <a class="btn font-weight-light bg-gradient-dark mb-0 me-3" href="">
-                        บันทึก
-                      </a>
-                      </ul>
+                      <?php
+                        echo '<ul class="nav nav-pills nav-fill p-1 bg-transparent" role="tablist" onclick="saveStatus()">';
+                        echo '<a class="btn font-weight-light bg-gradient-dark mb-0 me-3" href="admin_event.php?id=' .$row['activity_id']. '">';
+                        echo 'แก้ไข';
+                        echo '</a>';
+                        echo '</ul>';
+                      ?>
                     </td>
                   </tr>
                 <?php } ?>

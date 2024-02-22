@@ -1,0 +1,38 @@
+<?php
+// เชื่อมต่อกับฐานข้อมูล
+require_once('../../backend/dbcon.php');
+
+// รับข้อมูลจากฟอร์ม
+$type = mysqli_real_escape_string($conn, $_POST['type']);
+$event_date_from = mysqli_real_escape_string($conn, $_POST['event_date_from']);
+$event_date_to = mysqli_real_escape_string($conn, $_POST['event_date_to']);
+$event_reg_to = mysqli_real_escape_string($conn, $_POST['event_reg_to']);
+$event_number = mysqli_real_escape_string($conn, $_POST['event_number']);
+$event_fee = mysqli_real_escape_string($conn, $_POST['event_fee']);
+$requirements = mysqli_real_escape_string($conn, $_POST['requirements']);
+$event_location = mysqli_real_escape_string($conn, $_POST['event_location']);
+$event_detail_full = mysqli_real_escape_string($conn, $_POST['event_detail_full']);
+
+// เขียนคำสั่ง SQL เพื่ออัปเดตฐานข้อมูล
+$sql = "UPDATE tb_event SET 
+        type = '$type',
+        event_date_from = '$event_date_from',
+        event_date_to = '$event_date_to',
+        event_reg_to = '$event_reg_to',
+        event_number = '$event_number',
+        event_fee = '$event_fee',
+        requirements = '$requirements',
+        event_location = '$event_location',
+        event_detail_full = '$event_detail_full'
+        WHERE activity_id = $activity_id"; // ใส่เงื่อนไข WHERE เพื่อระบุว่าจะอัปเดตแถวใด
+
+// ทำการอัปเดต
+if (mysqli_query($conn, $sql)) {
+  echo "อัปเดตข้อมูลเรียบร้อยแล้ว";
+} else {
+  echo "เกิดข้อผิดพลาดในการอัปเดตข้อมูล: " . mysqli_error($conn);
+}
+
+// ปิดการเชื่อมต่อฐานข้อมูล
+mysqli_close($conn);
+?>
