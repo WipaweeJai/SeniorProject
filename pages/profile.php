@@ -115,7 +115,7 @@
             <div class="card-body p-3">
               <hr class="horizontal gray-light my-2">
               <ul class="list-group">
-                <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">ชื่อ-นามสกุล :</strong> &nbsp; ขวัญนภา แก้วเพ็ชร</li>
+                <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">ชื่อ-นามสกุล :</strong> &nbsp; กัญญารัตน์ อุดมรัตน์</li>
                 <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Email :</strong> &nbsp; alecthompson@mail.com</li>
                 <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">เบอร์โทรศัพท์ :</strong> &nbsp; 08X-XXX-XXXX</li>
                 <!--Social-->
@@ -154,7 +154,7 @@
                 $sql = "SELECT event_name FROM tb_event";
                 $result = mysqli_query($conn, $sql);
                 while ($row = mysqli_fetch_assoc($result)) {
-                    echo "<li class='list-group-item border-0 ps-0 pt-0 text-sm'><strong class='text-dark'>" . $row['event_name'] . " : " . "</li>";
+                    echo "<li class='list-group-item border-0 ps-0 pt-0 text-sm'><strong class='text-dark'>" . $row['event_name'] . "</li>";
                 }
                 ?>
               </ul>

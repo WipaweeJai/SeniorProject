@@ -87,7 +87,14 @@
             <div class="col-auto my-auto">
               <div class="h-100">
                 <?php
+                if(isset($_GET['id'])) {
+                  $activity_id = $_GET['id'];
+                  $sql = "SELECT * FROM tb_event WHERE activity_id = '$activity_id'";
+                  $result = mysqli_query($conn, $sql);
+                  $row = mysqli_fetch_assoc($result);
+                  
                   echo '<h5 class="mb-1">' . $row['event_name'] . '</h5>';
+                }
                 ?>
               </div>
             </div>
