@@ -76,118 +76,49 @@
     </nav>
     <!-- End Navbar -->
     <div class="container-fluid py-4">
-      <!-- <div class="row">
-        <div class="col-12">
-          <div class="card mb-4">
-            <div class="card-header pb-0">
-              <div class="row">
-                <h5 class="font-weight-bolder">Basic Python Programming For Health Data Science</h5>
-                  <p class="mb-5">กิจกรรม Basic Python Programming For Health Data Science สำหรับนักศึกษาชั้นปีที่ 2</p>
-                  <a class="text-body text-sm font-weight-bold mb-0 icon-move-right mt-auto" href="event_detail.php">
-                  รายละเอียด
-                  <i class="fas fa-arrow-right text-sm ms-1" aria-hidden="true"></i>
-                  </a>
-              </div>
-              <div class="px-0 pt-0 pb-2">
-            </div>
-          </div>
-        </div>
-      </div> -->
-      <!-- ที่อยากได้ เดี๋ยวกลับมาแก้ๆๆๆๆ -->
-      <div class="col-lg-7 mb-lg-0 mb-4 ">
-
-            <?php
-              require_once('../backend/dbcon.php');
-
-              // $sql = "SELECT * FROM tb_event where status = 'Approved'";
-              // $result = mysqli_query($conn, $sql);
-              // if (mysqli_num_rows($result) > 0) {
-              //     while ($row = mysqli_fetch_assoc($result)) {
-              //         echo '<div class="card mb-4">';
-              //         echo '<div class="card-body p-3">';
-              //         echo '<div class="row ">';
-              //         echo '<div class="col-lg-6 text-center mt-5 mt-lg-0">';
-              //         echo '<div class="border-radius-img h-100">';
-              //         echo '<img src="../assets/img/shapes/waves-white.svg" class="position-absolute h-100 w-50 top-0 d-lg-block d-none" alt="waves">';
-              //         echo '<div class="position-relative d-flex align-items-center justify-content-center ">';
-              //         echo '<img src="' . $row['event_banner'] . '" width="auto" >';
-              //         echo '</div>';
-              //         echo '</div>';
-              //         echo '</div>';
-              //         echo '<div class="col-lg-4">';
-              //         echo '<div class="d-flex flex-column h-100">';
-              //         echo '<h5 class="font-weight-bolder">' . $row['event_name'] . '</h5>';
-              //         echo '<p class="mb-5">' . $row['event_detail_short'] . '</p>';
-              //         echo '<a class="text-body text-sm font-weight-bold mb-0 icon-move-right mt-auto" href="event_detail.php">';
-              //         echo 'รายละเอียด';
-
-              //         echo '<i class="fas fa-arrow-right text-sm ms-1" aria-hidden="true"></i>';
-              //         echo '</a>';
-              //         echo '</div>';
-              //         echo '</div>';
-              //         echo '</div>';
-              //         echo '</div>';
-              //         echo '</div>';
-              //     }
-              // } else {
-              //     echo "ไม่พบข้อมูล";
-              // }
-              
-              $sql = "SELECT * FROM tb_event where status = 'Approved'";
-              $result = mysqli_query($conn, $sql);
-              if (mysqli_num_rows($result) > 0) {
-                  while ($row = mysqli_fetch_assoc($result)) {
-                      echo '<div class="card mb-4">';
-                      echo '<div class="card-body p-3">';
-                      echo '<div class="row ">';
-                      echo '<div class="col-lg-6 text-center mt-5 mt-lg-0">';
-                      echo '<div class="border-radius-img h-100">';
-                      echo '<img src="../assets/img/shapes/waves-white.svg" class="position-absolute h-100 w-50 top-0 d-lg-block d-none" alt="waves">';
-                      echo '<div class="position-relative d-flex align-items-center justify-content-center ">';
-                      echo '<img src="' . $row['event_banner'] . '" width="auto" >';
-                      echo '</div>';
-                      echo '</div>';
-                      echo '</div>';
-                      echo '<div class="col-lg-4">';
-                      echo '<div class="d-flex flex-column h-100">';
-                      echo '<h5 class="font-weight-bolder">' . $row['event_name'] . '</h5>';
-                      echo '<p class="mb-5">' . $row['event_detail_short'] . '</p>';
-                      echo '<a class="text-body text-sm font-weight-bold mb-0 icon-move-right mt-auto" href="event_detail.php?id=' . $row['activity_id'] . '">';
-                      echo 'รายละเอียด';
-                      echo '<i class="fas fa-arrow-right text-sm ms-1" aria-hidden="true"></i>';
-                      echo '</a>';
-                      echo '</div>';
-                      echo '</div>';
-                      echo '</div>';
-                      echo '</div>';
-                      echo '</div>';
-                  }
-              } else {
-                  echo "ไม่พบข้อมูล";
+      <div class="col-lg-10 mb-lg-0 mb-4 ">
+        <?php
+          require_once('../backend/dbcon.php');              
+          $sql = "SELECT * FROM tb_event where status = 'Approved'";
+          $result = mysqli_query($conn, $sql);
+          if (mysqli_num_rows($result) > 0) {
+              while ($row = mysqli_fetch_assoc($result)) {
+                  echo '<div class="card mb-4">';
+                  echo '<div class="card-body p-3">';
+                  echo '<div class="row ">';
+                  echo '<div class="col-lg-6 text-center mt-5 mt-lg-0">';
+                  echo '<div class="border-radius-img h-100">';
+                  echo '<img src="../assets/img/shapes/waves-white.svg" class="position-absolute h-100 w-50 top-0 d-lg-block d-none" alt="waves">';
+                  echo '<div class="position-relative d-flex align-items-center justify-content-center ">';
+                  echo '<img src="' . $row['event_banner'] . '" width="auto" >';
+                  echo '</div>';
+                  echo '</div>';
+                  echo '</div>';
+                  echo '<div class="col-lg-5">';
+                  echo '<div class="d-flex flex-column h-100">';
+                  echo '<a class="font-weight-bold text-info text-gradient lead" href="event_detail.php?id=' . $row['activity_id'] . '">' . $row['event_name'] . '</a>';
+                  echo '<p class="mb-5">' . $row['event_detail_short'] . '</p>';
+                  echo '<a class="text-body text-sm font-weight-bold mb-0 icon-move-right mt-auto" href="event_detail.php?id=' . $row['activity_id'] . '">';
+                  echo 'รายละเอียด';
+                  echo '<i class="fas fa-arrow-right text-sm ms-1" aria-hidden="true"></i>';
+                  echo '</a>';
+                  echo '</div>';
+                  echo '</div>';
+                  echo '</div>';
+                  echo '</div>';
+                  echo '</div>';
               }
+          } else {
+              echo "ไม่พบข้อมูล";
+          }
 
-            ?>
+        ?>
 
-            </div>
-          </div>
-        </div>
       </div>
-      
-      <!-- <div class="row">
-        <div class="col-12">
-          <div class="card mb-4">
-            <div class="card-header pb-0">
-                <h5 class="font-weight-bolder">Step To Data Science – ก้าวแรกสู่สายงานวิทยาการข้อมูล</h5>
-                <p class="mb-5">กิจกรรมเวิร์กช็อปแบบออฟไลน์ สำหรับนักศึกษาทุกชั้นปี</p>
-                <a class="text-body text-sm font-weight-bold mb-0 icon-move-right mt-auto" href="javascript:;">
-                  รายละเอียด
-                  <i class="fas fa-arrow-right text-sm ms-1" aria-hidden="true"></i>
-                </a>
-            <div class="px-0 pt-0 pb-2">
-          </div>
-        </div>
-      </div> -->
     </div>
+  </div>
+</div>
+</div>
   </main>
 
   <!--   Core JS Files   -->

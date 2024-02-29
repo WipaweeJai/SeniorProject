@@ -26851,3 +26851,14 @@ pre[class*="language-"] {
   border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* ความกว้างของ column */
+  grid-gap: 10px; /* ระยะห่างระหว่าง grid item */
+}
+
+.grid-item {
+  width: 100%; /* ให้ grid item ขยายตามความกว้างของ column */
+}
+
+
