@@ -166,7 +166,7 @@
                         <h6><?php echo $event_name; ?></h6>
                         <div class="d-flex align-items-center justify-content-between">
                           <button type="button" class="btn btn-outline-info btn-sm mb-0" onclick="window.open('<?php echo $image_url; ?>', '_blank')">
-                              ดาวน์โหลดใบประกาศ
+                              รายละเอียด
                           </button>
                         </div>
                       </div>

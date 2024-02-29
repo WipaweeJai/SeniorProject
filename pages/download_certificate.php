@@ -92,10 +92,12 @@
               echo '</div>';
               echo '<div class="card-body p-3">';
               echo '<h6 class="text-uppercase text-body text-xs font-weight-bolder">' . $event_name . '</h6>';
-              echo '<button type="button" class="btn btn-info btn-sm mb-0" onclick="window.open(\'' . $image_url . '\', \'_blank\')">';
+              echo '<a href="' . $image_url . '" download>';
+              echo '<button type="button" class="btn btn-info btn-sm mb-0">';
               echo 'ดาวน์โหลดใบประกาศ';
-              echo '</div>';
               echo '</button>';
+              echo '</div>';
+              echo '</a>';
               echo '</div>';
               echo '</div>';
           }
