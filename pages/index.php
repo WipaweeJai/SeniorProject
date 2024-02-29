@@ -76,9 +76,8 @@
     </nav>
     <!-- End Navbar -->
 
-
       <div class="row mt-4">
-        <!-- Slider กิจกรรม -->
+          <!-- Slider กิจกรรม -->
           <div class="carousel-container">
             <div id="carouselCaptions" class="carousel slide col-lg-12 mb-lg-0 mb-4" data-bs-ride="carousel">
               <div class="carousel-indicators">
@@ -86,32 +85,31 @@
                 <button type="button" data-bs-target="#carouselCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
                 <button type="button" data-bs-target="#carouselCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
               </div>
+              <div class="carousel-inner">
+                  <div class="carousel-item active">
+                    <img  src="../assets/img/upload_event/banner/banner_event1.png" class="d-block w-100 custom-rounded" alt="Image 1">
+                  </div>
+                  <div class="carousel-item">
+                    <img src="../assets/img/upload_event/banner/banner_event2.png" class="d-block w-100 custom-rounded" alt="Image 2">
+                  </div>
+                  <div class="carousel-item">
+                    <img  src="../assets/img/upload_event/banner/banner_event3.png" class="d-block w-100 custom-rounded" alt="Image 3">
+                  </div>
+              </div>
 
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                      <img  src="../assets/img/upload_event/banner/banner_event1.png" class="d-block w-100 custom-rounded" alt="Image 1">
-                    </div>
-                    <div class="carousel-item">
-                      <img src="../assets/img/upload_event/banner/banner_event2.png" class="d-block w-100 custom-rounded" alt="Image 2">
-                    </div>
-                    <div class="carousel-item">
-                      <img  src="../assets/img/upload_event/banner/banner_event3.png" class="d-block w-100 custom-rounded" alt="Image 3">
-                    </div>
-                </div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#carouselCaptions" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
 
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselCaptions" data-bs-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Previous</span>
-            </button>
-
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselCaptions" data-bs-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Next</span>
-            </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#carouselCaptions" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
           </div>
         </div>
 
-        <!-- Card Add Event -->
+        <!-- ประชาสัมพันธ์ -->
         <div class="col-lg-5">
           <div class="card h-100 p-3">
             <div class="overflow-hidden position-relative border-radius-lg bg-cover h-100" style="background-image: url('../assets/img/3.jpg');">
@@ -127,26 +125,8 @@
           </div>
         </div>
 
-        <!-- Card Add Event -->
-        <!-- <div class="col-lg-4">
-          <div class="card h-100 p-3">
-            <div class="overflow-hidden position-relative border-radius-lg bg-cover h-100" style="background-image: url('../assets/img/ivancik.jpg');">
-              <span class="mask bg-gradient-dark"></span>
-              <div class="card-body position-relative z-index-1 d-flex flex-column h-100 p-3">
-                <h5 class="text-white font-weight-bolder mb-4 pt-2">เพิ่มกิจกรรมขึ้นหน้าเว็บกับเรา ฟรี!</h5>
-                <p class="text-white mb-5">ผู้จัดกิจกรรมสามารถลงข้อมูลกิจกรรมผ่านหน้าเว็บกับเราได้ฟรี ส่งข้อมูลกิจกรรมทั่วไป ค่ายแนะแนว ค่ายติว ค่ายอาสา ค่ายพัฒนาทักษะ งานเปิดบ้าน นิทรรศการการศึกษา กิจกรรมออนไลน์</p>
-                <a class="text-white text-sm font-weight-bold mb-0 icon-move-right mt-auto" href="add_event.php">
-                  รายละเอียด
-                  <i class="fas fa-arrow-right text-sm ms-1" aria-hidden="true"></i>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div> -->
-
-
+      <!-- Calendar -->
       <div class="row mt-4">
-        <!-- Calendar -->
         <div class="col-lg-5 mb-lg-0 mb-4">
             <div id="calendar-container" class="card z-index-2 calendar-container">
                 <div class="container text-left">
@@ -173,14 +153,14 @@
                 <script src="calendar/calendar-17/js/rome.js"></script>
                 <script src="calendar/calendar-17/js/main.js"></script>
             </div>
-        </div>
-        <!-- end calendar -->
+      </div>
+      <!-- end calendar -->
 
         <!-- start ข้อมูลกิจกรรมจาก calendar -->
         <div class="col-lg-7">
           <div class="card z-index-2">
             <div class="card-header pb-13">
-              <ul class="list-group ">
+              <ul class="list-group">
                 <!-- วนข้อมูลกิจกรรมลงหน้าเว็บ -->
                 <?php
                     require_once('../backend/dbcon.php');
@@ -192,7 +172,7 @@
                     if (mysqli_num_rows($result) > 0) {
                         // วนลูปเพื่อดึงข้อมูลและแสดงในแท็ก <li>
                         while ($row = mysqli_fetch_assoc($result)) {
-                            echo '<li class="list-group-item border-0 d-flex p-4 mb-2 bg-white-80 border-radius-lg">';
+                            echo '<li class="list-group-item border-0 d-flex p-4 mb-2 glass">';
                             echo '<div class="d-flex flex-column">';
                             echo '<h6 class="mb-3 text-sm">' . $row['event_name'] . '</h6>';
                             echo '<span class="mb-2 text-xs">' . $row['event_location'] . '</span>';
@@ -211,8 +191,6 @@
             </div>
           </div>
         </div>
-      </div>
-
   </main>
 
   <!--   Core JS Files   -->
