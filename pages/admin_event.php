@@ -144,7 +144,7 @@
               <p class="text-dark">ข้อมูลเบื้องต้นของกิจกรรม</p>
             </div>
             <div class="card-body p-3">
-                <form id="admin_event_form">
+            <form id="admin_event_form" method="post" enctype="multipart/form-data">
                     <?php
                         if(isset($_GET['id'])) {
                         $activity_id = $_GET['id'];
@@ -157,23 +157,23 @@
                             <input class="form-control custom-width" type="text" id="event_name" value="' . $row['event_name'] . '">
                             </p>';
                         echo '<p class="text-uppercase text-body text-sm font-weight-bolder ">สถานะกิจกรรม</p>
-                            <select class="form-select status-select" style="width: 50%" data-event-id="' . $row['activity_id'] . '">
+                            <select id="status" class="form-select status-select" style="width: 50%" data-event-id="' . $row['activity_id'] . '">
                                 <option value="Approved"'; if ($row['status'] == 'Approved') echo "selected"; echo '>Approved</option>
                                 <option value="Pending"'; if ($row['status'] == 'Pending') echo "selected"; echo '>Pending</option>
                                 <option value="Closed"'; if ($row['status'] == 'Closed') echo "selected"; echo '>Closed</option>
                             </select>';
                         echo '<p class="text-uppercase text-body text-sm font-weight-bolder ">รูปแบบกิจกรรม :
                             <input class="form-control custom-width" type="text" id="type" value="' . $row['type'] . '">';
-                        echo '<p class="text-uppercase text-body text-sm font-weight-bolder">วันที่จัดกิจกรรม : ';
-                            // ตรวจสอบว่าฟิลด์ event_date_to ไม่ใช่ค่าว่าง
-                            if(isset($row['event_date_to'])) {
-                                // แสดงค่าในรูปแบบ "event_date_from - event_date_to"
-                                echo '<input class="form-control custom-width" type="text" id="event_date" value="' . $row['event_date_from'] . ' - ' . $row['event_date_to'] .'">';
-                            } else {
-                                // หรือหากไม่มีค่าใน event_date_to ให้แสดงเฉพาะ event_date_from
-                                echo '<input class="form-control custom-width" type="text" id="event_date_from" value="' . $row['event_date_from'] . '">';
-                            }
-                            echo '</p>';
+                        // echo '<p class="text-uppercase text-body text-sm font-weight-bolder">วันที่จัดกิจกรรม : ';
+                        //     // ตรวจสอบว่าฟิลด์ event_date_to ไม่ใช่ค่าว่าง
+                        //     if(isset($row['event_date_to'])) {
+                        //         // แสดงค่าในรูปแบบ "event_date_from - event_date_to"
+                        //         echo '<input class="form-control custom-width" type="text" id="event_date" value="' . $row['event_date_from'] . ' - ' . $row['event_date_to'] .'">';
+                        //     } else {
+                        //         // หรือหากไม่มีค่าใน event_date_to ให้แสดงเฉพาะ event_date_from
+                        //         echo '<input class="form-control custom-width" type="text" id="event_date_from" value="' . $row['event_date_from'] . '">';
+                        //     }
+                        //     echo '</p>';
                         echo '<p class="text-uppercase text-body text-sm font-weight-bolder ">วันที่รับสมัครวันสุดท้าย : 
                             <input class="form-control custom-width" type="text" id="event_reg_to" value="' . $row['event_reg_to'] . '">
                             </p>';
@@ -227,26 +227,57 @@
   <script src="../assets/js/soft-ui-dashboard.min.js?v=1.0.7"></script>
 
   <script>
-    document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("btn_edit_event").addEventListener("click", function() {
-        var formData = new FormData(document.getElementById("admin_event_form"));
+    var formData = new FormData(document.getElementById("admin_event_form"));
+    var event_name = document.getElementById("event_name").value;
+    var status = document.getElementById("status").value;
+    var type = document.getElementById("type").value;
+    var event_reg_to = document.getElementById("event_reg_to").value;
+    var event_number = document.getElementById("event_number").value;
+    var event_fee = document.getElementById("event_fee").value;
+    var requirements = document.getElementById("requirements").value;
+    var event_location = document.getElementById("event_location").value;
+    var event_detail_full = document.getElementById("event_detail_full").value;
+    
 
-        // ส่งข้อมูลโดยใช้ AJAX
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", "update_event.php", true);
-        xhr.onload = function() {
-        if (xhr.status == 200) {
+    // เพิ่มค่าเข้าไปใน formData
+    var activity_id = <?php echo json_encode($_GET['id']); ?>;
+    
+    formData.append("activity_id", activity_id);
+    formData.append("event_name", event_name);
+    formData.append("status", status);
+    formData.append("type", type);
+    formData.append("event_reg_to", event_reg_to);
+    formData.append("event_number", event_number);
+    formData.append("event_fee", event_fee);
+    formData.append("requirements", requirements);
+    formData.append("event_location", event_location);
+    formData.append("event_detail_full", event_detail_full);
+    console.log(formData);
+
+    // ตรวจสอบ key ที่ถูกส่งมา
+    formData.forEach(function(value, key) {
+        console.log(key, value);
+    });
+    
+    // ส่งข้อมูลโดยใช้ AJAX
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "update_event.php", true);
+    xhr.onload = function() {
+        console.log("Response:", xhr.responseText);  // เพิ่มบรรทัดนี้
+        if (xhr.status === 200) {
             // อัปเดตเรียบร้อย
             alert("อัปเดตข้อมูลเรียบร้อยแล้ว");
         } else {
             // เกิดข้อผิดพลาดในการอัปเดต
             alert("เกิดข้อผิดพลาดในการอัปเดตข้อมูล");
         }
-        };
-        xhr.send(formData);
-    });
-    });
-  </script>
+    };
+    
+    xhr.send(formData);
+});
+
+</script>
 
 </body>
 

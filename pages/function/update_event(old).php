@@ -35,7 +35,7 @@ if (isset($_POST['activity_id'], $_POST['status'])) {
   if (mysqli_query($conn, $sql)) {
     echo "อัปเดตข้อมูลเรียบร้อยแล้ว";
   } else {
-    echo "เกิดข้อผิดพลาดในการอัปเดตข้อมูล: " . mysqli_error($conn);
+    echo "เกิดข้อผิดพลาดในการอัปเดตข้อมูลBack: " . mysqli_error($conn);
   }
 } else {
   // ถ้าไม่มีค่า $_POST['activity_id'] หรือ $_POST['status'] ไม่ให้ดำเนินการ
