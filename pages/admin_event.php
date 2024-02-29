@@ -164,16 +164,19 @@
                             </select>';
                         echo '<p class="text-uppercase text-body text-sm font-weight-bolder ">รูปแบบกิจกรรม :
                             <input class="form-control custom-width" type="text" id="type" value="' . $row['type'] . '">';
-                        // echo '<p class="text-uppercase text-body text-sm font-weight-bolder">วันที่จัดกิจกรรม : ';
-                        //     // ตรวจสอบว่าฟิลด์ event_date_to ไม่ใช่ค่าว่าง
-                        //     if(isset($row['event_date_to'])) {
-                        //         // แสดงค่าในรูปแบบ "event_date_from - event_date_to"
-                        //         echo '<input class="form-control custom-width" type="text" id="event_date" value="' . $row['event_date_from'] . ' - ' . $row['event_date_to'] .'">';
-                        //     } else {
-                        //         // หรือหากไม่มีค่าใน event_date_to ให้แสดงเฉพาะ event_date_from
-                        //         echo '<input class="form-control custom-width" type="text" id="event_date_from" value="' . $row['event_date_from'] . '">';
-                        //     }
-                        //     echo '</p>';
+                        echo '<p class="text-uppercase text-body text-sm font-weight-bolder">วันที่จัดกิจกรรม : ';
+                            // ตรวจสอบว่าฟิลด์ event_date_to ไม่ใช่ค่าว่าง
+                            if(isset($row['event_date_to'])) {
+                                // แสดงค่าในรูปแบบ "event_date_from - event_date_to"
+                                echo '<input class="form-control custom-width" type="text" id="event_date_from" value="' . $row['event_date_from'] .'">';
+                                echo '<input class="form-control custom-width" type="text" id="event_date_to" value="' . $row['event_date_to'] .'">';  
+                            } else {
+                                // หรือหากไม่มีค่าใน event_date_to ให้แสดงเฉพาะ event_date_from
+                                echo '<input class="form-control custom-width" type="text" id="event_date_from" value="' . $row['event_date_from'] . '">';
+                            }
+                            echo '</p>';
+                        
+
                         echo '<p class="text-uppercase text-body text-sm font-weight-bolder ">วันที่รับสมัครวันสุดท้าย : 
                             <input class="form-control custom-width" type="text" id="event_reg_to" value="' . $row['event_reg_to'] . '">
                             </p>';
@@ -228,10 +231,13 @@
 
   <script>
     document.getElementById("btn_edit_event").addEventListener("click", function() {
+    event.preventDefault();
     var formData = new FormData(document.getElementById("admin_event_form"));
     var event_name = document.getElementById("event_name").value;
     var status = document.getElementById("status").value;
     var type = document.getElementById("type").value;
+    var event_date_to = document.getElementById("event_date_to").value;
+    var event_date_from = document.getElementById("event_date_from").value;
     var event_reg_to = document.getElementById("event_reg_to").value;
     var event_number = document.getElementById("event_number").value;
     var event_fee = document.getElementById("event_fee").value;
@@ -247,6 +253,8 @@
     formData.append("event_name", event_name);
     formData.append("status", status);
     formData.append("type", type);
+    formData.append("event_date_to", event_date_to);
+    formData.append("event_date_from", event_date_from);
     formData.append("event_reg_to", event_reg_to);
     formData.append("event_number", event_number);
     formData.append("event_fee", event_fee);

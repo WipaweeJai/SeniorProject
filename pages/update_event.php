@@ -12,7 +12,8 @@ if (isset($_POST['activity_id']) && !empty($_POST['activity_id'])) {
   $event_name = isset($_POST['event_name']) ? $_POST['event_name'] : '';
   $status = isset($_POST['status']) ? $_POST['status'] : '';
   $type = isset($_POST['type']) ? $_POST['type'] : '';
-  // $event_date = isset($_POST['event_date']) ? $_POST['event_date'] : '';
+  $event_date_from = isset($_POST['event_date_from']) ? $_POST['event_date_from'] : '';
+  $event_date_to = isset($_POST['event_date_to']) ? $_POST['event_date_to'] : '';
   $event_reg_to = isset($_POST['event_reg_to']) ? $_POST['event_reg_to'] : '';
   $event_number = isset($_POST['event_number']) ? $_POST['event_number'] : '';
   $event_fee = isset($_POST['event_fee']) ? $_POST['event_fee'] : '';
@@ -25,6 +26,8 @@ if (isset($_POST['activity_id']) && !empty($_POST['activity_id'])) {
           event_name = '$event_name',
           status = '$status',
           type = '$type',
+          event_date_from ='$event_date_from',
+          event_date_to ='$event_date_to',
           event_reg_to = '$event_reg_to',
           event_number = '$event_number',
           event_fee = '$event_fee',
