@@ -95,6 +95,10 @@
                                     <input class="form-control custom-width" type="text" id="event_name" placeholder="กรุณาพิมพ์ชื่อกิจกรรม" maxlength="60" name="event_name" value="<?php echo $event_name; ?>" readonly>
                                 </span>
                             </p>
+                            <div class="divider"></div>
+                            <a class="btn bg-gradient-danger mb-3 text-sm" href="../assets/img/manual/manual.pdf" target="_blank">
+                                คู่มือรายละเอียดการอัปโหลดไฟล์
+                            </a>
                             <p class="text-dark text-lg font-weight-normal ">
                                 อัปโหลดไฟล์รายชื่อผู้ผ่านกิจกรรม
                                 <div class="mb-3">

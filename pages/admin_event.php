@@ -92,7 +92,6 @@
                   $sql = "SELECT * FROM tb_event WHERE activity_id = '$activity_id'";
                   $result = mysqli_query($conn, $sql);
                   $row = mysqli_fetch_assoc($result);
-                  
                   echo '<h5 class="mb-1">' . $row['event_name'] . '</h5>';
                 }
                 ?>
@@ -133,9 +132,9 @@
 
                 echo '<div class="card-header pb-0 p-3">';
                     echo '<p class="text-dark">ข้อมูลผู้ส่งข่าวกิจกรรม</p>';
-                    echo '<p class="text-uppercase text-body text-sm font-weight-bolder ">ชื่อผู้ส่งข่าวกิจกรรม : ' . $row['sender_name'] . '</p>';
-                    echo '<p class="text-uppercase text-body text-sm font-weight-bolder ">อีเมล : ' . $row['sender_email'] . '</p>';
-                    echo '<p class="text-uppercase text-body text-sm font-weight-bolder ">เบอร์โทรศัพท์ : ' . $row['sender_tel'] . '</p>';
+                    echo '<p class="text-body text-sm font-weight-bolder ">ชื่อผู้ส่งข่าวกิจกรรม : <span class="font-weight-normal">' . $row['sender_name'] . '</span></p>';
+                    echo '<p class="text-body text-sm font-weight-bolder ">อีเมล : <span class="font-weight-normal">' . $row['sender_email'] . '</p>';
+                    echo '<p class="text-body text-sm font-weight-bolder ">เบอร์โทรศัพท์ : <span class="font-weight-normal">' . $row['sender_tel'] . '</p>';
                 echo '</div>';
             }
             ?>
