@@ -96,7 +96,7 @@
         <div class="container-fluid py-4">
         <div class="row">
             <!-- ส่วนที่ 1 ข้อมูลผู้ส่งข่าว -->
-            <div class="card mb-4">
+            <!-- <div class="card mb-4">
                 <div class="card-header pb-0 p-3">
                     <h3 class="text-dark ">ส่วนที่ 1 ข้อมูลผู้ส่งข่าวกิจกรรม</h3>
                 </div>
@@ -107,7 +107,7 @@
                             <input class="form-control custom-width" type="text" id="sender_name" placeholder="กรุณากรอกชื่อคนที่สามารถติดต่อได้ ไม่ใช่ชื่อเพจหรือองค์กร">
                         </span>
                     </p>
-                    <p class="text-dark text-lg font-weight-normal "> <!--ทำให้อยู่บรรทัดเดียวกับชื่อ-->
+                    <p class="text-dark text-lg font-weight-normal ">
                         นามสกุล
                         <span class="text-dark ms-sm-2 font-weight-bold">
                             <input class="form-control custom-width" type="text" id="sender_surname" placeholder="กรุณากรอกนามสกุลคนที่สามารถติดต่อได้ ไม่ใช่ชื่อเพจหรือองค์กร">
@@ -126,45 +126,48 @@
                         </span>
                     </p>
                 </div>
-            </div>
-            <!-- ส่วนที่ 2 พาดหัวข่าว และรูปภาพกิจกรรม -->
+            </div> -->
+            <!-- ส่วนที่ 1 พาดหัวข่าว และรูปภาพกิจกรรม -->
             <div class="card mb-4">
                 <div class="card-header pb-0 p-3">
-                    <h3 class="text-dark ">ส่วนที่ 2 พาดหัวข่าว และรูปภาพกิจกรรม</h3>
+                    <h3 class="text-dark ">ส่วนที่ 1 พาดหัวข่าว และรูปภาพกิจกรรม</h3>
                 </div>
                 <div class="parent-container">
-                    <img src="../assets/img/activity2.png" alt="" class="responsive-image">
+                    <img src="../assets/img/activity4.png" alt="" class="responsive-image40" style="padding: 15px;">
+                    <img src="../assets/img/activity2.png" alt="" class="responsive-image" style="max-width: 50%;" >
                 </div>
                 <div class="card-body p-3">
-                    <form action="upload_event.php" method="post" enctype="multipart/form-data">
-                        <p class="text-dark text-lg font-weight-normal ">
-                            อัปโหลดภาพหัวข่าว ขนาด 1200 x 630 พิกเซล (ไม่เกิน 2MB)
-                            <div class="mb-3">
-                                <p class="text-dark text-sm font-weight-normal ">หากไม่อัปโหลดภาพให้ตรงตามขนาด หรือไม่อัปโหลดภาพนี้เข้ามาให้ถูกต้อง ทางเพจจะไม่เพิ่มลงเว็บให้</p>
-                                <input class="form-control custom-width" type="file" id="event_banner" name="event_banner">
-                            </div>
-                        </p>
-                        <p class="text-dark text-lg font-weight-normal ">
-                            ชื่อกิจกรรม
-                            <span class="text-dark ms-sm-2 font-weight-bold">
-                                <p class="text-sm font-weight-light ">จำกัดจำนวนตัวอักษร 60 ตัว</p>
-                                <input class="form-control custom-width" type="text" id="event_name" placeholder="กรุณาพิมพ์ชื่อกิจกรรม"  maxlength="60">
-                            </span>
-                        </p>
-                        <p class="text-dark text-lg font-weight-normal ">
-                            คำโปรยของกิจกรรม
-                            <span class="text-dark ms-sm-2 font-weight-bold">
-                                <p class="text-sm font-weight-light ">จำกัดจำนวนตัวอักษร 120 ตัว</p>
-                                <textarea class="form-control custom-width" type="text" rows="3" id="event_detail_short" placeholder="กรุณาพิมพ์คำอธิบายกิจกรรมคร่าว ๆ ที่เชิญชวนให้คนสนใจ"  maxlength="120"></textarea>
-                            </span>
-                        </p>
-                    </form>
+
+                <form action="upload_event.php" method="post" enctype="multipart/form-data">
+
+                <p class="text-dark text-lg font-weight-normal">
+                    อัปโหลดภาพหัวข่าว ขนาด 1200 x 630 พิกเซล (ไม่เกิน 2MB)
+                </p>
+
+                    <div class="mb-3">
+                        <p class="text-dark text-sm font-weight-normal ">หากไม่อัปโหลดภาพให้ตรงตามขนาด หรือไม่อัปโหลดภาพนี้เข้ามาให้ถูกต้อง ทางเพจจะไม่เพิ่มลงเว็บให้</p>
+                        <input class="form-control custom-width" type="file" id="event_banner" name="event_banner">
+                    </div>
+                    <p class="text-dark text-lg font-weight-normal ">
+                        ชื่อกิจกรรม
+                        <span class="text-dark ms-sm-2 font-weight-bold">
+                            <p class="text-sm font-weight-light ">จำกัดจำนวนตัวอักษร 60 ตัว</p>
+                            <input class="form-control custom-width" type="text" id="event_name" placeholder="กรุณาพิมพ์ชื่อกิจกรรม"  maxlength="60">
+                        </span>
+                    </p>
+                    <p class="text-dark text-lg font-weight-normal ">
+                        คำโปรยของกิจกรรม
+                        <span class="text-dark ms-sm-2 font-weight-bold">
+                            <p class="text-sm font-weight-light ">จำกัดจำนวนตัวอักษร 120 ตัว</p>
+                            <textarea class="form-control custom-width" type="text" rows="3" id="event_detail_short" placeholder="กรุณาพิมพ์คำอธิบายกิจกรรมคร่าว ๆ ที่เชิญชวนให้คนสนใจ"  maxlength="120"></textarea>
+                        </span>
+                    </p>
                 </div>
             </div>
-            <!-- ส่วนที่ 3 ข้อมูลเบื้องต้นของกิจกรรม -->
+            <!-- ส่วนที่ 2 ข้อมูลเบื้องต้นของกิจกรรม -->
             <div class="card mb-4">
                 <div class="card-header pb-0 p-3">
-                    <h3 class="text-dark ">ส่วนที่ 3 ข้อมูลเบื้องต้นของกิจกรรม</h3>
+                    <h3 class="text-dark ">ส่วนที่ 2 ข้อมูลเบื้องต้นของกิจกรรม</h3>
                 </div>
                 <div class="card-body p-3">
                     <p class="text-dark text-lg font-weight-normal ">
@@ -265,13 +268,17 @@
                     </p>
                 </div>
             </div>
-            <!-- ส่วนที่ 4 ระบุรายละเอียดกิจกรรม -->
+            <!-- ส่วนที่ 3 ระบุรายละเอียดกิจกรรม -->
             <div class="card mb-4">
                 <div class="card-header pb-0 p-3">
-                    <h3 class="text-dark ">ส่วนที่ 4 ระบุรายละเอียดกิจกรรม</h3>
+                    <h3 class="text-dark ">ส่วนที่ 3 ระบุรายละเอียดกิจกรรม</h3>
+                </div>
+                <div class="parent-container">
+                    <img src="../assets/img/activity5.png" alt="" class="responsive-image40" style="padding: 15px;">
+                    <img src="../assets/img/activity3.png" alt="" class="responsive-image40">
                 </div>
                 <div class="card-body p-3">
-                    <p class="text-dark text-lg font-weight-normal ">
+                    <p class="text-dark text-lg font-weight-normal">
                         อัปโหลดภาพโปสเตอร์เพิ่มเติม (ไม่เกิน 2MB)
                         <div class="mb-3">
                             <p class="text-dark text-sm font-weight-normal ">หากคุณมีภาพโปสเตอร์ค่ายไซส์ A2 หรือสี่เหลี่ยมจัตุรัส</p>
