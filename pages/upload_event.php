@@ -36,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $sql = "INSERT INTO tb_event (event_poster, event_banner) VALUES ('{$uploadedFiles['event_poster']}', '{$uploadedFiles['event_banner']}')";
 
         if ($conn->query($sql) === TRUE) {
-            header("Location: form_event.php");
+            header("Location: add_event.php");
             exit();
             echo "อัปโหลดไฟล์และบันทึกข้อมูลเรียบร้อยแล้ว<br>";
         } else {
