@@ -87,32 +87,17 @@
             <div class="col-auto my-auto">
               <div class="h-100">
                 <?php
-                if(isset($_GET['id'])) {
-                  $activity_id = $_GET['id'];
-                  $sql = "SELECT * FROM tb_event WHERE activity_id = '$activity_id'";
-                  $result = mysqli_query($conn, $sql);
-                  $row = mysqli_fetch_assoc($result);
-                  echo '<h5 class="mb-1">' . $row['event_name'] . '</h5>';
-                }
+                  if(isset($_GET['id'])) {
+                      $activity_id = $_GET['id'];
+                      $sql = "SELECT * FROM tb_event WHERE activity_id = '$activity_id'";
+                      $result = mysqli_query($conn, $sql);
+                      $row = mysqli_fetch_assoc($result);
+                      $event_name = $row['event_name']; // Fetch event name from $row
+                  }
                 ?>
-              </div>
-            </div>
-            <div class="col-lg-4 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3">
-              <div class="nav-wrapper position-relative end-0 ">
-                <ul class="nav nav-pills nav-fill p-1 bg-transparent" role="tablist">
-                  <li class="nav-item"  style="padding-right: 10px;">
-                    <a class="nav-link mb-0 px-0 py-2 active" href="form_cert_zip.php?id=<?php echo $activity_id; ?>" role="tab">
-                        <i class="far fa-regular fa-paper-plane"></i>
-                        <span class="ms-1">อัพโหลดใบประกาศ</span>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link mb-0 px-0 py-2 active "  href="https://www.camphub.in.th/basic-python-programming-for-health-data-science/" target ="_blank" role="tab">
-                      <i class="far fa-regular fa-paper-plane"></i>
-                      <span class="ms-1">ลงทะเบียน</span>
-                    </a>
-                  </li>
-                </ul>
+                <div class="h-100">
+                    <h5 class='mb-1'><?php echo $event_name; ?></h5>
+                </div>
               </div>
             </div>
           </div>
@@ -164,18 +149,16 @@
                         echo '<p class="text-uppercase text-body text-sm font-weight-bolder ">รูปแบบกิจกรรม :
                             <input class="form-control custom-width" type="text" id="type" value="' . $row['type'] . '">';
                         echo '<p class="text-uppercase text-body text-sm font-weight-bolder">วันที่จัดกิจกรรม : ';
-                            // ตรวจสอบว่าฟิลด์ event_date_to ไม่ใช่ค่าว่าง
-                            if(isset($row['event_date_to'])) {
-                                // แสดงค่าในรูปแบบ "event_date_from - event_date_to"
-                                echo '<input class="form-control custom-width" type="text" id="event_date_from" value="' . $row['event_date_from'] .'">';
-                                echo '<input class="form-control custom-width" type="text" id="event_date_to" value="' . $row['event_date_to'] .'">';  
-                            } else {
-                                // หรือหากไม่มีค่าใน event_date_to ให้แสดงเฉพาะ event_date_from
-                                echo '<input class="form-control custom-width" type="text" id="event_date_from" value="' . $row['event_date_from'] . '">';
-                            }
-                            echo '</p>';
-                        
-
+                          if(isset($row['event_date_to'])) {
+                            echo '<div class="d-flex">';
+                            echo '<input class="form-control custom-width mr-2" type="text" id="event_date_from" value="' . $row['event_date_from'] .'">';
+                            echo '<input class="form-control custom-width type="text" id="event_date_to" value="' . $row['event_date_to'] .'">';
+                            echo '</div>';
+                          } else {
+                            // หรือหากไม่มีค่าใน event_date_to ให้แสดงเฉพาะ event_date_from
+                            echo '<input class="form-control custom-width col-5" type="text" id="event_date_from" value="' . $row['event_date_from'] . '">';
+                          }
+                        echo '</p>';                            
                         echo '<p class="text-uppercase text-body text-sm font-weight-bolder ">วันที่รับสมัครวันสุดท้าย : 
                             <input class="form-control custom-width" type="text" id="event_reg_to" value="' . $row['event_reg_to'] . '">
                             </p>';
