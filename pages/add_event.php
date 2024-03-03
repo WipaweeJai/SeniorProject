@@ -72,25 +72,6 @@
     <div class="container-fluid py-4">
       <div class="page-header min-height-300 border-radius-xl mt-4" style="background-image: url('../assets/img/add_activity3.png'); background-position-y: 50%;">
       </div>
-      <!-- <div class="card card-body blur shadow-blur mx-4 mt-n6 overflow-hidden"> -->
-        <!-- <div class="row gx-4">
-          <div class="col-auto">
-            <div class="avatar avatar-xl position-relative">
-              <img src="../assets/img/bruce-mars.jpg" alt="profile_image" class="w-100 border-radius-lg shadow-sm">
-            </div>
-          </div>
-          <div class="col-auto my-auto">
-            <div class="h-100">
-              <h5 class="mb-1">
-                Alec Thompson
-              </h5>
-              <p class="mb-0 font-weight-bold text-sm">
-                CEO / Co-Founder
-              </p>
-            </div>
-          </div>
-        </div> -->
-      <!-- </div> -->
       <div class="row">
 
         <div class="container-fluid py-4">
@@ -138,7 +119,7 @@
                 </div>
                 <div class="card-body p-3">
 
-                <form action="upload_event.php" method="post" enctype="multipart/form-data">
+<form action="api_add_event.php" method="post" enctype="multipart/form-data">
 
                 <p class="text-dark text-lg font-weight-normal">
                     อัปโหลดภาพหัวข่าว ขนาด 1200 x 630 พิกเซล (ไม่เกิน 2MB)
@@ -152,14 +133,14 @@
                         ชื่อกิจกรรม
                         <span class="text-dark ms-sm-2 font-weight-bold">
                             <p class="text-sm font-weight-light ">จำกัดจำนวนตัวอักษร 60 ตัว</p>
-                            <input class="form-control custom-width" type="text" id="event_name" placeholder="กรุณาพิมพ์ชื่อกิจกรรม"  maxlength="60">
+                            <input class="form-control custom-width" type="text" id="event_name" name="event_name" placeholder="กรุณาพิมพ์ชื่อกิจกรรม"  maxlength="60">
                         </span>
                     </p>
                     <p class="text-dark text-lg font-weight-normal ">
                         คำโปรยของกิจกรรม
                         <span class="text-dark ms-sm-2 font-weight-bold">
                             <p class="text-sm font-weight-light ">จำกัดจำนวนตัวอักษร 120 ตัว</p>
-                            <textarea class="form-control custom-width" type="text" rows="3" id="event_detail_short" placeholder="กรุณาพิมพ์คำอธิบายกิจกรรมคร่าว ๆ ที่เชิญชวนให้คนสนใจ"  maxlength="120"></textarea>
+                            <textarea class="form-control custom-width" type="text" rows="3" id="event_detail_short" name="event_detail_short" placeholder="กรุณาพิมพ์คำอธิบายกิจกรรมคร่าว ๆ ที่เชิญชวนให้คนสนใจ"  maxlength="120"></textarea>
                         </span>
                     </p>
                 </div>
@@ -175,21 +156,21 @@
                         <span class="text-dark ms-sm-2">
                             <p class="text-sm font-weight-light ">(กรุณากรอกข้อมูลวัน เดือน ปี ให้เต็มรูปแบบ เช่น 1 มกราคม พ.ศ. 2567)</p>
                             <p class="text-dark font-weight-bold ">วันที่เริ่มต้น</p>
-                            <input class="form-control custom-width" type="text" id="event_date_from" placeholder="วัน เดือน ปี พ.ศ.">
+                            <input class="form-control custom-width" type="text" id="event_date_from" name="event_date_from"  placeholder="วัน เดือน ปี พ.ศ.">
                         </span>
                         <span class="text-dark ms-sm-2">
                             <p class="text-dark font-weight-bold ">วันที่สิ้นสุด</p>
-                            <input class="form-control custom-width" type="text" id="event_date_to" placeholder="วัน เดือน ปี พ.ศ.">
+                            <input class="form-control custom-width" type="text" id="event_date_to" name="event_date_to"  placeholder="วัน เดือน ปี พ.ศ.">
                         </span>
                     </p>
                     <p class="text-dark text-lg font-weight-normal ">
                         วันที่รับสมัครวันสุดท้าย
                         <span class="text-dark ms-sm-2">
                             <p class="text-sm font-weight-light ">(กรุณากรอกข้อมูลวัน เดือน ปี ให้เต็มรูปแบบ เช่น 1 มกราคม พ.ศ. 2567)</p>
-                            <input class="form-control custom-width" type="text" id="event_reg_to" placeholder="วัน เดือน ปี พ.ศ.">
+                            <input class="form-control custom-width" type="text" id="event_reg_to" name="event_reg_to"  placeholder="วัน เดือน ปี พ.ศ.">
                         </span>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="ปิดรับสมัครทันทีหลังเต็ม" id="event_reg_detail">
+                            <input class="form-check-input" type="checkbox" value="ปิดรับสมัครทันทีหลังเต็ม" id="event_reg_detail" name="event_reg_detail">
                             <label class="form-check-label" for="flexCheckIndeterminate">
                                 ปิดรับสมัครทันทีเมื่อมีผู้สมัครครบตามจำนวน - หากปิดรับสมัครก่อนกำหนด รบกวนแจ้งทางเพจด้วย
                             </label>
@@ -199,7 +180,7 @@
                     <p class="text-dark text-lg font-weight-normal ">
                         จำนวนคนที่เปิดรับ
                         <span class="text-nddark ms-sm-2 font-weight-bold">
-                            <input class="form-control custom-width" type="text" id="event_number" placeholder="เช่น 50 คน , ไม่จำกัด">
+                            <input class="form-control custom-width" type="text" id="event_number" name="event_number"  placeholder="เช่น 50 คน , ไม่จำกัด">
                         </span>
                     </p>
                     <div class="divider"></div>
@@ -207,7 +188,7 @@
                         ค่าใช้จ่าย
                         <span class="text-nddark ms-sm-2 font-weight-bold">
                             <p class="text-sm font-weight-light ">(กรุณากรอกเฉพาะราคาปกติต่อ 1 คน เท่านั้น)</p>
-                            <input class="form-control custom-width" type="text" id="event_fee" placeholder="เช่น 500 บาท , ฟรี">
+                            <input class="form-control custom-width" type="text" id="event_fee" name="event_fee"  placeholder="เช่น 500 บาท , ฟรี">
                         </span>
                     </p>
                     <div class="divider"></div>
@@ -240,7 +221,7 @@
                         คุณสมบัติเพิ่มเติม
                         <span class="text-nddark ms-sm-2 font-weight-bold">
                             <p class="text-sm font-weight-light ">(ข้อจำกัดต่าง ๆ เช่น อายุ สาขา เกรดเฉลี่ย)</p>
-                            <input class="form-control custom-width" type="text" id="event_require" placeholder="คุณสมบัติเพิ่มเติม">
+                            <input class="form-control custom-width" type="text" id="event_require" name="event_require"  placeholder="คุณสมบัติเพิ่มเติม">
                         </span>
                     </p>
                     <div class="divider"></div>
@@ -248,14 +229,14 @@
                         สถานที่จัดกิจกรรม
                         <span class="text-nddark ms-sm-2 font-weight-bold">
                             <div class="form-check" style="display: block;">
-                                <input class="form-check-input" type="radio" value= "ออนไลน์" id="event_location">
+                                <input class="form-check-input" type="radio" value= "ออนไลน์" id="event_location" name="event_location" >
                                 <label class="form-check-label" >ออนไลน์</label>
-                                <input class="form-control custom-width" type="text" id="event_location" placeholder="กรอกช่องทางทางออนไลน์ที่จัดกิจกรรม">
+                                <input class="form-control custom-width" type="text" id="event_location" name="event_location"  placeholder="กรอกช่องทางทางออนไลน์ที่จัดกิจกรรม">
                             </div>
                             <div class="form-check" style="display: block;">
-                                <input class="form-check-input" type="radio" value= "ออฟไลน์" id="event_location">
+                                <input class="form-check-input" type="radio" value= "ออฟไลน์" id="event_location" name="event_location" >
                                 <label class="form-check-label" >ออนไซต์</label>
-                                <input class="form-control custom-width" type="text" id="event_location" placeholder="สถานที่จัดกิจกรรม">
+                                <input class="form-control custom-width" type="text" id="event_location" name="event_location"  placeholder="สถานที่จัดกิจกรรม">
                             </div>
                         </span>
                     </p>
@@ -263,7 +244,7 @@
                     <p class="text-dark text-lg font-weight-normal ">
                         ลิงค์ดาวน์โหลดใบสมัคร/ลิงค์สมัครออนไลน์
                         <span class="text-nddark ms-sm-2 font-weight-bold">
-                            <input class="form-control custom-width" type="text" id="event_download_url" placeholder="https://">
+                            <input class="form-control custom-width" type="text" id="event_download_url" name="event_download_url"  placeholder="https://">
                         </span>
                     </p>
                 </div>
@@ -288,7 +269,7 @@
                     <p class="text-dark text-lg font-weight-normal ">
                         รายละเอียดกิจกรรม
                         <span class="text-dark ms-sm-2 font-weight-bold">
-                            <textarea class="form-control" id="event_detail_full" rows="3" placeholder="กรุณาระบุรายละเอียดของกิจกรรมทั้งหมด"></textarea>
+                            <textarea class="form-control" id="event_detail_full" rows="3" name="event_detail_full"  placeholder="กรุณาระบุรายละเอียดของกิจกรรมทั้งหมด"></textarea>
                         </span>
                     </p>
                 </div>
@@ -325,136 +306,20 @@
 </html>
 
 <script>
-    $(document).ready(function() {
-        $("#btn_add_event").on("click", function() {
-            var sender_name = $("#sender_name").val();
-            var sender_email = $("#sender_email").val();
-            var sender_tel = $("#sender_tel").val();
-            var event_banner = $("#event_banner").val();
-            var event_name = $("#event_name").val();
-            var event_detail_short = $("#event_detail_short").val();
-            var event_date_from = $("#event_date_from").val();
-            var event_date_to = $("#event_date_to").val();
-            var event_reg_to = $("#event_reg_to").val();
-            var event_reg_detail = $("#event_reg_detail").val();
-            var event_number = $("#event_number").val();
-            var event_fee = $("#event_fee").val();
-            // var event_first = $("#event_first").val();
-            var event_require = $("#event_require").val();
-            var event_location = $("#event_location").val();
-            var event_download_url = $("#event_download_url").val();
-            var event_detail_full = $("#event_detail_full").val();
-            var event_poster = $("#event_poster").val();
-            a = {
-                sender_name:sender_name,
-                sender_email:sender_email,
-                sender_tel:sender_tel,
-                event_banner:event_banner,
-                event_name:event_name,
-                event_detail_short:event_detail_short,
-                event_date_from:event_date_from,
-                event_date_to:event_date_to,
-                event_reg_to:event_reg_to,
-                event_reg_detail:event_reg_detail,
-                event_number:event_number,
-                event_fee:event_fee,
-                event_require:event_require,
-                event_location:event_location,
-                event_download_url:event_download_url,
-                event_detail_full:event_detail_full,
-                event_poster:event_poster
-            }
-            console.log(a);
-            if (confirm("Are you want to add ?") == true) {
-                $.ajax({
-                    url: "function/api_add_event.php",
-                    method: "POST",
-                    data: {
-                        sender_name:sender_name,
-                        sender_email:sender_email,
-                        sender_tel:sender_tel,
-                        event_banner:event_banner,
-                        event_name:event_name,
-                        event_detail_short:event_detail_short,
-                        event_date_from:event_date_from,
-                        event_date_to:event_date_to,
-                        event_reg_to:event_reg_to,
-                        event_reg_detail:event_reg_detail,
-                        event_number:event_number,
-                        event_fee:event_fee,
-                        event_require:event_require,
-                        event_location:event_location,
-                        event_download_url:event_download_url,
-                        event_detail_full:event_detail_full,
-                        event_poster:event_poster
-                    }
-                    ,success: function(result_insert) {
-                        if(result_insert == 1){
-                            alert("fail.");
-                        }else{
-                            alert("success.");
-                            // console.log('success');
-                            // location.reload();
-                        }
-                    },
-                    error: function(request, status, error) {
-                        console.log(request.responseText);
-                    }
-                });
-            }
+    document.getElementById('btn_add_event').addEventListener('click', function() {
+        var formData = new FormData(document.getElementById('event_form'));
+
+        fetch('api_add_event.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.text())
+        .then(result => {
+            console.log(result);
+            // ทำสิ่งที่คุณต้องการหลังจากที่ได้ผลลัพธ์จากการส่งข้อมูล
+        })
+        .catch(error => {
+            console.error('Error:', error);
         });
     });
-
-//     $(document).ready(function() {
-//         $("#btn_add_event").on("click", function() {
-//             if (confirm("Are you want to add ?") == true) {
-//         var sender_name = $("#sender_name").val();
-//         var sender_email = $("#sender_email").val();
-//         var sender_tel = $("#sender_tel").val();
-//         // var event_banner = $("#event_banner").val();
-//         var event_name = $("#event_name").val();
-//         var event_detail_short = $("#event_detail_short").val();
-//         var event_date_from = $("#event_date_from").val();
-//         var event_date_to = $("#event_date_to").val();
-//         var event_reg_to = $("#event_reg_to").val();
-//         var event_reg_detail = $("#event_reg_detail").val();
-//         var event_number = $("#event_number").val();
-//         var event_fee = $("#event_fee").val();
-//         // var event_first = $("#event_first").val();
-//         var event_require = $("#event_require").val();
-//         var event_location = $("#event_location").val();
-//         var event_download_url = $("#event_download_url").val();
-//         var event_detail_full = $("#event_detail_full").val();
-//         var event_poster = $("#event_poster").val();
-//             // if (confirm("Are you want to add ?") == true) {
-//                 $.ajax({
-//                     url: "function/api_add_event.php",
-//                     method: "POST",
-//                     data: {
-//                         sender_name:sender_name,
-//                         sender_email:sender_email,
-//                         sender_tel:sender_tel,
-//                         event_name:event_name,
-//                         event_detail_short:event_detail_short,
-//                         event_date_from:event_date_from,
-//                         event_date_to:event_date_to,
-//                         event_reg_to:event_reg_to,
-//                         event_reg_detail:event_reg_detail,
-//                         event_number:event_number,
-//                         event_fee:event_fee,
-//                         event_require:event_require,
-//                         event_location:event_location,
-//                         event_download_url:event_download_url,
-//                         event_detail_full:event_detail_full,
-//                         event_poster:event_poster
-//                     }
-//                     ,success: function($result_insert) {
-//                         console.log("success");
-//                     }
-//                     ,error: function(request, status, error) {
-//                         console.log(request.responseText);
-//                     }
-//                 });
-//     });
-//   });
 </script>

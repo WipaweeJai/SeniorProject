@@ -1,5 +1,5 @@
 <?php
- include "../backend/dbcon.php";
+session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -37,18 +37,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-    // บันทึกรูปภาพในฐานข้อมูล
-    $sql = "INSERT INTO tb_event (event_poster, event_banner) VALUES ('{$uploadedFiles['event_poster']}', '{$uploadedFiles['event_banner']}')";
+    // ส่งค่าไปยัง api_add_event
+    $_SESSION['path_banner'] = $uploadedFiles['event_poster'];
+    $_SESSION['path_poster'] = $$uploadedFiles['event_banner'];
 
-    if ($conn->query($sql) === TRUE) {
-        header("Location: add_event.php");
-        exit();
-        echo "อัปโหลดไฟล์และบันทึกข้อมูลเรียบร้อยแล้ว<br>";
-    } else {
-        echo "เกิดข้อผิดพลาดในการบันทึกข้อมูล: " . $conn->error . "<br>";
-    }
-
-    //ปิดการเชื่อมต่อฐานข้อมูล
-    $conn->close();
+    // ลิ้งค์ไปหน้าที่ต้องการ
+    header("Location: api_add_event.php");
+    exit();
 }
 ?>
