@@ -144,13 +144,13 @@
                       <span class="text-secondary text-xs font-weight-bold">23/04/2018</span>
                     </td>
                     <td>
-                      <?php
+                    <?php
                         echo '<ul class="nav nav-pills nav-fill p-1 bg-transparent" role="tablist" onclick="saveStatus()">';
                         echo '<a class="btn font-weight-light bg-gradient-dark mb-0 me-3" href="admin_event.php?id=' .$row['activity_id']. '">';
-                        echo 'แก้ไข';
+                        echo '<i class="fas fa-pencil-alt"></i>แก้ไข';
                         echo '</a>';
                         echo '</ul>';
-                      ?>
+                    ?>
                     </td>
                   </tr>
                 <?php } ?>
