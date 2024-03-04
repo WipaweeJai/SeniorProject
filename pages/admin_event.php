@@ -96,6 +96,7 @@
                   }
                 ?>
                 <div class="h-100">
+                    <h5 class='mb-1'>รหัสกิจกรรม : <?php echo $activity_id; ?></h5>
                     <h5 class='mb-1'><?php echo $event_name; ?></h5>
                 </div>
               </div>
@@ -182,7 +183,7 @@
                     <!-- ปุ่มส่งข้อมูลกิจกรรม -->
                     <div class="col-12 text-center mt-3">
                         <button class="btn bg-gradient-dark mb-0 text-lg" type="submit" id="btn_edit_event"><i class="fas fa-plus"></i>&nbsp;&nbsp;บันทึก</button>
-                        <button class="btn bg-gradient-danger mb-0 text-lg" type="submit" id="btn_delete_event"><i class="fas fa-plus"></i>&nbsp;&nbsp;ลบ</button>
+                        <button class="btn bg-gradient-danger mb-0 text-lg" type="submit" id="btn_delete_event"><i class="far fa-trash-alt"></i>&nbsp;&nbsp;ลบ</button>
                     </div>
                 </form>
             </div>
@@ -211,6 +212,7 @@
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="../assets/js/soft-ui-dashboard.min.js?v=1.0.7"></script>
 
+  <!--แก้ไขกิจกรรม-->
   <script>
     document.getElementById("btn_edit_event").addEventListener("click", function() {
     event.preventDefault();
@@ -265,9 +267,35 @@
     };
     
     xhr.send(formData);
-});
+  });
+  </script>
 
-</script>
+  <!--ลบกิจกรรม-->
+  <script>
+    document.getElementById("btn_delete_event").addEventListener("click", function(event){
+        event.preventDefault(); // ป้องกันการโหลดหน้าเว็บหลังจากการกดปุ่ม
+
+        // ยืนยันว่าผู้ใช้ต้องการลบกิจกรรม
+        var confirmation = confirm("คุณแน่ใจหรือไม่ว่าต้องการลบกิจกรรมนี้?");
+        if(confirmation) {
+            // ดึง ID ของกิจกรรม
+            var activityId = <?php echo $activity_id; ?>;
+
+            // ส่งคำขอ HTTP POST ไปยังไฟล์ PHP เพื่อลบข้อมูล
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "delete_event.php", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    // หลังจากลบข้อมูลเสร็จสิ้น ทำสิ่งที่คุณต้องการ เช่น รีโหลดหน้าเว็บหรือแสดงข้อความว่าลบสำเร็จ
+                    alert("ลบกิจกรรมเรียบร้อยแล้ว");
+                    window.location.href = "admin.php";
+                }
+            };
+            xhr.send("activity_id=" + activityId);
+        }
+    });
+  </script>
 
 </body>
 

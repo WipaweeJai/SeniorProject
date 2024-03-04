@@ -1,10 +1,10 @@
 <?php
-require_once('../backend/dbcon.php');
+require_once('../../backend/dbcon.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Path ยังไม่ไป
-    $uploadDirBanner = '../assets/img/upload_event/banner/';
-    $uploadDirPoster = '../assets/img/upload_event/poster/';
+    $uploadDirBanner = '../../assets/img/upload_event/banner/';
+    $uploadDirPoster = '../../assets/img/upload_event/poster/';
 
     // สร้างโฟลเดอร์หากยังไม่มี
     if (!file_exists($uploadDirBanner)) {
@@ -59,7 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     VALUES ('{$uploadedFiles['event_banner']}', '{$uploadedFiles['event_poster']}', '$event_name', '$event_detail_short', '$event_date_from', '$event_date_to',
     '$event_reg_to', '$event_reg_detail', '$event_number', '$event_fee', '$event_require', '$event_location', '$event_download_url',
     '$event_detail_full')";
-    //รูปไม่รวมเป็น1recordกับข้อมูลอื่น
+
 
     $result_insert = mysqli_query($conn, $sql_insert);
 
