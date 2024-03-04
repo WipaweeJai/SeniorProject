@@ -103,7 +103,7 @@
                                 อัปโหลดไฟล์รายชื่อผู้ผ่านกิจกรรม
                                 <div class="mb-3">
                                     <p class="text-sm font-weight-light ">ไฟล์ Excel ขนาดไม่เกิน 5 MB</p>
-                                    <input class="form-control custom-width" type="file" id="excFile" name="excFile">
+                                    <input class="form-control custom-width" type="file" id="excel_file" name="excel_file">
                                 </div>
                             </p>
                             <p class="text-dark text-lg font-weight-normal ">
