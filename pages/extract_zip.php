@@ -34,7 +34,26 @@ if (isset($_FILES['zip_file']) && isset($_POST["upload_btn"])) {
             if ($zip->open($target_file) === TRUE) {
                 // สร้างโฟลเดอร์ถ้ายังไม่มี
                 $event_name = $_POST['event_name']; //รับค่าชื่อกิจกรรมจาก Form
-                $target_dir = "../assets/img/zip/" . $event_name . "/"; //Rename Folderตามชื่อกิจกรรม
+
+                $sql = "SELECT activity_id FROM tb_event WHERE event_name = ?";
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param("s", $event_name);
+                $stmt->execute();
+                $result = $stmt->get_result();
+
+                // ตรวจสอบว่ามีผลลัพธ์ที่สอดคล้องหรือไม่
+                if ($result->num_rows > 0) {
+                    // ดึงข้อมูล activity_id จากผลลัพธ์
+                    $row = $result->fetch_assoc();
+                    $activity_id = $row['activity_id'];
+
+                    // ใช้ activity_id ในการสร้างชื่อโฟลเดอร์
+                    $target_dir = "../assets/img/zip/" . $activity_id . "/";
+                } else {
+                    // หากไม่พบ activity_id ที่สอดคล้องกับ event_name ที่รับมา
+                    echo "ไม่พบกิจกรรมที่ตรงกับชื่อที่ระบุ";
+                }
+                    
                 if (!is_dir($target_dir)) {
                     mkdir($target_dir, 0755, true);
                 }
@@ -47,10 +66,13 @@ if (isset($_FILES['zip_file']) && isset($_POST["upload_btn"])) {
                     // เพิ่มโค้ดที่ใช้ insert เข้า database
                     $file_path = $target_dir . $file_name;
                     $event_name = $_POST['event_name'];
-                    $sql = "INSERT INTO tb_certificate_template (event_name, path_cert_temp, upload_date) 
-                            VALUES (?, ?, CURRENT_TIMESTAMP())";
+                    
+                    $sql = "INSERT INTO tb_certificate_template (activity_id, event_name, path_cert_temp, upload_date) 
+                            VALUES (?, ?, ?, CURRENT_TIMESTAMP())";
+                   
                     $stmt = $conn->prepare($sql);
-                    $stmt->bind_param("ss", $event_name, $file_path);
+                    
+                    $stmt->bind_param("sss", $activity_id, $event_name, $file_path); 
                     if ($stmt->execute()) {
                         echo "บันทึกข้อมูล $file_name เข้าฐานข้อมูลเรียบร้อยแล้ว";
                     } else {
@@ -68,7 +90,6 @@ if (isset($_FILES['zip_file']) && isset($_POST["upload_btn"])) {
             echo "ขออภัย! เกิดข้อผิดพลาดในการอัพโหลดไฟล์";
         }
     }
-    
 }
 
 $conn->close();

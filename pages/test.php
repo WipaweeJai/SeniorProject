@@ -6,12 +6,11 @@
     <title>TEST</title>
 </head>
 <body>
-
-<!-- <button id="referenceNumber">TEST</button> -->
-
 <?php
-    // ********************** แบบ 1 ไม่เพิ่มตัวอักษร b
-    $folderPath = 'C:/xampp/htdocs/project/assets/img/zip/1001';
+    require_once('../backend/dbcon.php');
+    
+    // ********************** แบบ 1 ไม่เพิ่มตัวอักษร b ไม่ได้ใช้ เก็บไว้เฉยๆ ค่อย clean 
+    $folderPath = '../assets/img/zip/1001';
     $files = scandir($folderPath);
     $pngFiles = array();
     foreach ($files as $file) {
@@ -22,127 +21,152 @@
     }
     echo json_encode($pngFiles);
     echo '<br>';
-    // **********************
 
     // ********************** แบบ 2 เพิ่มตัวอักษร b
-    require_once('../backend/dbcon.php');
-    $folderPath = 'C:/xampp/htdocs/project/assets/img/zip/1001'; // ตำแหน่งของโฟลเดอร์ที่มีไฟล์ .png
-    $files = scandir($folderPath); // ดึงรายชื่อไฟล์ทั้งหมดในโฟลเดอร์
+    $folderPath = '../assets/img/zip/1001'; // ตำแหน่งของโฟลเดอร์ที่มีไฟล์ .png ++ชื่อโฟลเดอร์จะตามที่แอดมินกดมา ทำหลังจากทำหน้าแอดมินเสร็จแล้ว++
+    $files = scandir($folderPath);
     $fileNames = array();
     foreach ($files as $file) {
-        if (is_file($folderPath . '/' . $file)) { // ตรวจสอบว่าไฟล์หรือไม่
-            $fileName = pathinfo($file, PATHINFO_FILENAME); // ดึงชื่อไฟล์โดยไม่รวมนามสกุล
-            $fileNameWithB = 'b' . $fileName; // เพิ่มตัวอักษร 'b' นำหน้าชื่อไฟล์
-            $fileNames[] = $fileNameWithB; // เพิ่มชื่อไฟล์ลงในอาร์เรย์
+        if (is_file($folderPath . '/' . $file)) {
+            $fileName = pathinfo($file, PATHINFO_FILENAME);
+            $fileNameWithB = 'b' . $fileName;
+            $fileNames[] = $fileNameWithB;
         }
     }
     echo json_encode($fileNames); // ส่งออกเป็น JSON
     echo "<br>";
-    // **********************
     
-    // วนลูปเพื่อดึงข้อมูลจากฐานข้อมูลโดยใช้ชื่อไฟล์ .png เป็นค่าอ้างอิง
-    foreach ($fileNames as $fileName) {
-        // สร้างคำสั่ง SQL เพื่อดึงข้อมูล
-        $sql = "SELECT * FROM tb_user WHERE user_id = '$fileName'";
-        $result = $conn->query($sql);
-    
-        // ตรวจสอบว่ามีข้อมูลหรือไม่
-        if ($result->num_rows > 0) {
-            // วนลูปเพื่อแสดงข้อมูลที่ดึงมา
-            while ($row = $result->fetch_assoc()) {
-                // ดำเนินการตามที่ต้องการกับข้อมูล
-                $user_id = substr($row["user_id"], 1); // ตัดตัวอักษร b ออก --> b633 = 633
-                $name = $row["name"];
-    
-                $sql = "SELECT * FROM tb_certificate_template WHERE SUBSTRING_INDEX(path_cert_temp, '/', -1) = '$user_id';";
-                $result = $conn->query($sql);
 
-                // ใช้วันที่ที่กำหนดไปก่อน ไม่อยากให้มันเปลี่ยนไปเปลี่ยนมา เพราะต้องเอาเข้าดาต้าเบส
-                $timestamp = mktime(16, 2, 1, 2, 15, 2024);
-                // สร้างรหัสอ้างอิง
-                $referenceNumber = '1001' . $timestamp . $user_id;
-                
-                // บันทึกข้อมูลลงในตาราง tb_certificate
-                // $sql = "INSERT INTO tb_certificate (cert_Ref, activity_id, user_id) 
-                // VALUES ('$referenceNumber', '1001', 'b$user_id')";
-                //     // ทำการ execute คำสั่ง SQL
-                //     if ($conn->query($sql) === TRUE) {
-                //         echo "Record inserted successfully";
-                //     } else {
-                //         echo "Error inserting record: " . $conn->error;
-                //     }
-                // แสดงข้อมูล
-                echo "ID: $user_id - Name: $name - Reference Number: $referenceNumber<br>";
-    
-                // เพิ่มชื่อไฟล์ในอาร์เรย์ $fileNames ตามที่พบ
-                $fileNames[] = $fileName;
-            }
-        } else {
-            echo "0 results";
-        }
-    }
-
-// ปิดการเชื่อมต่อฐานข้อมูล
-// $conn->close();
-?>
-
-<?php
-    require_once('qrlib.php');
+/**************************************
+            สร้างเลข Reference
+*************************************/
+// วนลูปเพื่อดึงข้อมูลจากฐานข้อมูลโดยใช้ชื่อไฟล์ .png ดึง
+foreach ($fileNames as $fileName) {
     // สร้างคำสั่ง SQL เพื่อดึงข้อมูล
-    $sql = "SELECT cert_Ref, path_cert FROM tb_certificate WHERE activity_id = 1001 AND path_cert = ''";
+    $sql = "SELECT * FROM tb_user WHERE user_id = '$fileName'";
     $result = $conn->query($sql);
 
     // ตรวจสอบว่ามีข้อมูลหรือไม่
     if ($result->num_rows > 0) {
         // วนลูปเพื่อแสดงข้อมูลที่ดึงมา
         while ($row = $result->fetch_assoc()) {
-            // ดำเนินการตามที่ต้องการกับข้อมูล
-            $cert_Ref = $row["cert_Ref"];
-            $path_cert = $row["path_cert"];
+            $user_id = substr($row["user_id"], 1); // ตัดตัวอักษร b ออก --> b633 = 633 เพื่อเอาไปสร้างเลขเรฟต่อ
+            $name = $row["name"];
 
-            // ทำสร้าง QR code หรือการประมวลผลอื่นๆ ตามที่ต้องการ
-            // เช่น สร้างไฟล์ QR code
-            $targetURL = 'http://localhost/project/pages/check_certificate.php';
-            $qrCodeFilePath = 'C:/xampp/htdocs/project/assets/img/qrcodes/1001/' . $cert_Ref . '.png';
-            QRcode::png($targetURL . '?ref=' . urlencode($cert_Ref), $qrCodeFilePath, QR_ECLEVEL_L, 5, 2);
+// เพิ่มเงื่อนไข ถ้ายังไม่มีเลขเรฟ ++
 
-            // สร้างรูปภาพใหม่โดยแทรก QR Code ในตำแหน่งที่ต้องการ
-            $originalImagePath = 'C:/xampp/htdocs/project/assets/img/zip/1001/' . substr($fileName, 1) . '.png';
-            $outputImagePath = 'C:/xampp/htdocs/project/assets/img/zip/1001/modified/' . $cert_Ref . '.png';
+            // $sql = "SELECT * FROM tb_certificate_template WHERE SUBSTRING_INDEX(path_cert_temp, '/', -1) = '$user_id';";
+            // $result = $conn->query($sql);
+            // $upload_date = $result['upload_date'];
+            // แปลง upload_date เป็น timestamp
+            // $timestamp = strtotime($upload_date);
+            $timestamp = mktime(16, 2, 1, 2, 15, 2024);
+            // สร้างรหัสอ้างอิง
+            $referenceNumber = '1001' . $timestamp . $user_id;
+            
+            // บันทึกข้อมูลลงในตาราง tb_certificate
+            // $sql = "INSERT INTO tb_certificate (cert_Ref, activity_id, user_id) 
+            // VALUES ('$referenceNumber', '1001', 'b$user_id')";
+            //     // ทำการ execute คำสั่ง SQL
+            //     if ($conn->query($sql) === TRUE) {
+            //         echo "Record inserted successfully";
+            //     } else {
+            //         echo "Error inserting record: " . $conn->error;
+            //     }
+            // แสดงข้อมูล
+            echo "ID: $user_id - Name: $name - Reference Number: $referenceNumber<br>";
 
-            $originalImage = imagecreatefrompng($originalImagePath);
-            $qrCodeImage = imagecreatefrompng($qrCodeFilePath);
-
-            // กำหนดตำแหน่งที่จะแทรก QR Code (ปรับตำแหน่งตามความต้องการ)
-            $qrCodeX = 55;
-            $qrCodeY = 2232;
-
-            // แทรก QR Code ลงในรูปภาพ
-            imagecopy($originalImage, $qrCodeImage, $qrCodeX, $qrCodeY, 0, 0, imagesx($qrCodeImage), imagesy($qrCodeImage));
-
-            // เพิ่มข้อความลงบนรูปภาพ
-            $textColor = imagecolorallocate($originalImage, 0, 0, 0); // สีข้อความ (put your RGB values)
-            $fontSize = 40;
-            $textX = 2700;
-            $textY = 2400;
-            $text = $referenceNumber;
-
-            $fontPath = __DIR__ . '/../assets/fonts/Prompt-Medium.ttf';
-            imagettftext($originalImage, $fontSize, 0, $textX, $textY, $textColor, $fontPath, $text);
-
-            // บันทึกรูปภาพที่มี QR Code และข้อความลง
-            imagepng($originalImage, $outputImagePath);
-
-            $ImagePath = "http://localhost/project/assets/img/zip/1001/modified/" . $cert_Ref . ".png";
-            // แสดง QR code
-            echo '<div style="width: 50%;margin: 0 auto;">';
-            echo '<img src="' . $ImagePath . '" alt="Modified Image with QR Code" style="width: 100%; height: auto;">';
-            echo '</div>';
+            // เพิ่มชื่อไฟล์ในอาร์เรย์ $fileNames ตามที่พบ
+            $fileNames[] = $fileName;
         }
     } else {
-        echo "ไม่พบข้อมูลที่ต้องการ";
+        echo "0 results";
     }
+}
+
+
+/**************************************
+            สร้างภาพ QRCODE
+*************************************/
+require_once('qrlib.php');
+
+// ดึงข้อมูลใบรับรองที่ยังไม่มี QR code
+$sql = "SELECT cert_Ref, path_qrcode, user_id FROM tb_certificate WHERE activity_id = 1001 AND path_qrcode = ''";
+$result = $conn->query($sql);
+
+// วนลูปเพื่อสร้าง QR code และอัปเดตข้อมูล
+while ($row = $result->fetch_assoc()) {
+    $cert_Ref = $row["cert_Ref"];
+    $path_qrcode = $row["path_qrcode"];
+    $user_id = substr($row["user_id"], 1);
+
+    // สร้าง QR code ชื่อเป็นรหัสนิสิต
+    $targetURL = 'http://localhost/project/pages/check_certificate.php'; //สแกนคิวอาร์แล้วไปไหน?
+    // $qrCodeFilePath = '../assets/img/qrcodes/1001/' . $cert_Ref . '.png';
+    $qrCodeFilePath = '../assets/img/qrcodes/1001/' . $user_id . '.png';
+    QRcode::png($targetURL . '?ref=' . urlencode($cert_Ref), $qrCodeFilePath, QR_ECLEVEL_L, 5, 2);
+
+    // บันทึกข้อมูล QR code ลงในฐานข้อมูล
+    $sql = "UPDATE tb_certificate 
+    SET path_qrcode = '$qrCodeFilePath'
+    WHERE cert_Ref = '$cert_Ref'";
+    $conn->query($sql);
+}
+
+
+/***********************************************
+        แก้ไขภาพใบประกาศ เพิ่ม QRCODE+Reference
+************************************************/
+$sql_cert = "SELECT cert_Ref, path_qrcode, path_cert,user_id FROM tb_certificate WHERE activity_id = 1001 AND path_cert = ''";
+$result_cert = $conn->query($sql_cert);
+
+while ($row = $result_cert->fetch_assoc()) {
+    $cert_Ref = $row["cert_Ref"];
+    $path_qrcode = $row["path_qrcode"];
+    $path_cert = $row["path_cert"];
+    $user_id = substr($row["user_id"], 1);
+    $text = $cert_Ref;
+
+    $originalImagePath = '../assets/img/zip/1001/' . $user_id . '.png'; // ที่อยู่ของรูปภาพต้นฉบับ
+    $outputImagePath = '../assets/img/zip/1001/modified/'. $user_id . '.png'; // ที่อยู่ที่ต้องการบันทึกรูปภาพที่มี QR Code แทรก
+
+    $originalImage = imagecreatefrompng($originalImagePath);
+    $qrCodeImage = imagecreatefrompng($path_qrcode);
+
+    // ตรวจสอบว่าสามารถสร้างรูปภาพได้หรือไม่
+    if ($originalImage && $qrCodeImage) {
+        // แทรก QR Code ในรูปภาพต้นฉบับ
+        $qrCodeX = 30;
+        $qrCodeY = 1265;
+        imagecopy($originalImage, $qrCodeImage, $qrCodeX, $qrCodeY, 0, 0, imagesx($qrCodeImage), imagesy($qrCodeImage));
+
+        // เพิ่มข้อความลงบนรูปภาพ ++ อยากดูโค้ดว่า นับจากมุมขอบภาพได้มั้ย จะได้ตามขนาดของภาพเลย จะได้สวยๆด้วย
+        // ++ อยากเพิ่มพื้นหลังของเลขเรฟ เผื่อใบประกาศมีพื้นเป็นสีดำ
+        $textColor = imagecolorallocate($originalImage, 0, 0, 0); // สีข้อความ
+        $fontSize = 20;
+        $textX = 1600;
+        $textY = 1380;
+        $text = $cert_Ref;
+
+        $fontPath = __DIR__ . '/../assets/fonts/Prompt-Medium.ttf';
+        imagettftext($originalImage, $fontSize, 0, $textX, $textY, $textColor, $fontPath, $text);
+
+        // บันทึกรูปภาพที่มี QR Code และข้อความลง
+        imagepng($originalImage, $outputImagePath);
+
+        // อัปเดตที่อยู่ของรูปภาพใบรับรองในฐานข้อมูล
+        $sql = "UPDATE tb_certificate 
+        SET path_cert = '$outputImagePath'
+        WHERE cert_Ref = '$cert_Ref'";
+        $conn->query($sql);
+    } else {
+        echo 'ไม่สามารถสร้างรูปภาพจากไฟล์ได้';
+    }
+}
+// ปิดการเชื่อมต่อฐานข้อมูล
+$conn->close();
 ?>
+
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {

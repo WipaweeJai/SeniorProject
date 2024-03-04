@@ -1,27 +1,6 @@
-    // document.addEventListener('DOMContentLoaded', function () {
-    //     // รหัสกิจกรรม
-    //     var idevent = '1001';
-    //     // var timestamp = Math.floor(new Date().getTime() / 1000);
-    //     var id = '6330200076';
-
-    //     var timestampNumber = timestamp.toString().slice(-6);
-    //     // var idNumber = parseInt(id);
-    //     var sum = timestampNumber + id;
-    //     var sumString = sum.toString();
-    //     var referenceNumber = idevent + sumString;
-
-    //     // แสดงผลลัพธ์ใน HTML
-    //     document.getElementById('referenceNumber').innerHTML = 'Reference Number: ' + referenceNumber;
-
-    //     // เพิ่มการเรียกใช้งาน PHP ด้วย XMLHttpRequest และส่งค่า referenceNumber ไปใน URL parameters
-    //     var xhr = new XMLHttpRequest();
-    //     xhr.open('GET', 'generateQR.php?ref=' + encodeURIComponent(referenceNumber), true);
-    //     xhr.send();
-    // });
-
     document.addEventListener('DOMContentLoaded', function () {
         // ระบุชื่อโฟลเดอร์
-        var folderName = 'Basic Python Programming For Health Data Science';
+        var folderName = '1002';
     
         // สร้าง XMLHttpRequest object
         var xhr = new XMLHttpRequest();

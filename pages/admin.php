@@ -248,11 +248,11 @@
                       }
                       ?>
                       <!-- dropdown เพื่อเลือกแก้ไขสถานะ -->
-                      <select class="form-select status-select" data-event-id="<?php echo $row['activity_id']; ?>">
+                      <!-- <select class="form-select status-select" data-event-id="<?php echo $row['activity_id']; ?>">
                         <option value="Approved" <?php if ($status_row['status'] == 'Approved') echo "selected"; ?>>Approved</option>
                         <option value="Pending" <?php if ($status_row['status'] == 'Pending') echo "selected"; ?>>Pending</option>
                         <option value="Closed" <?php if ($status_row['status'] == 'Closed') echo "selected"; ?>>Closed</option>
-                      </select>
+                      </select> -->
                     </td>
                     <!-- แสดงวันที่และลิงก์ Edit -->
                     <td class="align-middle text-center">
