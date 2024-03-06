@@ -260,6 +260,7 @@
         if (xhr.status === 200) {
             // อัปเดตเรียบร้อย
             alert("อัปเดตข้อมูลเรียบร้อยแล้ว");
+            window.location.href = "admin.php";
         } else {
             // เกิดข้อผิดพลาดในการอัปเดต
             alert("เกิดข้อผิดพลาดในการอัปเดตข้อมูล");
@@ -292,7 +293,7 @@
                     window.location.href = "admin.php";
                 }
             };
-            xhr.send("activity_id=" + activityId);
+            xhr.send("activity_id=" + activityId + "&status=Closed");
         }
     });
   </script>
