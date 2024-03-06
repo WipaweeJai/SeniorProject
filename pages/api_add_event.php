@@ -59,7 +59,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     VALUES ('{$uploadedFiles['event_banner']}', '{$uploadedFiles['event_poster']}', '$event_name', '$event_detail_short', '$event_date_from', '$event_date_to',
     '$event_reg_to', '$event_reg_detail', '$event_number', '$event_fee', '$event_require', '$event_location', '$event_download_url',
     '$event_detail_full')";
-    //รูปไม่รวมเป็น1recordกับข้อมูลอื่น
 
     $result_insert = mysqli_query($conn, $sql_insert);
 
@@ -67,7 +66,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "เกิดข้อผิดพลาดในการบันทึกข้อมูล: " . $conn->error . "<br>";
     } else {
         echo "อัปโหลดไฟล์และบันทึกข้อมูลเรียบร้อยแล้ว<br>";
-        header("Location: add_event.php");
+        // header("Location: index.php");
         exit();
     }
 

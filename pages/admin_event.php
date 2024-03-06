@@ -29,7 +29,6 @@
   include "navbar.php";
   require_once('../backend/dbcon.php');
 ?>
-
   <div class="main-content position-relative bg-gray-100 max-height-vh-100 h-100">
     <!-- Navbar -->
     <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" navbar-scroll="true">
@@ -83,7 +82,7 @@
       <!-- รูปภาพแบนเบอร์ของกิจกรรมยังไม่แก้ เพราะติดปัญหาการอัปโหลดภาพลงอยู่ -->
         <div class="page-header min-height-500 border-radius-xl mt-4" style="background-image: url('<?php echo $row['event_banner']; ?>'); background-position-y: 50%;">
         </div>
-        <div class="card card-body blur shadow-blur mx-4 mt-n6 overflow-hidden glass">
+        <div class="card card-body blur shadow-blur mx-4 mt-n6 overflow-hidden">
           <div class="row gx-4">
             <div class="col-auto my-auto">
               <div class="h-100">
@@ -153,7 +152,7 @@
                         echo '<p class="text-uppercase text-body text-sm font-weight-bolder">วันที่จัดกิจกรรม : ';
                           if(isset($row['event_date_to'])) {
                             echo '<div class="d-flex">';
-                            echo '<input class="form-control custom-width" type="text" id="event_date_from" value="' . $row['event_date_from'] .'">';
+                            echo '<input class="form-control custom-width mr-2" type="text" id="event_date_from" value="' . $row['event_date_from'] .'">';
                             echo '<input class="form-control custom-width type="text" id="event_date_to" value="' . $row['event_date_to'] .'">';
                             echo '</div>';
                           } else {
@@ -261,8 +260,6 @@
         if (xhr.status === 200) {
             // อัปเดตเรียบร้อย
             alert("อัปเดตข้อมูลเรียบร้อยแล้ว");
-            location.reload();
-            window.location.href = "admin.php";
         } else {
             // เกิดข้อผิดพลาดในการอัปเดต
             alert("เกิดข้อผิดพลาดในการอัปเดตข้อมูล");

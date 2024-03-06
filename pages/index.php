@@ -159,8 +159,8 @@
         <!-- start ข้อมูลกิจกรรมจาก calendar -->
         <div class="col-lg-7">
           <div class="card z-index-2">
-            <div class="card-header pb-13">
-              <ul class="list-group">
+            <div class="card pb-13">
+              <ul class="list-group card-body">
                 <!-- วนข้อมูลกิจกรรมลงหน้าเว็บ -->
                 <?php
                     require_once('../backend/dbcon.php');

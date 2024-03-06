@@ -34,10 +34,10 @@
       <div class="container-fluid py-1">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 ps-2 me-sm-6 me-5">
-            <li class="breadcrumb-item text-sm"><a class="text-white opacity-5" href="javascript:;">หน้า</a></li>
-            <li class="breadcrumb-item text-sm text-white" aria-current="page">โปรไฟล์</li>
+            <li class="breadcrumb-item text-sm"><a class="text-dark opacity-5">หน้า</a></li>
+            <li class="breadcrumb-item text-sm text-dark" aria-current="page">โปรไฟล์</li>
           </ol>
-          <h6 class="text-white font-weight-bolder ms-2">โปรไฟล์</h6>
+          <h6 class="text-dark font-weight-bolder ms-2">โปรไฟล์</h6>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">

@@ -36,10 +36,10 @@
       <div class="container-fluid py-1">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 ps-2 me-sm-6 me-5">
-            <li class="breadcrumb-item text-sm"><a class="text-white opacity-5" href="javascript:;">หน้า</a></li>
-            <li class="breadcrumb-item text-sm text-white" aria-current="page">จัดการกิจกรรม</li>
+            <li class="breadcrumb-item text-sm"><a class="text-dark opacity-5">หน้า</a></li>
+            <li class="breadcrumb-item text-sm text-dark" aria-current="page">จัดการกิจกรรม</li>
           </ol>
-          <h6 class="text-white font-weight-bolder ms-2">จัดการกิจกรรม</h6>
+          <h6 class="font-weight-bolder ms-2">จัดการกิจกรรม</h6>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
@@ -70,16 +70,15 @@
     </nav>
     <!-- End Navbar -->
     <div class="container-fluid" style="padding">
-      <div class="page-header min-height-300 border-radius-xl mt-4" style="background-image: url('../assets/img/curved-images/curved0.jpg'); background-position-y: 50%;">
-        <span class="mask bg-gradient-primary opacity-6"></span>
+      <div class="page-header min-height-300 border-radius-xl mt-4" style="background-image: url('../assets/img/13.jpg'); background-position-y: 50%;">
       </div>
     </div>
 
-<div class="container-fluid py-4">
+<div class="container-fluid py-4" >
   <div class="row">
-    <div class="col-12">
-      <div class="card mb-4">
-        <div class="card-header pb-0">
+    <div class="col-12 ">
+      <div class="card mb-4 ">
+        <div class="card-header pb-0 ">
           <h5 class="font-weight-bolder text-info text-gradient">จัดการกิจกรรม</h5>
         </div>
         <div class="card-body px-0 pt-0 pb-2">
@@ -88,7 +87,7 @@
               <thead>
                 <tr>
                   <th class="text-center text-secondary text-sm font-weight-bolder opacity-7">ชื่อกิจกรรม</th>
-                  <th class="text-center text-secondary text-sm font-weight-bolder opacity-7 ps-2">รหัสกิจกรรม</th>
+                  <th class="text-center text-secondary text-sm font-weight-bolder opacity-7">รหัสกิจกรรม</th>
                   <th class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7">Status</th>
                   <th class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7">วันที่แก้ไข</th>
                   <th class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7"></th>
@@ -117,7 +116,7 @@
                     </td>
                     <!-- แสดงรหัสกิจกรรม -->
                     <td>
-                      <p class="text-xs font-weight-bold mb-0"><?php echo $row['activity_id']; ?></p>
+                      <p class="text-center text-xs font-weight-bold mb-0"><?php echo $row['activity_id']; ?></p>
                     </td>
                     <!-- แสดงสถานะกิจกรรม -->
                     <td class="align-middle text-center text-sm">
@@ -132,12 +131,6 @@
                             echo '<span class="badge badge-sm bg-gradient-secondary">Closed</span>';
                         }
                       ?>
-                      <!-- dropdown เพื่อเลือกแก้ไขสถานะ -->
-                      <!-- <select class="form-select status-select" data-event-id="<?php echo $row['activity_id']; ?>">
-                        <option value="Approved" <?php if ($status_row['status'] == 'Approved') echo "selected"; ?>>Approved</option>
-                        <option value="Pending" <?php if ($status_row['status'] == 'Pending') echo "selected"; ?>>Pending</option>
-                        <option value="Closed" <?php if ($status_row['status'] == 'Closed') echo "selected"; ?>>Closed</option>
-                      </select> -->
                     </td>
                     <!-- แสดงวันที่และลิงก์ Edit -->
                     <td class="align-middle text-center">
@@ -147,7 +140,7 @@
                     <?php
                         echo '<ul class="nav nav-pills nav-fill p-1 bg-transparent" role="tablist" onclick="saveStatus()">';
                         echo '<a class="btn font-weight-light bg-gradient-dark mb-0 me-3" href="admin_event.php?id=' .$row['activity_id']. '">';
-                        echo '<i class="fas fa-pencil-alt"></i>แก้ไข';
+                        echo '<i class="fas fa-pencil-alt"></i> แก้ไข';
                         echo '</a>';
                         echo '</ul>';
                     ?>
@@ -190,12 +183,12 @@
   </div>  
 </div>
 
-<div class="container-fluid py-4">
+<div class="container-fluid py-4" >
   <div class="row">
-    <div class="col-12">
-      <div class="card mb-4">
-        <div class="card-header pb-0">
-          <h5 class="font-weight-bolder text-info text-gradient">จัดการรายชื่อและใบประกาศ</h5>
+    <div class="col-12 ">
+      <div class="card mb-4 ">
+        <div class="card-header pb-0 ">
+          <h5 class="font-weight-bolder text-info text-gradient">จัดการรายชื่อและใบประกาศเข้าร่วมกิจกรรม</h5>
         </div>
         <div class="card-body px-0 pt-0 pb-2">
           <div class="table-responsive p-0">
@@ -203,24 +196,24 @@
               <thead>
                 <tr>
                   <th class="text-center text-secondary text-sm font-weight-bolder opacity-7">ชื่อกิจกรรม</th>
-                  <th class="text-center text-secondary text-sm font-weight-bolder opacity-7 ps-2">รหัสกิจกรรม</th>
+                  <th class="text-center text-secondary text-sm font-weight-bolder opacity-7">รหัสกิจกรรม</th>
                   <th class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7">Status</th>
-                  <th class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7">วันที่อัพเดทสถานะ</th>
+                  <th class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7">วันที่แก้ไข</th>
                   <th class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7"></th>
                 </tr>
               </thead>
               <tbody>
                 <!-- Query Data -->
                 <?php
-                require_once('../backend/dbcon.php');
-                $sql = "SELECT * FROM tb_event";
-                $result = mysqli_query($conn, $sql);
-                while ($row = mysqli_fetch_assoc($result)) {
-                  // Query สถานะจากตาราง tb_event
-                  $status_sql = "SELECT status FROM tb_event WHERE activity_id = " . $row['activity_id'];
-                  $status_result = mysqli_query($conn, $status_sql);
-                  $status_row = mysqli_fetch_assoc($status_result);
-                  ?>
+                  require_once('../backend/dbcon.php');
+                  $sql = "SELECT * FROM tb_event";
+                  $result = mysqli_query($conn, $sql);
+                  while ($row = mysqli_fetch_assoc($result)) {
+                    // Query สถานะจากตาราง tb_event
+                    $status_sql = "SELECT status FROM tb_event WHERE activity_id = " . $row['activity_id'];
+                    $status_result = mysqli_query($conn, $status_sql);
+                    $status_row = mysqli_fetch_assoc($status_result);
+                ?>
                   <tr>
                     <td>
                       <div class="d-flex px-2 py-1">
@@ -232,38 +225,36 @@
                     </td>
                     <!-- แสดงรหัสกิจกรรม -->
                     <td>
-                      <p class="text-xs font-weight-bold mb-0"><?php echo $row['activity_id']; ?></p>
+                      <p class="text-center text-xs font-weight-bold mb-0"><?php echo $row['activity_id']; ?></p>
                     </td>
                     <!-- แสดงสถานะกิจกรรม -->
                     <td class="align-middle text-center text-sm">
                       <!-- แสดงสถานะจากฐานข้อมูล -->
                       <?php
-                      $status = $status_row['status'];
-                      if ($status == 'Approved') {
-                          echo '<span class="badge badge-sm bg-gradient-success">Approve</span>';
-                      } elseif ($status == 'Pending') {
-                          echo '<span class="badge badge-sm bg-gradient-warning">Pending</span>';
-                      } elseif ($status == 'Closed') {
-                          echo '<span class="badge badge-sm bg-gradient-secondary">Closed</span>';
-                      }
+                        $status = $status_row['status'];
+                        if ($status == 'Approved') {
+                            echo '<span class="badge badge-sm bg-gradient-success">Approve</span>';
+                        } elseif ($status == 'Pending') {
+                            echo '<span class="badge badge-sm bg-gradient-warning">Pending</span>';
+                        } elseif ($status == 'Closed') {
+                            echo '<span class="badge badge-sm bg-gradient-secondary">Closed</span>';
+                        }
                       ?>
-                      <!-- dropdown เพื่อเลือกแก้ไขสถานะ -->
-                      <!-- <select class="form-select status-select" data-event-id="<?php echo $row['activity_id']; ?>">
-                        <option value="Approved" <?php if ($status_row['status'] == 'Approved') echo "selected"; ?>>Approved</option>
-                        <option value="Pending" <?php if ($status_row['status'] == 'Pending') echo "selected"; ?>>Pending</option>
-                        <option value="Closed" <?php if ($status_row['status'] == 'Closed') echo "selected"; ?>>Closed</option>
-                      </select> -->
                     </td>
                     <!-- แสดงวันที่และลิงก์ Edit -->
                     <td class="align-middle text-center">
-                      <span class="text-secondary text-xs font-weight-bold">23/04/2018</span>
-                    </td>
+                    <?php
+                    $date_update_status = $status_row['date_update_status'];
+                    echo '<span class="text-secondary text-xs font-weight-bold">' . $date_update_status . '</span>';
+                    ?>
                     <td>
-                      <ul class="nav nav-pills nav-fill p-1 bg-transparent" role="tablist" onclick="saveStatus()">
-                      <a class="btn font-weight-light bg-gradient-dark mb-0 me-3" href="">
-                        บันทึก
-                      </a>
-                      </ul>
+                    <?php
+                        echo '<ul class="nav nav-pills nav-fill p-1 bg-transparent" role="tablist" onclick="saveStatus()">';
+                        echo '<a class="btn font-weight-light bg-gradient-dark mb-0 me-3" href="admin_event.php?id=' .$row['activity_id']. '">';
+                        echo '<i class="fas fa-pencil-alt"></i> แก้ไข';
+                        echo '</a>';
+                        echo '</ul>';
+                    ?>
                     </td>
                   </tr>
                 <?php } ?>
