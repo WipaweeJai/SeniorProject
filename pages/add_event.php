@@ -119,7 +119,7 @@
                 </div>
                 <div class="card-body p-3">
 
-<form action="api_add_event.php" method="post" enctype="multipart/form-data" id="event_form">
+<form action="" method="post" enctype="multipart/form-data" id="event_form">
 
                 <p class="text-dark text-lg font-weight-normal">
                     อัปโหลดภาพหัวข่าว ขนาด 1200 x 630 พิกเซล (ไม่เกิน 2MB)
