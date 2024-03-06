@@ -91,70 +91,74 @@ if (isset($_FILES['zip_file']) && isset($_POST["upload_btn"])) {
         }
     }
 }
-$conn->close();
-?>
 
-<!--Upload ไฟล์รายชื่อ-->
-<?php
-    require 'PHPExcel/Classes/PHPExcel.php';
-    // ตรวจสอบว่ามีการส่งไฟล์ Excel มาหรือไม่
-    if (isset($_FILES['excel_file']) && isset($_POST["upload_btn"])) {
-        // กำหนด Folder ปลายทางที่จะบันทึกไฟล์ Excel
-        $target_dir_excel = "../assets/img/zip/";
 
-        // กำหนดชื่อไฟล์และตำแหน่งของไฟล์ชั่วคราว
-        $file_name_excel = $_FILES['excel_file']['name'];
-        $file_temp_excel = $_FILES['excel_file']['tmp_name'];
+// ตรวจสอบว่ามีการส่งไฟล์ Excel มาหรือไม่
+if (isset($_FILES['excel_file']) && isset($_POST["upload_btn"])) {
+    // กำหนด Folder ปลายทางที่จะบันทึกไฟล์ Excel
+    $excel_target_dir = "../assets/img/excel/";
+    $excel_target_file = $excel_target_dir . basename($_FILES["excel_file"]["name"]);
+    $excel_uploadOk = 1;
+    $excelFileType = strtolower(pathinfo($excel_target_file, PATHINFO_EXTENSION));
 
-        // สร้างตัวอ่านไฟล์ Excel
-        $objReader = PHPExcel_IOFactory::createReaderForFile($file_temp_excel);
-        $objPHPExcel = $objReader->load($file_temp_excel);
+    // ตรวจสอบไฟล์ว่าเป็น Excel หรือไม่
+    if ($excelFileType != "xls" && $excelFileType != "xlsx") {
+        echo "กรุณาอัพโหลดไฟล์ Excel เท่านั้น";
+        $excel_uploadOk = 0;
+    }
 
-        // แปลงข้อมูลจาก Excel เป็น array
-        $sheet = $objPHPExcel->getActiveSheet();
-        $data = $sheet->toArray(null, true, true, true);
+    // ตรวจสอบขนาดของไฟล์
+    if ($_FILES["excel_file"]["size"] > 5000000) { // 5 MB
+        echo "ขออภัย! ไฟล์ Excel มีขนาดใหญ่เกินไป";
+        $excel_uploadOk = 0;
+    }
 
-        // เริ่มต้นเชื่อมต่อกับฐานข้อมูล
-        include "../backend/dbcon.php";
+    // ตรวจสอบว่ามีข้อผิดพลาดในการอัพโหลดไฟล์ Excel หรือไม่
+    if ($excel_uploadOk == 0) {
+        echo "ขออภัย! ไฟล์ Excel ของคุณไม่ได้ถูกอัพโหลด";
+    } else {
+        // ถ้าไม่มีข้อผิดพลาด ก็ทำการย้ายไฟล์ Excel ไปที่ต้นทาง
+        if (move_uploaded_file($_FILES["excel_file"]["tmp_name"], $excel_target_file)) {
+            echo "ไฟล์ Excel ". basename($_FILES["excel_file"]["name"]). " ถูกอัพโหลดเรียบร้อยแล้ว.";
 
-        // เริ่มการเพิ่มข้อมูลลงในฐานข้อมูล
-        foreach ($data as $row) {
-            // ดึงข้อมูลจากแต่ละแถวใน Excel
+            // ดึงข้อมูล activity_id จากฐานข้อมูล
             $event_name = $_POST['event_name']; // รับค่าชื่อกิจกรรมจาก Form
 
-            // ค้นหา activity_id จาก event_name
-            $sql_activity_id = "SELECT activity_id FROM tb_event WHERE event_name = ?";
-            $stmt_activity_id = $conn->prepare($sql_activity_id);
-            $stmt_activity_id->bind_param("s", $event_name);
-            $stmt_activity_id->execute();
-            $result_activity_id = $stmt_activity_id->get_result();
-            if ($result_activity_id->num_rows > 0) {
-                $row_activity_id = $result_activity_id->fetch_assoc();
-                $activity_id = $row_activity_id['activity_id']; // ดึง activity_id จากผลลัพธ์
-            } else {
-                echo "ไม่พบข้อมูลกิจกรรม: $event_name";
-                continue; // ข้ามการเพิ่มข้อมูลลงในฐานข้อมูลหากไม่พบ activity_id
-            }
-            $stmt_activity_id->close();
-
-            $path_excel = $target_dir_excel . $file_name_excel; // กำหนดที่อยู่ของไฟล์ Excel
-            $column1_data = $row['A']; // ดึงข้อมูลจากคอลัมน์ A ใน Excel
-            $column2_data = $row['B']; // ดึงข้อมูลจากคอลัมน์ B ใน Excel
-
-            // เพิ่มโค้ดที่ใช้ insert เข้าฐานข้อมูล
-            $sql = "INSERT INTO tb_participants (activity_id, path_excel, user_id, name) 
-                    VALUES (?, ?, ?, ?)";
+            $sql = "SELECT activity_id FROM tb_event WHERE event_name = ?";
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param("ssss", $activity_id, $path_excel, $column1_data, $column2_data);
-            if ($stmt->execute()) {
-                echo "บันทึกข้อมูลเรียบร้อยแล้ว";
-            } else {
-                echo "เกิดข้อผิดพลาดในการบันทึกข้อมูล: " . $stmt->error;
-            }
-            $stmt->close();
-        }
+            $stmt->bind_param("s", $event_name);
+            $stmt->execute();
+            $result = $stmt->get_result();
 
-        // ปิดการเชื่อมต่อกับฐานข้อมูล
-        $conn->close();
+            // ตรวจสอบว่ามีผลลัพธ์ที่สอดคล้องหรือไม่
+            if ($result->num_rows > 0) {
+                // ดึงข้อมูล activity_id จากผลลัพธ์
+                $row = $result->fetch_assoc();
+                $activity_id = $row['activity_id'];
+
+                // เพิ่มโค้ดที่ใช้ insert เข้า database
+                $excel_file_path = $excel_target_dir . basename($_FILES["excel_file"]["name"]);
+                $event_name = $_POST['event_name'];
+
+                $sql = "INSERT INTO tb_participants (activity_id, path_excel) VALUES (?, ?)";
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param("ss" , $activity_id , $excel_file_path); 
+                
+                if ($stmt->execute()) {
+                    echo "บันทึก path ไฟล์ Excel เรียบร้อยแล้ว";
+                } else {
+                    echo "เกิดข้อผิดพลาดในการบันทึก path ไฟล์ Excel: " . $conn->error;
+                }
+                $stmt->close();
+            } else {
+                // หากไม่พบ activity_id ที่สอดคล้องกับ event_name ที่รับมา
+                echo "ไม่พบกิจกรรมที่ตรงกับชื่อที่ระบุ";
+            }
+
+        } else {
+            echo "ขออภัย! เกิดข้อผิดพลาดในการอัพโหลดไฟล์ Excel";
+        }
     }
-?>
+}
+
+$conn->close();
