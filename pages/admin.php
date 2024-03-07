@@ -74,10 +74,11 @@
       </div>
     </div>
 
+<!-- จัดการกิจกรรม -->
 <div class="container-fluid py-4" >
   <div class="row">
     <div class="col-12 ">
-      <div class="card mb-4 ">
+      <div class="card">
         <div class="card-header pb-0 ">
           <h5 class="font-weight-bolder text-info text-gradient">จัดการกิจกรรม</h5>
         </div>
@@ -134,7 +135,12 @@
                     </td>
                     <!-- แสดงวันที่และลิงก์ Edit -->
                     <td class="align-middle text-center">
-                      <span class="text-secondary text-xs font-weight-bold">23/04/2018</span>
+                      <?php
+                        $date_sql = "SELECT update_date FROM tb_event WHERE activity_id = " . $row['activity_id'];
+                        $date_result = mysqli_query($conn, $date_sql);
+                        $date_row = mysqli_fetch_assoc($date_result);
+                        echo '<span class="text-secondary text-xs font-weight-bold">' . $date_row['update_date'] . '</span>';
+                      ?>
                     </td>
                     <td>
                     <?php
@@ -183,10 +189,11 @@
   </div>  
 </div>
 
+<!-- จัดการรายชื่อและใบประกาศเข้าร่วมกิจกรรม -->
 <div class="container-fluid py-4" >
   <div class="row">
     <div class="col-12 ">
-      <div class="card mb-4 ">
+      <div class="card">
         <div class="card-header pb-0 ">
           <h5 class="font-weight-bolder text-info text-gradient">จัดการรายชื่อและใบประกาศเข้าร่วมกิจกรรม</h5>
         </div>
@@ -205,59 +212,61 @@
               <tbody>
                 <!-- Query Data -->
                 <?php
-                  require_once('../backend/dbcon.php');
-                  $sql = "SELECT * FROM tb_event";
-                  $result = mysqli_query($conn, $sql);
-                  while ($row = mysqli_fetch_assoc($result)) {
-                    // Query สถานะจากตาราง tb_event
-                    $status_sql = "SELECT status FROM tb_event WHERE activity_id = " . $row['activity_id'];
-                    $status_result = mysqli_query($conn, $status_sql);
-                    $status_row = mysqli_fetch_assoc($status_result);
-                ?>
+                  $sql_cert = "SELECT * FROM tb_certificate_template GROUP BY activity_id";
+                  $result_cert = mysqli_query($conn, $sql_cert);
+                  while ($row = mysqli_fetch_assoc($result_cert)) {
+                      $activity_id = $row['activity_id'];
+                      $certtemp_sql = "SELECT status FROM tb_certificate_template WHERE activity_id = $activity_id";
+                      $certtemp_result = mysqli_query($conn, $certtemp_sql);
+                      $certtemp_row = mysqli_fetch_assoc($certtemp_result);
+                  ?>
                   <tr>
-                    <td>
-                      <div class="d-flex px-2 py-1">
-                        <div class="d-flex flex-column justify-content-center">
-                          <!-- แสดงชื่อกิจกรรม -->
-                          <h6 class="mb-0 text-sm"><?php echo $row['event_name']; ?></h6>
-                        </div>
-                      </div>
-                    </td>
-                    <!-- แสดงรหัสกิจกรรม -->
-                    <td>
-                      <p class="text-center text-xs font-weight-bold mb-0"><?php echo $row['activity_id']; ?></p>
-                    </td>
-                    <!-- แสดงสถานะกิจกรรม -->
-                    <td class="align-middle text-center text-sm">
-                      <!-- แสดงสถานะจากฐานข้อมูล -->
-                      <?php
-                        $status = $status_row['status'];
-                        if ($status == 'Approved') {
-                            echo '<span class="badge badge-sm bg-gradient-success">Approve</span>';
-                        } elseif ($status == 'Pending') {
-                            echo '<span class="badge badge-sm bg-gradient-warning">Pending</span>';
-                        } elseif ($status == 'Closed') {
-                            echo '<span class="badge badge-sm bg-gradient-secondary">Closed</span>';
-                        }
-                      ?>
-                    </td>
-                    <!-- แสดงวันที่และลิงก์ Edit -->
-                    <td class="align-middle text-center">
-                    <?php
-                    $date_update_status = $status_row['date_update_status'];
-                    echo '<span class="text-secondary text-xs font-weight-bold">' . $date_update_status . '</span>';
-                    ?>
-                    <td>
-                    <?php
-                        echo '<ul class="nav nav-pills nav-fill p-1 bg-transparent" role="tablist" onclick="saveStatus()">';
-                        echo '<a class="btn font-weight-light bg-gradient-dark mb-0 me-3" href="admin_event.php?id=' .$row['activity_id']. '">';
-                        echo '<i class="fas fa-pencil-alt"></i> แก้ไข';
-                        echo '</a>';
-                        echo '</ul>';
-                    ?>
-                    </td>
+                      <td>
+                          <div class="d-flex px-2 py-1">
+                              <div class="d-flex flex-column justify-content-center">
+                                  <!-- แสดงชื่อกิจกรรม -->
+                                  <h6 class="mb-0 text-sm"><?php echo $row['event_name']; ?></h6>
+                              </div>
+                          </div>
+                      </td>
+                      <!-- แสดงรหัสกิจกรรม -->
+                      <td>
+                          <p class="text-center text-xs font-weight-bold mb-0"><?php echo $row['activity_id']; ?></p>
+                      </td>
+                      <!-- แสดงสถานะกิจกรรม -->
+                      <td class="align-middle text-center text-sm">
+                          <!-- แสดงสถานะจากฐานข้อมูล -->
+                          <?php
+                          $status = $certtemp_row['status'];
+                          if ($status == 'waiting') {
+                              echo '<span class="badge badge-sm bg-gradient-warning">Waiting</span>';
+                          } elseif ($status == 'complete') {
+                              echo '<span class="badge badge-sm bg-gradient-success">Complete</span>';
+                          } else {
+                              echo '<span class="badge badge-sm bg-gradient-secondary">ไม่พบข้อมูล</span>';
+                          }
+                          ?>
+                      </td>
+                      <!-- แสดงวันที่และลิงก์ Edit -->
+                      <td class="align-middle text-center">
+                          <?php
+                          $upload_sql = "SELECT upload_date FROM tb_certificate_template WHERE activity_id = $activity_id";
+                          $upload_result = mysqli_query($conn, $upload_sql);
+                          $upload_row = mysqli_fetch_assoc($upload_result);
+                          echo '<span class="text-secondary text-xs font-weight-bold">' . $upload_row['upload_date'] . '</span>';
+                          ?>
+                      </td>
+                      <td>
+                          <?php
+                          echo '<ul class="nav nav-pills nav-fill p-1 bg-transparent" role="tablist" onclick="saveStatus()">';
+                          echo '<a class="btn font-weight-light bg-gradient-dark mb-0 me-3" href="admin_cert.php?id=' . $activity_id . '">';
+                          echo '<i class="fas fa-pencil-alt"></i> แก้ไข';
+                          echo '</a>';
+                          echo '</ul>';
+                          ?>
+                      </td>
                   </tr>
-                <?php } ?>
+                  <?php } ?>
                 <script>
                   function saveStatus() {
                   var selects = document.querySelectorAll('.status-select');
@@ -285,6 +294,7 @@
                   });
                   }
                 </script>
+
               </tbody>
             </table>
           </div>
