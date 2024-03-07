@@ -82,6 +82,8 @@ if (isset($_FILES['zip_file']) && isset($_POST["upload_btn"])) {
                 }
                 $zip->close();
                 echo "ไฟล์ zip ถูกแตกและบันทึกลงฐานข้อมูลเรียบร้อยแล้ว";
+                echo "<script>alert('อัปโหลดเรียบร้อยแล้ว');</script>";
+                header("Location: index.php");
             } else {
                 echo "ขออภัย! เกิดข้อผิดพลาดในการแตกไฟล์ zip";
             }
@@ -146,6 +148,8 @@ if (isset($_FILES['excel_file']) && isset($_POST["upload_btn"])) {
                 
                 if ($stmt->execute()) {
                     echo "บันทึก path ไฟล์ Excel เรียบร้อยแล้ว";
+                    echo "<script>alert('อัปโหลดเรียบร้อยแล้ว');</script>";
+                    header("Location: index.php");
                 } else {
                     echo "เกิดข้อผิดพลาดในการบันทึก path ไฟล์ Excel: " . $conn->error;
                 }

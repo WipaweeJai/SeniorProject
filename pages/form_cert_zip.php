@@ -100,17 +100,17 @@
                                 คู่มือรายละเอียดการอัปโหลดไฟล์
                             </a>
                             <p class="text-dark text-lg font-weight-normal ">
-                                อัปโหลดไฟล์รายชื่อผู้ผ่านกิจกรรม
+                                อัปโหลดไฟล์รายชื่อผู้ผ่านกิจกรรม *
                                 <div class="mb-3">
                                     <p class="text-sm font-weight-light ">ไฟล์ Excel ขนาดไม่เกิน 5 MB</p>
-                                    <input class="form-control custom-width" type="file" id="excel_file" name="excel_file">
+                                    <input class="form-control custom-width" type="file" id="excel_file" name="excel_file" require>
                                 </div>
                             </p>
                             <p class="text-dark text-lg font-weight-normal ">
-                                อัปโหลดไฟล์ใบประกาศกิจกรรม
+                                อัปโหลดไฟล์ใบประกาศกิจกรรม *
                                 <div class="mb-3">
                                     <p class="text-sm font-weight-light ">ไฟล์ zip ขนาดไม่เกิน 5 MB</p>
-                                    <input class="form-control custom-width" type="file" id="zip_file" name="zip_file">
+                                    <input class="form-control custom-width" type="file" id="zip_file" name="zip_file" require>
                                 </div>
                             </p>
 
@@ -145,5 +145,17 @@
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="../assets/js/soft-ui-dashboard.min.js?v=1.0.7"></script>
+
+    <script>
+      document.getElementById("btn_add_event").addEventListener("click", function(event) {
+      var excelFile = document.getElementById("excel_file").value;
+      var zipFile = document.getElementById("zip_file").value;
+      
+      if(excelFile === "" || zipFile === "") {
+          event.preventDefault();
+          alert("กรุณากรอกข้อมูลไฟล์รายชื่อผู้ผ่านกิจกรรมและไฟล์ใบประกาศกิจกรรม");
+      }
+      });
+    </script>
 </body>
 </html>
