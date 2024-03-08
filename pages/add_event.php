@@ -124,18 +124,18 @@
                         <span class="text-dark ms-sm-2">
                             <p class="text-sm font-weight-light ">(กรุณากรอกข้อมูลวัน เดือน ปี ให้เต็มรูปแบบ เช่น 1 มกราคม พ.ศ. 2567)</p>
                             <p class="text-dark font-weight-bold ">วันที่เริ่มต้น</p>
-                            <input class="form-control custom-width" type="text" id="event_date_from" name="event_date_from"  placeholder="วัน เดือน ปี พ.ศ.">
+                            <input class="form-control custom-width" type="date" id="event_date_from" name="event_date_from"  placeholder="วัน เดือน ปี พ.ศ.">
                         </span>
                         <span class="text-dark ms-sm-2">
                             <p class="text-dark font-weight-bold ">วันที่สิ้นสุด</p>
-                            <input class="form-control custom-width" type="text" id="event_date_to" name="event_date_to"  placeholder="วัน เดือน ปี พ.ศ.">
+                            <input class="form-control custom-width" type="date" id="event_date_to" name="event_date_to"  placeholder="วัน เดือน ปี พ.ศ.">
                         </span>
                     </p>
                     <p class="text-dark text-lg font-weight-normal ">
                         วันที่รับสมัครวันสุดท้าย
                         <span class="text-dark ms-sm-2">
                             <p class="text-sm font-weight-light ">(กรุณากรอกข้อมูลวัน เดือน ปี ให้เต็มรูปแบบ เช่น 1 มกราคม พ.ศ. 2567)</p>
-                            <input class="form-control custom-width" type="text" id="event_reg_to" name="event_reg_to"  placeholder="วัน เดือน ปี พ.ศ.">
+                            <input class="form-control custom-width" type="date" id="event_reg_to" name="event_reg_to"  placeholder="วัน เดือน ปี พ.ศ.">
                         </span>
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" value="ปิดรับสมัครทันทีหลังเต็ม" id="event_reg_detail" name="event_reg_detail">
