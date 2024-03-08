@@ -23,8 +23,11 @@
 // วนลูปเพื่อดึงข้อมูลจากฐานข้อมูลโดยใช้ชื่อไฟล์ .png ดึง
 foreach ($fileNames as $fileName) {
     // สร้างคำสั่ง SQL เพื่อดึงข้อมูล
-    $sql = "SELECT * FROM tb_user WHERE user_id = '$fileName'";
+    $sql = "SELECT * FROM tb_participants WHERE user_id = '$fileName'";
     $result = $conn->query($sql);
+
+    // $sql = "SELECT * FROM tb_user WHERE user_id = '$fileName'";
+    // $result = $conn->query($sql);
 
     // ตรวจสอบว่ามีข้อมูลหรือไม่
     if ($result->num_rows > 0) {
@@ -50,6 +53,13 @@ foreach ($fileNames as $fileName) {
                 // ทำการ execute คำสั่ง SQL
                 if ($conn->query($sql) === TRUE) {
                     echo "Record inserted successfully";
+                    // อัพเดต status เป็น complete
+                    $updateSql = "UPDATE tb_certificate_template SET status = 'complete' WHERE activity_id = '$activity_id'";
+                    if ($conn->query($updateSql) === TRUE) {
+                        echo "Status updated successfully";
+                    } else {
+                        echo "Error updating status: " . $conn->error;
+                    }
                 } else {
                     echo "Error inserting record: " . $conn->error;
                 }
@@ -115,6 +125,11 @@ while ($row = $result_cert->fetch_assoc()) {
     $user_id = substr($row["user_id"], 1);
     $text = $cert_Ref;
 
+    // ตรวจสอบและสร้างโฟลเดอร์ modified ก่อน
+    if (!file_exists('../assets/img/zip/' . $activity_id . '/modified')) {
+        mkdir('../assets/img/zip/' . $activity_id . '/modified', 0777, true);
+    }
+
     $originalImagePath = '../assets/img/zip/' . $activity_id .'/' . $user_id . '.png'; // ที่อยู่ของรูปภาพต้นฉบับ
     $outputImagePath = '../assets/img/zip/' . $activity_id.'/modified/'. $user_id . '.png'; // ที่อยู่ที่ต้องการบันทึกรูปภาพที่มี QR Code แทรก
 
@@ -128,8 +143,6 @@ while ($row = $result_cert->fetch_assoc()) {
         $qrCodeY = imagesy($originalImage) - imagesy($qrCodeImage) - 30;
         imagecopy($originalImage, $qrCodeImage, $qrCodeX, $qrCodeY, 0, 0, imagesx($qrCodeImage), imagesy($qrCodeImage));
 
-        // เพิ่มข้อความลงบนรูปภาพ ++ อยากดูโค้ดว่า นับจากมุมขอบภาพได้มั้ย จะได้ตามขนาดของภาพเลย จะได้สวยๆด้วย
-        // ++ อยากเพิ่มพื้นหลังของเลขเรฟ เผื่อใบประกาศมีพื้นเป็นสีดำ
         $textColor = imagecolorallocate($originalImage, 0, 0, 0); // สีข้อความ
         $fontSize = 20;
         $textX = imagesx($originalImage) - 430; // ระยะห่างจากขอบภาพด้านขวา
@@ -137,11 +150,11 @@ while ($row = $result_cert->fetch_assoc()) {
         $text = $cert_Ref;
 
         // สร้างกล่องข้อความพื้นหลังสีขาว
-        $textBgColor = imagecolorallocate($originalImage, 255, 255, 255); // สีพื้นหลังข้อความ (สีขาว)
-        $textBgX1 = $textX - 10; // ตำแหน่ง X ของกล่องข้อความพื้นหลัง
-        $textBgY1 = $textY - 30; // ตำแหน่ง Y ของกล่องข้อความพื้นหลัง
-        $textBgX2 = $textX + 380; // ขนาดกว้างของกล่องข้อความพื้นหลัง
-        $textBgY2 = $textY + 10; // ขนาดสูงของกล่องข้อความพื้นหลัง
+        $textBgColor = imagecolorallocate($originalImage, 255, 255, 255);
+        $textBgX1 = $textX - 10;
+        $textBgY1 = $textY - 30;
+        $textBgX2 = $textX + 380;
+        $textBgY2 = $textY + 10;
         imagefilledrectangle($originalImage, $textBgX1, $textBgY1, $textBgX2, $textBgY2, $textBgColor);
 
         $fontPath = __DIR__ . '/../assets/fonts/Prompt-Medium.ttf';
@@ -158,7 +171,8 @@ while ($row = $result_cert->fetch_assoc()) {
     } else {
         echo 'ไม่สามารถสร้างรูปภาพจากไฟล์ได้';
     }
-}
+} 
+
 // ปิดการเชื่อมต่อฐานข้อมูล
 $conn->close();
 ?>

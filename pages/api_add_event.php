@@ -55,10 +55,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // สร้างคำสั่ง SQL และบันทึกข้อมูล
     $sql_insert = "INSERT INTO tb_event(event_banner, event_poster, event_name, event_detail_short, event_date_from,
-    event_date_to, event_reg_to, event_reg_detail, event_number, event_fee, event_require, event_location, event_download_url, event_detail_full) 
+    event_date_to, event_reg_to, event_reg_detail, event_number, event_fee, event_require, event_location, event_download_url, event_detail_full,status) 
     VALUES ('{$uploadedFiles['event_banner']}', '{$uploadedFiles['event_poster']}', '$event_name', '$event_detail_short', '$event_date_from', '$event_date_to',
     '$event_reg_to', '$event_reg_detail', '$event_number', '$event_fee', '$event_require', '$event_location', '$event_download_url',
-    '$event_detail_full')";
+    '$event_detail_full','Pending')";
 
     $result_insert = mysqli_query($conn, $sql_insert);
 

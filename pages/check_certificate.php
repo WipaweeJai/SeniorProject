@@ -81,20 +81,18 @@
               </div>
               <div class="card-body p-3">
                 <div class="row">
-                  <div class="col-md-8 mb-md-0 mb-4">
-                      <input class="form-control" type="text" id="refInput" placeholder="กรอกหมายเลขใบประกาศ">
-                  </div>
                   <?php
-                  // ดึงเลข ref ที่ส่งมาจาก url
-                    if(isset($_GET['ref'])) {
-                        $ref = $_GET['ref'];
-                        echo '<script>';
-                        echo 'document.getElementById("refInput").value = "' . $ref . '";';
-                        echo '</script>';
-                    }
+                  $ref = '';
+                  if(isset($_GET['ref'])) {
+                      $ref = $_GET['ref'];
+                  }
                   ?>
+                <div class="col-md-8 mb-md-0 mb-4">
+                    <input class="form-control" type="text" id="refInput" placeholder="กรอกหมายเลขใบประกาศ" value="<?= $ref ?>">
+                </div>
+                  
                   <div class="col-2 text-end">
-                      <a id="checkBtn" class="btn bg-gradient-dark mb-0" href="#">ตรวจสอบ</a>
+                      <a id="checkBtn" class="btn bg-gradient-dark mb-0">ตรวจสอบ</a>
                   </div>
                 </div>
               </div>
@@ -104,39 +102,84 @@
       </div>
       
       <!-- ถ้าระบบหาใบประกาศพบ -->
-      <div id="resultRowFound" class="row" style="display: none;">
-          <div class="col-md-7 mt-4">
-              <div class="card">
-                  <div class="card-header pb-0 px-3 text-success text-lg">
-                      <i class="fa fa-solid fa-check"></i>
-                      <span id="refInputValue" class="ms-2"></span>
-                  </div>
-                  <div class="card-body pt-4 p-3">
-                      <ul class="list-group">
-                          <li class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg">
-                              <div class="d-flex flex-column">
-                                  <span class="mb-2 text-sm">ชื่อ : <span id="name" class="text-dark font-weight-bold ms-sm-2"></span></span>
-                                  <span class="mb-2 text-sm">กิจกรรม : <span id="activity" class="text-dark ms-sm-2 font-weight-bold"></span></span>
-                              </div>
-                          </li>
-                      </ul>
-                  </div>
-              </div>
-          </div>
-      </div>
+      <?php
+// ดึงเลข ref ที่ส่งมาจาก url
+if (isset($_GET['ref'])) {
+    $ref = $_GET['ref'];
+    echo '<script>';
+    echo 'document.getElementById("refInput").value = "' . $ref . '";';
+    echo '</script>';
+    
+    // ถ้ามีค่า ref ใน URL ให้ดึงข้อมูลจากฐานข้อมูล
+    require_once('../backend/dbcon.php');
 
-      <!-- ถ้าระบบหาใบประกาศไม่พบ -->
-      <div id="resultRowNotFound" class="row" style="display: none;">
-          <div class="col-md-7 mt-4">
-              <div class="card">
-                  <div class="card-header pb-0 px-3 text-danger text-lg">
-                      <i class="fas fa-f00d"></i>
-                      <span class="ms-2">ไม่พบใบประกาศดังกล่าว</span>
-                  </div>
-                  <div class="card-body"></div>
-              </div>
-          </div>
-      </div>
+    // คำสั่ง SQL สำหรับดึงข้อมูล cert_Ref, name, sur_name, และ event_name จากตาราง tb_certificate และ tb_event
+    $sql_cert_event = "SELECT c.cert_Ref, u.name, u.sur_name, e.event_name
+                       FROM tb_certificate c
+                       INNER JOIN tb_user u ON c.user_id = u.user_id
+                       INNER JOIN tb_event e ON c.activity_id = e.activity_id
+                       WHERE c.cert_Ref = '$ref'";
+    $result_cert_event = mysqli_query($conn, $sql_cert_event);
+
+    // ตรวจสอบว่ามีผลลัพธ์จากคำสั่ง SQL
+    if (mysqli_num_rows($result_cert_event) > 0) {
+        $row_cert_event = mysqli_fetch_assoc($result_cert_event);
+        $cert_Ref = $row_cert_event["cert_Ref"];
+        $name = $row_cert_event["name"];
+        $sur_name = $row_cert_event["sur_name"];
+        $event_name = $row_cert_event["event_name"];
+?>
+        <div id="resultRowFound" class="row">
+            <div class="col-md-7 mt-4">
+                <div class="card">
+                    <div class="card-header pb-0 px-3 text-success text-lg">
+                        <i class="fa fa-solid fa-check"></i>
+                        <span id="refInputValue" class="ms-2"><?= $cert_Ref ?></span>
+                    </div>
+                    <div class="card-body pt-4 p-3">
+                        <ul class="list-group">
+                            <li class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg">
+                                <div class="d-flex flex-column">
+                                  <span class="mb-2 text-sm">กิจกรรม : <span id="event_name" class="text-dark font-weight-bold ms-sm-2"><?= $event_name ?></span></span>
+                                  <span class="mb-2 text-sm">ชื่อ : <span id="name" class="text-dark font-weight-bold ms-sm-2"><?= $name . ' ' . $sur_name ?></span></span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+<?php 
+    } else {
+        // ถ้าไม่พบข้อมูลในฐานข้อมูล
+        echo '<div id="resultRowNotFound" class="row" style="display: block;">';
+        echo '<div class="col-md-7 mt-4">';
+        echo '<div class="card">';
+        echo '<div class="card-header pb-0 px-3 text-danger text-lg">';
+        echo '<i class="fas fa-f00d"></i>';
+        echo '<span class="ms-2">ไม่พบใบประกาศดังกล่าว</span>';
+        echo '</div>';
+        echo '<div class="card-body"></div>';
+        echo '</div>';
+        echo '</div>';
+        echo '</div>';
+    }
+} else {
+    // ถ้าไม่มีค่า ref ใน URL
+    echo '<div id="resultRowNotFound" class="row" style="display: none;">';
+    echo '<div class="col-md-7 mt-4">';
+    echo '<div class="card">';
+    echo '<div class="card-header pb-0 px-3 text-danger text-lg">';
+    echo '<i class="fas fa-f00d"></i>';
+    echo '<span class="ms-2">ไม่พบใบประกาศดังกล่าว</span>';
+    echo '</div>';
+    echo '<div class="card-body"></div>';
+    echo '</div>';
+    echo '</div>';
+    echo '</div>';
+}
+?>
+
 
 
     </div>
@@ -177,11 +220,11 @@ $("#checkBtn").click(function() {
                     $("#resultRowFound").show();
                     $("#resultRowNotFound").hide();
                     // แปลงข้อมูลที่ได้จาก JSON เป็น Object
-                    var data = JSON.parse(response);
-                    // แสดงข้อมูลในแต่ละส่วน
-                    $("#refInputValue").text(data.cert_Ref);
-                    $("#name").text(data.name);
-                    $("#activity").text(data.activity_id);
+                    // var data = JSON.parse(response);
+                    // // แสดงข้อมูลในแต่ละส่วน
+                    // $("#refInputValue").text(data.cert_Ref);
+                    // $("#name").text(data.name);
+                    // $("#activity").text(data.activity_id);
                 }
             },
             error: function(request, status, error) {

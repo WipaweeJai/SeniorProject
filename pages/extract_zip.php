@@ -67,8 +67,8 @@ if (isset($_FILES['zip_file']) && isset($_POST["upload_btn"])) {
                     $file_path = $target_dir . $file_name;
                     $event_name = $_POST['event_name'];
                     
-                    $sql = "INSERT INTO tb_certificate_template (activity_id, event_name, path_cert_temp, upload_date) 
-                            VALUES (?, ?, ?, CURRENT_TIMESTAMP())";
+                    $sql = "INSERT INTO tb_certificate_template (activity_id, event_name, path_cert_temp, upload_date,status) 
+                            VALUES (?, ?, ?, CURRENT_TIMESTAMP(), 'waiting')";
                    
                     $stmt = $conn->prepare($sql);
                     
@@ -82,8 +82,7 @@ if (isset($_FILES['zip_file']) && isset($_POST["upload_btn"])) {
                 }
                 $zip->close();
                 echo "ไฟล์ zip ถูกแตกและบันทึกลงฐานข้อมูลเรียบร้อยแล้ว";
-                echo "<script>alert('อัปโหลดเรียบร้อยแล้ว');</script>";
-                header("Location: index.php");
+                echo "<script>alert('อัปโหลดเรียบร้อยแล้ว'); window.location.href = 'event_detail.php?id=$activity_id';</script>";
             } else {
                 echo "ขออภัย! เกิดข้อผิดพลาดในการแตกไฟล์ zip";
             }

@@ -168,7 +168,8 @@
         console.log("Response:", xhr.responseText);  // เพิ่มบรรทัดนี้
         if (xhr.status === 200) {
             // อัปเดตเรียบร้อย
-            alert("สร้างข้อมูลเรียบร้อยแล้ว");
+            alert("สร้างคิวอาร์โค้ดเรียบร้อยแล้ว");
+            window.location.href = 'admin.php';
         } else {
             // เกิดข้อผิดพลาดในการอัปเดต
             alert("เกิดข้อผิดพลาดในการสร้างข้อมูล");

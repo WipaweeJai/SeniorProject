@@ -71,9 +71,20 @@
     </nav>
     <!-- End Navbar -->
     <div class="container-fluid">
-      <!-- รูปภาพแบนเบอร์ของกิจกรรมยังไม่แก้ เพราะติดปัญหาการอัปโหลดภาพลงอยู่ -->
-        <div class="page-header min-height-500 border-radius-xl mt-4" style="background-image: url('../assets/img/activity1.png'); background-position-y: 50%;">
-        </div>
+      <?php
+        if(isset($_GET['id'])) {
+          $activity_id = $_GET['id'];
+          $sql = "SELECT * FROM tb_event WHERE activity_id = '$activity_id'";
+          $result = mysqli_query($conn, $sql);
+          if($result && mysqli_num_rows($result) > 0) {
+            $row = mysqli_fetch_assoc($result);
+            // ดึงค่า event_banner จาก $row
+            $event_banner = $row['event_banner'];
+            // สร้าง HTML tag โดยใช้ค่าของ $event_banner
+            echo '<div class="page-header min-height-500 border-radius-xl mt-4" style="background-image: url(\'' . $event_banner . '\'); background-position-y: 50%;"></div>';
+          }
+        }
+        ?>
         <div class="card card-body blur shadow-blur mx-4 mt-n6 overflow-hidden">
           <div class="row gx-4">
             <div class="col-auto my-auto">

@@ -99,19 +99,35 @@
                             <a class="btn bg-gradient-danger mb-3 text-sm" href="../assets/img/manual/manual.pdf" target="_blank">
                                 คู่มือรายละเอียดการอัปโหลดไฟล์
                             </a>
+
                             <p class="text-dark text-lg font-weight-normal ">
-                                อัปโหลดไฟล์รายชื่อผู้ผ่านกิจกรรม *
-                                <div class="mb-3">
-                                    <p class="text-sm font-weight-light ">ไฟล์ Excel ขนาดไม่เกิน 5 MB</p>
-                                    <input class="form-control custom-width" type="file" id="excel_file" name="excel_file" require>
+                              อัปโหลดไฟล์รายชื่อผู้ผ่านกิจกรรม *
+                              <a class="btn bg-gradient-success btn-sm mt-3 font-weight-light" onclick="openModal('myModal1')">ข้อกำหนด</a>
+                              <div id="myModal1" class="modal1">
+                                <div class="modal1-content-wrapper">
+                                  <img class="modal1-content" id="img01" src="../assets/img/activity6.png" alt="">
+                                  <span class="close" onclick="closeModal('myModal1')">&times;</span>
                                 </div>
+                              </div>
+                              <div class="mb-3">
+                                  <p class="text-sm font-weight-light ">ไฟล์ Excel ขนาดไม่เกิน 5 MB</p>
+                                  <input class="form-control custom-width" type="file" id="excel_file" name="excel_file" require>
+                              </div>
                             </p>
+
                             <p class="text-dark text-lg font-weight-normal ">
-                                อัปโหลดไฟล์ใบประกาศกิจกรรม *
-                                <div class="mb-3">
-                                    <p class="text-sm font-weight-light ">ไฟล์ zip ขนาดไม่เกิน 5 MB</p>
-                                    <input class="form-control custom-width" type="file" id="zip_file" name="zip_file" require>
+                              อัปโหลดไฟล์ใบประกาศเข้าร่วมกิจกรรม *
+                              <a class="btn bg-gradient-success btn-sm mt-3 font-weight-light" onclick="openModal('myModal2')">ข้อกำหนด</a>
+                              <div id="myModal2" class="modal1">
+                                <div class="modal1-content-wrapper">
+                                  <img class="modal1-content" id="img02" src="../assets/img/activity7.png" alt="">
+                                  <span class="close" onclick="closeModal('myModal2')">&times;</span>
                                 </div>
+                              </div>
+                              <div class="mb-3">
+                                <p class="text-sm font-weight-light ">ไฟล์ zip ขนาดไม่เกิน 5 MB</p>
+                                <input class="form-control custom-width" type="file" id="zip_file" name="zip_file" require>
+                              </div>
                             </p>
 
                         </div>
@@ -146,16 +162,30 @@
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="../assets/js/soft-ui-dashboard.min.js?v=1.0.7"></script>
 
-    <script>
-      document.getElementById("btn_add_event").addEventListener("click", function(event) {
-      var excelFile = document.getElementById("excel_file").value;
-      var zipFile = document.getElementById("zip_file").value;
-      
-      if(excelFile === "" || zipFile === "") {
-          event.preventDefault();
-          alert("กรุณากรอกข้อมูลไฟล์รายชื่อผู้ผ่านกิจกรรมและไฟล์ใบประกาศกิจกรรม");
-      }
-      });
-    </script>
+<script>
+
+document.getElementById("btn_add_event").addEventListener("click", function(event) {
+var excelFile = document.getElementById("excel_file").value;
+var zipFile = document.getElementById("zip_file").value;
+
+if(excelFile === "" || zipFile === "") {
+    event.preventDefault();
+    alert("กรุณากรอกข้อมูลไฟล์รายชื่อผู้ผ่านกิจกรรมและไฟล์ใบประกาศกิจกรรม");
+}
+});
+
+function openModal(modalId) {
+  var modal = document.getElementById(modalId);
+  modal.style.display = "block";
+}
+
+function closeModal(modalId) {
+  var modal = document.getElementById(modalId);
+  modal.style.display = "none";
+}
+
+
+</script>
+
 </body>
 </html>

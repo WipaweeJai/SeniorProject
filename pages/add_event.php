@@ -76,38 +76,6 @@
 
         <div class="container-fluid py-4">
         <div class="row">
-            <!-- ส่วนที่ 1 ข้อมูลผู้ส่งข่าว -->
-            <!-- <div class="card mb-4">
-                <div class="card-header pb-0 p-3">
-                    <h3 class="text-dark ">ส่วนที่ 1 ข้อมูลผู้ส่งข่าวกิจกรรม</h3>
-                </div>
-                <div class="card-body p-3">
-                    <p class="text-dark text-lg font-weight-normal ">
-                        ชื่อผู้ติดต่อ
-                        <span class="text-dark ms-sm-2 font-weight-bold">
-                            <input class="form-control custom-width" type="text" id="sender_name" placeholder="กรุณากรอกชื่อคนที่สามารถติดต่อได้ ไม่ใช่ชื่อเพจหรือองค์กร">
-                        </span>
-                    </p>
-                    <p class="text-dark text-lg font-weight-normal ">
-                        นามสกุล
-                        <span class="text-dark ms-sm-2 font-weight-bold">
-                            <input class="form-control custom-width" type="text" id="sender_surname" placeholder="กรุณากรอกนามสกุลคนที่สามารถติดต่อได้ ไม่ใช่ชื่อเพจหรือองค์กร">
-                        </span>
-                    </p>
-                    <p class="text-dark text-lg font-weight-normal ">
-                        อีเมล
-                        <span class="text-dark ms-sm-2 font-weight-bold">
-                            <input class="form-control custom-width" type="email" id="sender_email" placeholder="สำหรับการติดต่อและแจ้งข่าว">
-                        </span>
-                    </p>
-                    <p class="text-dark text-lg font-weight-normal ">
-                        เบอร์โทรศัพท์
-                        <span class="text-nddark ms-sm-2 font-weight-bold">
-                            <input class="form-control custom-width" type="text" id="sender_tel" placeholder="สำหรับการติดต่อเร่งด่วน">
-                        </span>
-                    </p>
-                </div>
-            </div> -->
             <!-- ส่วนที่ 1 พาดหัวข่าว และรูปภาพกิจกรรม -->
             <div class="card mb-4">
                 <div class="card-header pb-0 p-3">
@@ -316,7 +284,8 @@
         .then(response => response.text())
         .then(result => {
             console.log(result);
-            // ทำสิ่งที่คุณต้องการหลังจากที่ได้ผลลัพธ์จากการส่งข้อมูล
+            alert("เพิ่มกิจกรรมเรียบร้อยแล้ว");
+            window.location.href = "index.php";
         })
         .catch(error => {
             console.error('Error:', error);

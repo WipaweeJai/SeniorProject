@@ -26814,7 +26814,8 @@ pre[class*="language-"] {
   width: 100%;
   height: 100%;
   overflow: auto;
-  background-color: rgba(0,0,0,0.5);
+  background-color: rgba(0,0,0,0.2);
+  backdrop-filter: blur(5px);
 }
 
 .popup-content {
@@ -26824,20 +26825,24 @@ pre[class*="language-"] {
   padding: 50px;
   border: 1px solid #888;
   width: 50%;
-  border-radius: 8px;
+  border-radius: 25px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
 .close {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
+  position: absolute;
+  top: 10px; /* ปรับตำแหน่งให้อยู่ในมุมขวาบนของรูปภาพ */
+  right: 10px; /* ปรับตำแหน่งให้อยู่ในมุมขวาบนของรูปภาพ */
+  color: white;
+  font-size: 30px;
   font-weight: bold;
+  cursor: pointer;
 }
+
 
 .close:hover,
 .close:focus {
-  color: black;
+  color: #999;
   text-decoration: none;
   cursor: pointer;
 }
@@ -26859,6 +26864,36 @@ pre[class*="language-"] {
 
 .grid-item {
   width: 100%; /* ให้ grid item ขยายตามความกว้างของ column */
+}
+
+.modal1 {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.5); /* ตัวหนังสือ */
+  backdrop-filter: blur(5px);
+}
+
+.modal1-content {
+  margin: auto;
+  display: block;
+  margin: 10% auto;
+  width: 50%; /* ขนาดรูปภาพ */
+  max-width: 50%; /* ขนาดรูปภาพสูงสุด */
+  border-radius: 25px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+
+.modal1-content-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  position: relative;
 }
 
 
