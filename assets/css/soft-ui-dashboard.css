@@ -26896,4 +26896,15 @@ pre[class*="language-"] {
   position: relative;
 }
 
+.modal2-content {
+  margin: auto;
+  display: block;
+  margin: 10% auto;
+  width: 30%; /* ขนาดรูปภาพ */
+  max-width: 30%; /* ขนาดรูปภาพสูงสุด */
+  border-radius: 25px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+
 

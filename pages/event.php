@@ -1,3 +1,7 @@
+<?php 
+  session_start();
+  $name = $_SESSION['name'];
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -26,7 +30,7 @@
 
 <body class="g-sidenav-show  bg-gray-100">
 <?php
-  include "navbar.php";
+  include "layout/navbar.php";
 ?>
   <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
     <!-- Navbar -->
@@ -56,8 +60,15 @@
             </li>
             <li class="nav-item d-flex align-items-center">
               <a href="javascript:;" class="nav-link text-body font-weight-bold px-0">
-                <i class="fa fa-user me-sm-1"></i>
-                <span class="d-sm-inline d-none">เข้าสู่ระบบ</span>
+                <?php
+                  if(isset($name)) {
+                    echo "<a href='profile.php' class='fa fa-user me-sm-1 px-2'></a>";
+                    echo "<a href='profile.php' class='d-sm-inline d-none font-weight-normal'>" . ucfirst($name) . "</a>";
+                  } else {
+                    echo "<a href='login.php' class='fa fa-user me-sm-1 px-2'></a>";
+                    echo "<a href='login.php' class='d-sm-inline d-none font-weight-bolder'>เข้าสู่ระบบ</a>";
+                  }
+                ?>
               </a>
             </li>
             

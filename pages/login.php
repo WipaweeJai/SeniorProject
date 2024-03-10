@@ -70,9 +70,9 @@
                 </div>
                 <div class="card-body">
                   <form role="form" class="font-weight-bolder"action="loginAction.php" method="post">
-                    <label>บัญชีผู้ใช้เครือข่ายนนทรี</label>
+                    <label>อีเมล</label>
                     <div class="mb-3">
-                      <input type="text" id="user_id" name="user_id" class="form-control" placeholder="b6xxxxxxxxx" required>
+                      <input type="text" id="email" name="email" class="form-control" placeholder="กรุณากรอกอีเมล" required>
                     </div>
                     <label>รหัสผ่าน</label>
                     <div class="mb-3">

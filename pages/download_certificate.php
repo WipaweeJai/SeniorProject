@@ -1,3 +1,7 @@
+<?php 
+  session_start();
+  @$name = $_SESSION['name'];
+?>
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -25,7 +29,7 @@
 
 <body class="g-sidenav-show  bg-gray-100">
 <?php
-  include "navbar.php";
+  include "layout/navbar.php";
 ?>
   <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
     <!-- Navbar -->
@@ -39,17 +43,18 @@
           <h6 class="font-weight-bolder mb-0">ดาวน์โหลดใบประกาศ</h6>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
-          <div class="ms-md-auto pe-md-3 d-flex align-items-center">
-            <div class="input-group">
-              <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
-              <input type="text" class="form-control" placeholder="ค้นหา">
-            </div>
-          </div>
-          <ul class="navbar-nav  justify-content-end">
+          <ul class="ms-md-auto pe-md-3 d-flex align-items-center navbar-nav  justify-content-end">
             <li class="nav-item d-flex align-items-center">
               <a href="javascript:;" class="nav-link text-body font-weight-bold px-0">
-                <i class="fa fa-user me-sm-1"></i>
-                <span class="d-sm-inline d-none">เข้าสู่ระบบ</span>
+                <?php
+                  if(isset($name)) {
+                    echo "<a href='profile.php' class='fa fa-user me-sm-1 px-2'></a>";
+                    echo "<a href='profile.php' class='d-sm-inline d-none font-weight-normal'>" . ucfirst($name) . "</a>";
+                  } else {
+                    echo "<a href='login.php' class='fa fa-user me-sm-1 px-2'></a>";
+                    echo "<a href='login.php' class='d-sm-inline d-none font-weight-bolder'>เข้าสู่ระบบ</a>";
+                  }
+                ?>
               </a>
             </li>
             <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
@@ -68,41 +73,55 @@
     <!-- End Navbar -->
       <div class="container-fluid py-4">
         <div class="row">
-          <?php
-            require_once('../backend/dbcon.php');
-            $user_id = "b6330200041";
+        <?php
+          require_once('../backend/dbcon.php');
+          $name = $_SESSION['name'];
+
+          $sql_user_id = "SELECT user_id FROM tb_user WHERE name = '$name'";
+          $result_user_id = mysqli_query($conn, $sql_user_id);
+
+          if (mysqli_num_rows($result_user_id) > 0) {
+            $row_user_id = mysqli_fetch_assoc($result_user_id);
+            $user_id = $row_user_id['user_id'];
 
             $sql = "SELECT tb_certificate.*, tb_event.*
                     FROM tb_certificate
                     INNER JOIN tb_event ON tb_certificate.activity_id = tb_event.activity_id
                     WHERE tb_certificate.user_id = '$user_id'";
             $result = mysqli_query($conn, $sql);
-            while ($row = mysqli_fetch_assoc($result)) {
-              $user_id = $row['user_id'];
-              $cert_Ref = $row['cert_Ref'];
-              $event_name = $row['event_name'];
-              $event_banner = $row['event_banner'];
-              $activity_id = $row['activity_id'];
-              $image_url = "http://localhost/project/assets/img/zip/{$activity_id}/modified/{$cert_Ref}.png";
-          
-              echo '<div class="col-12 col-xl-4">';
-              echo '<div class="card h-100">';
-              echo '<div class="card-header pb-0 p-3">';
-              echo '<img src="' . $event_banner . '" alt="img-blur-shadow" class="img-fluid border-radius-2xl">';
-              echo '</div>';
-              echo '<div class="card-body p-3">';
-              echo '<h6 class="text-uppercase text-body text-xs font-weight-bolder">' . $event_name . '</h6>';
-              echo '<a href="' . $image_url . '" download>';
-              echo '<button type="button" class="btn btn-info btn-sm mb-0">';
-              echo 'ดาวน์โหลดใบประกาศ';
-              echo '</button>';
-              echo '</div>';
-              echo '</a>';
-              echo '</div>';
-              echo '</div>';
-          }
-          
-          ?>
+
+            if (mysqli_num_rows($result) > 0) {
+              while ($row = mysqli_fetch_assoc($result)) {
+                $event_name = $row['event_name'];
+                $event_banner = $row['event_banner'];
+                $activity_id = $row['activity_id'];
+                $user_id1 = substr($user_id, 1);
+                $image_url = "http://localhost/project/assets/img/zip/{$activity_id}/modified/{$user_id1}.png";
+        ?>
+          <div class="col-12 col-xl-4">
+            <div class="card h-100">
+              <div class="card-header pb-0 p-3">
+                <img src="<?php echo $event_banner; ?>" alt="img-blur-shadow" class="img-fluid border-radius-2xl">
+              </div>
+              <div class="card-body p-3">
+                <h6 class="text-uppercase text-body text-xs font-weight-bolder"><?php echo $event_name; ?></h6>
+                <a href="<?php echo $image_url; ?>" download>
+                  <button type="button" class="btn btn-info btn-sm mb-0">ดาวน์โหลดใบประกาศ</button>
+                </a>
+              </div>
+            </div>
+          </div>
+            <?php
+                }
+              } else {
+                // ไม่พบข้อมูลกิจกรรม
+                echo "ไม่พบข้อมูลกิจกรรม";
+              }
+            } else {
+              // ไม่พบผู้ใช้ในฐานข้อมูล
+              echo "ไม่พบผู้ใช้ในระบบ";
+            }
+            ?>
         </div>
       </div>
       </div>

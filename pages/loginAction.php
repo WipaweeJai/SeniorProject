@@ -1,18 +1,20 @@
 <?php
 session_start();
-// var_dump($_POST);
 require_once('../backend/dbcon.php');
+$_SESSION = array();
+session_destroy(); 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $user_id = mysqli_real_escape_string($conn, $_POST['user_id']);
+    $email = mysqli_real_escape_string($conn, $_POST['email']);
     $password = mysqli_real_escape_string($conn, $_POST['password']);
 
-    $sql = "SELECT * FROM tb_user WHERE user_id = '$user_id' and password = '$password'";
+    $sql = "SELECT * FROM tb_user WHERE email = '$email' and password = '$password'";
     $result = mysqli_query($conn, $sql);
 
     if (mysqli_num_rows($result) > 0) {
         $row = mysqli_fetch_assoc($result);
-        $_SESSION['user_id'] = $row['user_id'];
+        session_start();
+        $_SESSION['name'] = $row['name'];
         header("location: index.php");
     } else {
         // ไม่พบผู้ใช้ในฐานข้อมูล

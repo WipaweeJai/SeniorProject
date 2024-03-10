@@ -1,3 +1,7 @@
+<?php 
+  session_start();
+  $name = $_SESSION['name'];
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -26,7 +30,7 @@
 
 <body class="g-sidenav-show bg-gray-100">
 <?php
-    include "navbar.php";
+    include "layout/navbar.php";
 ?>
 <div class="main-content position-relative bg-gray-100 max-height-vh-100 h-100">
     <!-- Navbar -->
@@ -40,17 +44,18 @@
           <h6 class="text-dark font-weight-bolder ms-2">โปรไฟล์</h6>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
-          <div class="ms-md-auto pe-md-3 d-flex align-items-center">
-            <div class="input-group">
-              <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
-              <input type="text" class="form-control" placeholder="ค้นหา">
-            </div>
-          </div>
-          <ul class="navbar-nav  justify-content-end">
+          <ul class="ms-md-auto pe-md-3 d-flex align-items-center navbar-nav  justify-content-end">
             <li class="nav-item d-flex align-items-center">
               <a href="javascript:;" class="nav-link text-body font-weight-bold px-0">
-                <i class="fa fa-user me-sm-1"></i>
-                <span class="d-sm-inline d-none">เข้าสู่ระบบ</span>
+                <?php
+                  if(isset($name)) {
+                    echo "<a href='profile.php' class='fa fa-user me-sm-1 px-2'></a>";
+                    echo "<a href='profile.php' class='d-sm-inline d-none font-weight-normal'>" . ucfirst($name) . "</a>";
+                  } else {
+                    echo "<a href='login.php' class='fa fa-user me-sm-1 px-2'></a>";
+                    echo "<a href='login.php' class='d-sm-inline d-none font-weight-bolder'>เข้าสู่ระบบ</a>";
+                  }
+                ?>
               </a>
             </li>
             <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
@@ -76,15 +81,13 @@
             <div class="h-100">
               <?php
                 require_once('../backend/dbcon.php');
-                $name = "";
-                $sur_name = "";
+                $name = $_SESSION['name'];
                 $status = "";
                 $user_id = "";
-                $sql = "SELECT * FROM tb_user WHERE id='1'";
+                $sql = "SELECT * FROM tb_user WHERE name ='$name'";
                 $result = mysqli_query($conn, $sql);
                 while ($row = mysqli_fetch_assoc($result)) {
                     $name = $row['name'];
-                    $sur_name = $row['sur_name'];
                     $email = $row['email'];
                     $status = $row['status'];
                     $tel = $row['tel'];
@@ -93,7 +96,7 @@
                 ?>
                 
                 <div class="h-100">
-                    <h5 class='mb-1'><?php echo $name . " " . $sur_name; ?></h5>
+                    <h5 class='mb-1'><?php echo $name ?></h5>
                     <?php
                     if ($status == 'student') {
                         echo "<p class='mb-0 font-weight-bold text-sm'>นิสิต</p>";
@@ -101,7 +104,7 @@
                         echo "<p class='mb-0 font-weight-bold text-sm'>บุคคลภายนอก</p>";
                     } elseif ($status == 'admin') {
                         echo "<p class='mb-0 font-weight-bold text-sm'>Admin</p>";
-                    }
+                    }                    
                     ?>
             </div>
           </div>
@@ -122,7 +125,7 @@
                       echo '<li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">บัญชีนนทรี :</strong> &nbsp; ' . $user_id . '</li>';
                     }
                 ?>
-                <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">ชื่อ-นามสกุล :</strong> &nbsp; <?php echo $name . " " . $sur_name; ?></li>
+                <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">ชื่อ-นามสกุล :</strong> &nbsp; <?php echo $name ?></li>
                 <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Email :</strong> &nbsp; <?php echo $email; ?></li>
                 <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">เบอร์โทรศัพท์ :</strong> &nbsp; <?php echo $tel; ?></li>
               </ul>
@@ -136,50 +139,66 @@
             </div>
             <div class="card-body p-3">
               <div class="row">
-                <?php
-                  $activity_id = "";
-                  $cert_Ref = "";
-                  $user_id = "b6330200041";
-                  $event_name = "";
+              <?php
+                $name = $_SESSION['name'];
+                // ค้นหา user_id โดยใช้ชื่อผู้ใช้จาก session
+                $sql_user_id = "SELECT user_id FROM tb_user WHERE name = '$name'";
+                $result_user_id = mysqli_query($conn, $sql_user_id);
+
+                // ตรวจสอบว่ามีผลลัพธ์จากคำสั่ง SQL
+                if (mysqli_num_rows($result_user_id) > 0) {
+                  // ดึงข้อมูล user_id จากผลลัพธ์
+                  $row_user_id = mysqli_fetch_assoc($result_user_id);
+                  $user_id = $row_user_id['user_id'];
+
+                  // คำสั่ง SQL เพื่อดึงข้อมูลกิจกรรมที่เกี่ยวข้องกับผู้ใช้นี้
                   $sql_event = "SELECT tb_certificate.*, tb_event.*
                                 FROM tb_certificate
                                 INNER JOIN tb_event ON tb_certificate.activity_id = tb_event.activity_id
                                 WHERE tb_certificate.user_id = '$user_id'";
                   $result_event = mysqli_query($conn, $sql_event);
+
+                  // ตรวจสอบว่ามีข้อมูลกิจกรรมหรือไม่
                   if (mysqli_num_rows($result_event) > 0) {
+                    // วนลูปเพื่อแสดงข้อมูลทุกกิจกรรม
                     while ($row = mysqli_fetch_assoc($result_event)) {
                       $activity_id = $row['activity_id'];
                       $cert_Ref = $row['cert_Ref'];
                       $event_name = $row['event_name'];
                       $event_banner = $row['event_banner'];
                       $image_url = "http://localhost/project/assets/img/zip/{$activity_id}/modified/{$cert_Ref}.png";
-                  ?>
-                  <div class="col-xl-3 col-md-6 mb-xl-0 mb-4">
-                    <div class="card card-blog card-plain">
-                      <div class="position-relative">
-                        <a class="d-block shadow-xl border-radius-xl">
-                          <img src=<?php echo $event_banner; ?> alt="img-blur-shadow" class="img-fluid shadow border-radius-xl">
-                        </a>
-                      </div>
+              ?>
 
-                      <div class="card-body px-1 pb-0">
-                        <h6><?php echo $event_name; ?></h6>
-                        <div class="d-flex align-items-center justify-content-between">
-                          <button type="button" class="btn btn-outline-info btn-sm mb-0" onclick="window.open('<?php echo $image_url; ?>', '_blank')">
-                              รายละเอียด
-                          </button>
-                        </div>
-                      </div>
+              <div class="col-xl-3 col-md-6 mb-xl-0 mb-4">
+                <div class="card card-blog card-plain">
+                  <div class="position-relative">
+                    <a class="d-block shadow-xl border-radius-xl">
+                      <img src="<?php echo $event_banner; ?>" alt="img-blur-shadow" class="img-fluid shadow border-radius-xl">
+                    </a>
+                  </div>
 
+                  <div class="card-body px-1 pb-0">
+                    <h6><?php echo $event_name; ?></h6>
+                    <div class="d-flex align-items-center justify-content-between">
+                      <button type="button" class="btn btn-outline-info btn-sm mb-0" onclick="window.open('<?php echo $image_url; ?>', '_blank')">
+                        รายละเอียด
+                      </button>
                     </div>
                   </div>
-                  <?php
+                </div>
+              </div>
+
+              <?php
                     }
                   } else {
-                    echo "ไม่พบข้อมูล";
+                    // ไม่พบข้อมูลกิจกรรม
+                    echo "ไม่พบข้อมูลกิจกรรม";
                   }
-                ?>
-
+                } else {
+                  // ไม่พบผู้ใช้ในฐานข้อมูล
+                  echo "ไม่พบผู้ใช้ในระบบ";
+                }
+              ?>
               </div>
             </div>
           </div>

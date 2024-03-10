@@ -1,3 +1,7 @@
+<?php 
+  session_start();
+  $name = $_SESSION['name'];
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -26,7 +30,8 @@
 
 <body class="g-sidenav-show  bg-gray-100">
 <?php
-  include "navbar.php";
+  include "layout/navbar.php";
+  require_once('../backend/dbcon.php');
 ?>
   <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
     <!-- Navbar -->
@@ -40,17 +45,18 @@
           <h6 class="font-weight-bolder mb-0">อัปโหลดไฟล์ใบประกาศ</h6>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
-          <div class="ms-md-auto pe-md-3 d-flex align-items-center">
-            <div class="input-group">
-              <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
-              <input type="text" class="form-control" placeholder="ค้นหา">
-            </div>
-          </div>
-          <ul class="navbar-nav  justify-content-end">
+          <ul class="ms-md-auto pe-md-3 d-flex align-items-center navbar-nav  justify-content-end">
             <li class="nav-item d-flex align-items-center">
               <a href="javascript:;" class="nav-link text-body font-weight-bold px-0">
-                <i class="fa fa-user me-sm-1"></i>
-                <span class="d-sm-inline d-none">เข้าสู่ระบบ</span>
+                <?php
+                  if(isset($name)) {
+                    echo "<a href='profile.php' class='fa fa-user me-sm-1 px-2'></a>";
+                    echo "<a href='profile.php' class='d-sm-inline d-none font-weight-normal'>" . ucfirst($name) . "</a>";
+                  } else {
+                    echo "<a href='login.php' class='fa fa-user me-sm-1 px-2'></a>";
+                    echo "<a href='login.php' class='d-sm-inline d-none font-weight-bolder'>เข้าสู่ระบบ</a>";
+                  }
+                ?>
               </a>
             </li>
             <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
@@ -68,7 +74,18 @@
     </nav>
     <!-- End Navbar -->
     <div class="container-fluid py-4">
-      <div class="page-header min-height-300 border-radius-xl mt-4" style="background-image: url('../assets/img/poster_cert.png'); background-position-y: 50%;">
+      <?php
+        if(isset($_GET['id'])) {
+          $activity_id = $_GET['id'];
+          $sql = "SELECT * FROM tb_event WHERE activity_id = '$activity_id'";
+          $result = mysqli_query($conn, $sql);
+          if($result && mysqli_num_rows($result) > 0) {
+            $row = mysqli_fetch_assoc($result);
+            $event_banner = $row['event_banner'];
+            echo '<div class="page-header min-height-300 border-radius-xl mt-4" style="background-image: url(\'' . $event_banner . '\'); background-position-y: 50%;">';
+          }
+        }
+      ?>
       </div>
 
       <div class="row">
