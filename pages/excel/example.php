@@ -68,8 +68,8 @@ if(isset($_POST['btn_submit'])  && isset($_FILES['_fileup']['name']) && $_FILES[
             $start_row = 2;
             // กำหนดชื่อ column ที่ต้องการไปเรียกใช้งาน
             $col_name = array(
-                "A"=>"cus_id",
-                "B"=>"cus_name",
+                "A"=>"user_id",
+                "B"=>"name",
             );
             if($row >= $start_row){
                 $data_arr[$row-$start_row][$col_name[$column]] = $data_value;                                               
@@ -88,7 +88,7 @@ if(isset($_POST['btn_submit'])  && isset($_FILES['_fileup']['name']) && $_FILES[
 // สร้างฟังก์ชั่นสำหรับจัดการกับข้อมุลที่เป็นค่าว่าง หรือไม่มีข้อมูลน้้น
 function prepare_data($data){
     // กำหนดชื่อ filed ให้ตรงกับ $col_name ด้านบน
-    $arr_field = array("cus_id","cus_name","order_id","pro_id","pro_name");
+    $arr_field = array("user_id","name");
     if(is_array($data)){
         foreach($arr_field as $v){
             if(!isset($data[$v])){
@@ -105,8 +105,8 @@ if(isset($data_arr) && count($data_arr)>0){
         $row = prepare_data($row);
 ?>
     <tr>
-        <td><?=$row['cus_id']?></td>
-        <td><?=$row['cus_name']?></td>
+        <td><?=$row['user_id']?></td>
+        <td><?=$row['name']?></td>
     </tr>
 <?php
     }
