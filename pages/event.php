@@ -1,6 +1,6 @@
 <?php 
   session_start();
-  $name = $_SESSION['name'];
+  @$name = $_SESSION['name'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -52,7 +52,7 @@
               <input type="text" class="form-control" placeholder="ค้นหา">
             </div>
           </div>
-          <ul class="navbar-nav  justify-content-end">
+          <ul class="navbar-nav justify-content-end">
             <li class="nav-item d-flex align-items-center">
               <a class="btn font-weight-light bg-gradient-dark mb-0 me-3" href="add_event.php">
                 เพิ่มกิจกรรมบนหน้าเว็บ

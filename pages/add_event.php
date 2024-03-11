@@ -1,6 +1,10 @@
 <?php 
   session_start();
   @$name = $_SESSION['name'];
+  if (!isset($_SESSION['name'])) {
+    header("Location: login.php");
+    exit();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">

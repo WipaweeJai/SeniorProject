@@ -16,6 +16,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         session_start();
         $_SESSION['name'] = $row['name'];
         header("location: index.php");
+        // $previous_page = $_SERVER['HTTP_REFERER'] ?? 'index.php';
+        // header("Location: $previous_page");
     } else {
         // ไม่พบผู้ใช้ในฐานข้อมูล
         echo "<script>alert('ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง');</script>";

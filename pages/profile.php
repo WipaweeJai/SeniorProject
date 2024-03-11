@@ -1,6 +1,10 @@
 <?php 
   session_start();
-  $name = $_SESSION['name'];
+  @$name = $_SESSION['name'];
+  if (!isset($_SESSION['name'])) {
+    header("Location: login.php");
+    exit();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -73,8 +77,7 @@
     </nav>
     <!-- End Navbar -->
     <div class="container-fluid">
-      <div class="page-header min-height-300 border-radius-xl mt-4 " style="background-image: url('../assets/img/7.jpg'); background-position-y: 50%;">
-      </div>
+      <div class="page-header min-height-300 border-radius-xl mt-4 " style="background-image: url('../assets/img/7.jpg'); background-position-y: 50%;"></div>
       <div class="card card-body glass mx-4 mt-n6 overflow-hidden">
         <div class="row gx-4">
           <div class="col-auto my-auto">
@@ -94,7 +97,7 @@
                     $user_id = $row['user_id'];
                 }
                 ?>
-                
+              </div>
                 <div class="h-100">
                     <h5 class='mb-1'><?php echo $name ?></h5>
                     <?php
@@ -108,6 +111,16 @@
                     ?>
             </div>
           </div>
+          <div class="col-lg-4 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3">
+              <div class="nav-wrapper position-relative end-0">
+                <ul class="nav nav-pills nav-fill p-1 bg-transparent justify-content-end" role="tablist">
+                    <button id="logoutBtn" class="btn mb-0 bg-outline-dark " href="#" >
+                      <i class="far fa-regular fa-paper-plane"></i>
+                      <span class="ms-1">ออกจากระบบ</span>
+                  </button>
+                </ul>
+              </div>
+            </div>
         </div>
       </div>
     </div>
@@ -209,3 +222,23 @@
 </body>
 
 </html>
+
+<script>
+  document.getElementById("logoutBtn").addEventListener("click", function() {
+    if(confirm("ต้องการออกจากระบบหรือไม่") == true){
+      fetch("logout.php")
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("เกิดข้อผิดพลาด");
+        }
+        window.location.href = "index.php";
+      })
+      .catch(error => {
+        console.error("มีข้อผิดพลาด: ", error);
+      });
+    }
+});
+    
+  
+
+</script>
