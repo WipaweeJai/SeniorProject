@@ -82,7 +82,7 @@ if (isset($_FILES['zip_file']) && isset($_POST["upload_btn"])) {
                 }
                 $zip->close();
                 echo "ไฟล์ zip ถูกแตกและบันทึกลงฐานข้อมูลเรียบร้อยแล้ว";
-                echo "<script>alert('อัปโหลดเรียบร้อยแล้ว'); window.location.href = 'event_detail.php?id=$activity_id';</script>";
+                // echo "<script>alert('อัปโหลดเรียบร้อยแล้ว'); window.location.href = 'event_detail.php?id=$activity_id';</script>";
             } else {
                 echo "ขออภัย! เกิดข้อผิดพลาดในการแตกไฟล์ zip";
             }
@@ -93,7 +93,7 @@ if (isset($_FILES['zip_file']) && isset($_POST["upload_btn"])) {
     }
 }
 
-
+require_once("excel/Classes/PHPExcel.php");
 // ตรวจสอบว่ามีการส่งไฟล์ Excel มาหรือไม่
 if (isset($_FILES['excel_file']) && isset($_POST["upload_btn"])) {
     // กำหนด Folder ปลายทางที่จะบันทึกไฟล์ Excel
@@ -122,6 +122,40 @@ if (isset($_FILES['excel_file']) && isset($_POST["upload_btn"])) {
         if (move_uploaded_file($_FILES["excel_file"]["tmp_name"], $excel_target_file)) {
             echo "ไฟล์ Excel ". basename($_FILES["excel_file"]["name"]). " ถูกอัพโหลดเรียบร้อยแล้ว.";
 
+
+                // อ่านไฟล์จาก path temp ชั่วคราวที่เราอัพโหลด
+                $objPHPExcel = PHPExcel_IOFactory::load($excel_target_file);      
+                 
+                 
+                // ดึงข้อมูลของแต่ละเซลในตารางมาไว้ใช้งานในรูปแบบตัวแปร array
+                $cell_collection = $objPHPExcel->getActiveSheet()->getCellCollection();
+                  
+                // วนลูปแสดงข้อมูล
+                $data_arr=array();
+                foreach ($cell_collection as $cell) {
+                    // ค่าสำหรับดูว่าเป็นคอลัมน์ไหน เช่น A B C ....
+                    $column = $objPHPExcel->getActiveSheet()->getCell($cell)->getColumn();
+                    // คำสำหรับดูว่าเป็นแถวที่เท่าไหร่ เช่น 1 2 3 .....
+                    $row = $objPHPExcel->getActiveSheet()->getCell($cell)->getRow();
+                    // ค่าของข้อมูลในเซลล์นั้นๆ เช่น A1 B1 C1 ....
+                    $data_value = $objPHPExcel->getActiveSheet()->getCell($cell)->getValue();          
+                     
+                    // เริ่มขึ้นตอนจัดเตรียมข้อมูล
+                    // เริ่มเก็บข้อมูลบรรทัดที่ 2 เป็นต้นไป
+                    $start_row = 2;
+                    // กำหนดชื่อ column ที่ต้องการไปเรียกใช้งาน
+                    $col_name = array(
+                        "A"=>"user_id",
+                        "B"=>"name",
+                    );
+                    if($row >= $start_row){
+                        $data_arr[$row-$start_row][$col_name[$column]] = $data_value;                                               
+                    }
+                }       
+              print_r($data_arr);
+            
+
+
             // ดึงข้อมูล activity_id จากฐานข้อมูล
             $event_name = $_POST['event_name']; // รับค่าชื่อกิจกรรมจาก Form
 
@@ -141,14 +175,14 @@ if (isset($_FILES['excel_file']) && isset($_POST["upload_btn"])) {
                 $excel_file_path = $excel_target_dir . basename($_FILES["excel_file"]["name"]);
                 $event_name = $_POST['event_name'];
 
-                $sql = "INSERT INTO tb_participants (activity_id, path_excel) VALUES (?, ?)";
+                $sql = "INSERT INTO tb_participants (activity_id, path_excel, user_id, name) VALUES (?, ?, ?, ?)";
                 $stmt = $conn->prepare($sql);
-                $stmt->bind_param("ss" , $activity_id , $excel_file_path); 
+                $stmt->bind_param("ssss" , $activity_id , $excel_file_path , $user_id, $name); 
                 
                 if ($stmt->execute()) {
                     echo "บันทึก path ไฟล์ Excel เรียบร้อยแล้ว";
                     echo "<script>alert('อัปโหลดเรียบร้อยแล้ว');</script>";
-                    header("Location: index.php");
+                    // header("Location: index.php");
                 } else {
                     echo "เกิดข้อผิดพลาดในการบันทึก path ไฟล์ Excel: " . $conn->error;
                 }

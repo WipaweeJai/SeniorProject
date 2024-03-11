@@ -75,7 +75,7 @@ if(isset($_POST['btn_submit'])  && isset($_FILES['_fileup']['name']) && $_FILES[
                 $data_arr[$row-$start_row][$col_name[$column]] = $data_value;                                               
             }
         }       
-//      print_r($data_arr);
+      print_r($data_arr);
     }
 } 
 ?>
