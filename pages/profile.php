@@ -93,7 +93,6 @@
                     $name = $row['name'];
                     $email = $row['email'];
                     $status = $row['status'];
-                    $tel = $row['tel'];
                     $user_id = $row['user_id'];
                 }
                 ?>
@@ -140,7 +139,6 @@
                 ?>
                 <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">ชื่อ-นามสกุล :</strong> &nbsp; <?php echo $name ?></li>
                 <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Email :</strong> &nbsp; <?php echo $email; ?></li>
-                <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">เบอร์โทรศัพท์ :</strong> &nbsp; <?php echo $tel; ?></li>
               </ul>
             </div>
           </div>

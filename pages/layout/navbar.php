@@ -48,13 +48,13 @@
           $admin_url = "/project/pages/admin.php";
 
           $name = @$_SESSION['name'];
-          // $status = "";
+          $status = "";
           $sql = "SELECT name,status FROM tb_user WHERE name = '$name'";
           $result = $conn->query($sql);
           
           if ($result->num_rows > 0) {
               while($row = $result->fetch_assoc()) {
-                  @$status = $row['status'];
+                  $status = @$row['status'];
               }
           }
         ?>

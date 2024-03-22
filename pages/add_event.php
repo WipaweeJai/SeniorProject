@@ -150,12 +150,12 @@
                                         <p class="text-sm font-weight-light ">(กรุณากรอกข้อมูลวัน เดือน ปี ให้เต็มรูปแบบ เช่น 1 มกราคม พ.ศ. 2567)</p>
                                         <input class="form-control custom-width" type="date" id="event_reg_to" name="event_reg_to"  placeholder="วัน เดือน ปี พ.ศ.">
                                     </span>
-                                    <div class="form-check">
+                                    <!-- <div class="form-check">
                                         <input class="form-check-input" type="checkbox" value="ปิดรับสมัครทันทีหลังเต็ม" id="event_reg_detail" name="event_reg_detail">
                                         <label class="form-check-label" for="flexCheckIndeterminate">
                                             ปิดรับสมัครทันทีเมื่อมีผู้สมัครครบตามจำนวน - หากปิดรับสมัครก่อนกำหนด รบกวนแจ้งทางเพจด้วย
                                         </label>
-                                    </div>
+                                    </div> -->
                                 </p>
                                 <div class="divider"></div>
                                 <p class="text-dark text-lg font-weight-normal ">

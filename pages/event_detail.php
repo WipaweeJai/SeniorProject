@@ -83,9 +83,7 @@
           $result = mysqli_query($conn, $sql);
           if($result && mysqli_num_rows($result) > 0) {
             $row = mysqli_fetch_assoc($result);
-            // ดึงค่า event_banner จาก $row
             $event_banner = $row['event_banner'];
-            // สร้าง HTML tag โดยใช้ค่าของ $event_banner
             echo '<div class="page-header min-height-500 border-radius-xl mt-4" style="background-image: url(\'' . $event_banner . '\'); background-position-y: 50%;"></div>';
           }
         }
@@ -108,12 +106,30 @@
             <div class="col-lg-4 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3">
               <div class="nav-wrapper position-relative end-0">
                 <ul class="nav nav-pills nav-fill p-1 bg-transparent" role="tablist">
-                  <li class="nav-item"  style="padding-right: 10px;">
-                    <a class="nav-link mb-0 px-0 py-2 active" href="form_cert_zip.php?id=<?php echo $activity_id; ?>" role="tab">
-                        <i class="far fa-regular fa-paper-plane"></i>
-                        <span class="ms-1">อัพโหลดใบประกาศ</span>
-                    </a>
-                  </li>
+                <?php
+                  if(isset($_GET['id'])) {
+                      $activity_id = $_GET['id'];
+                      $sender_name = $_SESSION['name'];
+
+                      // Query to check if the name matches the activity_id
+                      $sql = "SELECT sender_name FROM tb_event WHERE activity_id = '$activity_id'";
+                      $result = mysqli_query($conn, $sql);
+                      if(mysqli_num_rows($result) > 0) {
+                          $row = mysqli_fetch_assoc($result);
+                          if($row['sender_name'] == $sender_name) {
+                ?>
+                              <!-- HTML code for upload button -->
+                              <li class="nav-item" style="padding-right: 10px;">
+                                  <a class="nav-link mb-0 px-0 py-2 active" href="form_cert_zip.php?id=<?php echo $activity_id; ?>" role="tab">
+                                      <i class="far fa-regular fa-paper-plane"></i>
+                                      <span class="ms-1">อัพโหลดใบประกาศ</span>
+                                  </a>
+                              </li>
+                  <?php
+                          }
+                      }
+                  }
+                  ?>
                   <li class="nav-item">
                     <a class="nav-link mb-0 px-0 py-2 active "  href="https://www.camphub.in.th/basic-python-programming-for-health-data-science/" target ="_blank" role="tab">
                       <i class="far fa-regular fa-paper-plane"></i>
