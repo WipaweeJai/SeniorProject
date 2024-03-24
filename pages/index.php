@@ -130,6 +130,11 @@
         </div>
 
       <!-- Calendar -->
+      <?php
+        require_once('../backend/dbcon.php');
+        $sql = "SELECT event_date_from and event_date_to FROM tb_event";
+        $result = mysqli_query($conn, $sql);
+      ?>
       <div class="row mt-4">
         <div class="col-lg-4 mb-lg-0 mb-4">
           <div class="row">
@@ -174,16 +179,17 @@
                       </tbody> 
                     </table>
                   </div> 
-                  <button class="button" id="add-button">Add Event</button>
+                  <!-- <button class="button" id="add-button">Add Event</button> -->
                 </div>
               </div> 
           </div>
 
           <!-- Include specific scripts for the calendar-17 -->
           <script src="calendar/calendar-04/js/jquery.min.js"></script>
-          <script src="calendar/calendar-04/js/popper.min.js"></script>
+          <script src="calendar/calendar-04/js/popper.js"></script>
           <script src="calendar/calendar-04/js/bootstrap.min.js"></script>
           <script src="calendar/calendar-04/js/main.js"></script>
+          <script src="http://localhost/project/pages/getEventCalendar.php"></script>
         </div>
       </div>
       <!-- end calendar -->
@@ -224,6 +230,8 @@
           </div>
         </div>
   </main>
+
+
 
   <!--   Core JS Files   -->
   <script src="../assets/js/core/popper.min.js"></script>

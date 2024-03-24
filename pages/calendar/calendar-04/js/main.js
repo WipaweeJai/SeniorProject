@@ -10,12 +10,33 @@
         $(".right-button").click({ date: date }, next_year);
         $(".left-button").click({ date: date }, prev_year);
         $(".month").click({ date: date }, month_click);
-        $("#add-button").click({ date: date }, new_event);
+        // $("#add-button").click({ date: date }, new_event);
         // Set current month as active
         $(".months-row").children().eq(date.getMonth()).addClass("active-month");
         init_calendar(date);
         var events = check_events(today, date.getMonth() + 1, date.getFullYear());
         show_events(events, months[date.getMonth()], today);
+    });
+
+    $(document).ready(function () {
+        // เรียกใช้งาน API หรือไฟล์ PHP ที่มีข้อมูล start_date และ end_date
+        $.ajax({
+            url: '../pages/getEventCalendar.php',
+            method: 'GET',
+            success: function(response) {
+                // หลังจากที่ดึงข้อมูลสำเร็จ
+                // ทำการใช้ข้อมูลในการแสดงผลบนปฏิทิน
+                var start_date = response.start_date;
+                var end_date = response.end_date;
+    
+                // เรียกใช้ฟังก์ชัน show_events() เพื่อแสดงผลข้อมูลอีเวนต์ในปฏิทิน
+                show_events(start_date, end_date);
+            },
+            error: function(xhr, status, error) {
+                // กรณีที่เกิดข้อผิดพลาดในการโหลดข้อมูล
+                console.log("Error:", error);
+            }
+        });
     });
 
     // Initialize the calendar by appending the HTML dates
@@ -116,95 +137,33 @@
         init_calendar(date);
     }
 
-    // Event handler for clicking the new event button
-    function new_event(event) {
-        // if a date isn't selected then do nothing
-        if ($(".active-date").length === 0)
-            return;
-        // remove red error input on click
-        $("input").click(function () {
-            $(this).removeClass("error-input");
-        })
-        // empty inputs and hide events
-        $("#dialog input[type=text]").val('');
-        $("#dialog input[type=number]").val('');
-        $(".events-container").hide(250);
-        $("#dialog").show(250);
-        // Event handler for cancel button
-        $("#cancel-button").click(function () {
-            $("#name").removeClass("error-input");
-            $("#count").removeClass("error-input");
-            $("#dialog").hide(250);
-            $(".events-container").show(250);
-        });
-        // Event handler for ok button
-        $("#ok-button").unbind().click({ date: event.data.date }, function () {
-            var date = event.data.date;
-            var name = $("#name").val().trim();
-            var count = parseInt($("#count").val().trim());
-            var day = parseInt($(".active-date").html());
-            // Basic form validation
-            if (name.length === 0) {
-                $("#name").addClass("error-input");
-            }
-            else if (isNaN(count)) {
-                $("#count").addClass("error-input");
-            }
-            else {
-                $("#dialog").hide(250);
-                console.log("new event");
-                var start_date = prompt("Enter event start date (YYYY-MM-DD):");
-                var end_date = prompt("Enter event end date (YYYY-MM-DD):");
-                new_event_json(name, count, start_date, end_date);
-                date.setDate(day);
-                init_calendar(date);
-            }
-        });
-    }
-
-    // Adds a json event to event_data
-    function new_event_json(name, count, start_date, end_date) {
-        var event = {
-            "occasion": name,
-            "invited_count": count,
-            "start_date": start_date,
-            "end_date": end_date
-        };
-        event_data["events"].push(event);
-    }
-
     // Display all events of the selected date in card views
     function show_events(events, month, day) {
         // Clear the dates container
         $(".events-container").empty();
         $(".events-container").show(250);
         console.log(event_data["events"]);
-        // If there are no events for this date, notify the user
-        if (events.length === 0) {
+    
+        // Check if events is defined and not null
+        if (events && events.length > 0) { // ทำการตรวจสอบว่า events มีค่าและมีความยาวมากกว่า 0 หรือไม่
+            // Go through and add each event as a card to the events container
+            for (var i = 0; i < events.length; i++) {
+                var event_card = $("<div class='event-card'></div>");
+                var event_name = $("<div class='event-name'>" + events[i]["event_name"] + ":</div>");
+                var event_dates = $("<div class='event-dates'>From: " + events[i]["start_date"] + " To: " + events[i]["end_date"] + "</div>");
+                $(event_card).append(event_name).append(event_dates);
+                $(".events-container").append(event_card);
+            }
+        } else {
+            // If there are no events for this date, notify the user
             var event_card = $("<div class='event-card'></div>");
             var event_name = $("<div class='event-name'>There are no events planned for " + month + " " + day + ".</div>");
             $(event_card).css({ "border-left": "10px solid #FF1744" });
             $(event_card).append(event_name);
             $(".events-container").append(event_card);
         }
-        else {
-            // Go through and add each event as a card to the events container
-            for (var i = 0; i < events.length; i++) {
-                var event_card = $("<div class='event-card'></div>");
-                var event_name = $("<div class='event-name'>" + events[i]["occasion"] + ":</div>");
-                var event_count = $("<div class='event-count'>" + events[i]["invited_count"] + " Invited</div>");
-                var event_dates = $("<div class='event-dates'>From: " + events[i]["start_date"] + " To: " + events[i]["end_date"] + "</div>");
-                if (events[i]["ข้าวโง่"] === true) {
-                    $(event_card).css({
-                        "border-left": "10px solid #FF1744"
-                    });
-                    event_count = $("<div class='event-cancelled'>ข้าวโง่</div>");
-                }
-                $(event_card).append(event_name).append(event_count).append(event_dates);
-                $(".events-container").append(event_card);
-            }
-        }
     }
+    
 
     // Checks if a specific date has any events
     function check_events(day, month, year) {
@@ -222,11 +181,9 @@
     var event_data = {
         "events": [
             {
-                "occasion": " Repeated Test Event ",
-                "invited_count": 120,
+                "event_name": " Repeated Test Event ",
                 "start_date": "2024-03-16",
-                "end_date": "2024-03-18",
-                "ข้าวโง่": true
+                "end_date": "2024-03-18"
             }
         ]
     };
