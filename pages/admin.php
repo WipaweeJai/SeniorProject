@@ -97,6 +97,7 @@
                   <th class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7">Status</th>
                   <th class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7">วันที่แก้ไข</th>
                   <th class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7"></th>
+                  <th class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7"></th>
                 </tr>
               </thead>
               <tbody>
@@ -148,43 +149,42 @@
                       ?>
                     </td>
                     <td>
-                    <?php
-                        echo '<ul class="nav nav-pills nav-fill p-1 bg-transparent" role="tablist" onclick="saveStatus()">';
-                        echo '<a class="btn font-weight-light bg-gradient-dark mb-0 me-3" href="admin_event.php?id=' .$row['activity_id']. '">';
+                      <?php
+                        echo '<ul class="nav nav-pills nav-fill p-1 bg-transparent" role="tablist">';
+                        echo '<a class="btn font-weight-light bg-gradient-dark mb-0 me-2" href="admin_event.php?id=' .$row['activity_id']. '">';
                         echo '<i class="fas fa-pencil-alt"></i> แก้ไข';
                         echo '</a>';
                         echo '</ul>';
-                    ?>
+                      ?>
+                    </td>
+                    <td>
+                      <?php
+                        echo '<i class="far fa-trash-alt" onclick="deleteRow(' . $row['activity_id'] . ')"></i>';
+                      ?>
                     </td>
                   </tr>
                 <?php } ?>
-                <script>
-                  function saveStatus() {
-                  var selects = document.querySelectorAll('.status-select');
-                  selects.forEach(function(select) {
-                    var activityId = select.getAttribute('data-event-id');
-                    var newStatus = select.value;
 
-                    // ส่งข้อมูลไปยังไฟล์ PHP เพื่ออัพเดทสถานะในฐานข้อมูล
-                    $.ajax({
-                    url: 'updateStatus.php',
-                    method: 'POST',
-                    data: {
-                      activityId: activityId,
-                      newStatus: newStatus
-                    },
-                    success: function(response) {
-                      // ประมวลผลเมื่ออัพเดทสถานะสำเร็จ (ถ้าต้องการ)
-                      console.log(response);
-                    },
-                    error: function(xhr, status, error) {
-                      // ประมวลผลเมื่อเกิดข้อผิดพลาดในการอัพเดทสถานะ
-                      console.error(xhr.responseText);
+                <!-- ลบกิจกรรมถาวร -->
+                <script>
+                  function deleteRow(activityId) {
+                    if (confirm('คุณต้องการลบกิจกรรมถาวรใช่หรือไม่?')) {
+                      $.ajax({
+                        url: 'deleteRow.php', // เปลี่ยนเส้นทางไปยังไฟล์ PHP ที่ทำการลบข้อมูล
+                        method: 'POST',
+                        data: { activityId: activityId },
+                        success: function(response) {
+                          console.log(response);
+                          // สามารถเพิ่มการรีเฟรชตารางหรือส่วนที่ต้องการให้ลบข้อมูลออกจาก DOM ได้ที่นี่
+                        },
+                        error: function(xhr, status, error) {
+                          console.error(xhr.responseText);
+                        }
+                      });
                     }
-                    });
-                  });
                   }
                 </script>
+
               </tbody>
             </table>
           </div>

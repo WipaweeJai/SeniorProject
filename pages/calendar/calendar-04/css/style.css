@@ -8488,3 +8488,8 @@ h1, h2, h3, h4, h5,
 .calendar {
   user-select: none;
 }
+
+/* เพิ่ม CSS เมื่อ hover ที่ icon ลบ */
+.fa-trash-alt:hover {
+  cursor: pointer; /* เปลี่ยน cursor เป็น pointer เมื่อ hover */
+}
