@@ -3,7 +3,7 @@
 require_once('../backend/dbcon.php');
 
 // ดึงข้อมูลเหตุการณ์จากฐานข้อมูล
-$sql = "SELECT event_date_from, event_date_to FROM tb_event";
+$sql = "SELECT event_date_from, event_date_to FROM tb_event WHERE status = 'Approved'";
 $result = mysqli_query($conn, $sql);
 
 // ตรวจสอบว่ามีข้อมูลในฐานข้อมูลหรือไม่

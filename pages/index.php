@@ -135,7 +135,6 @@
         $sql = "SELECT event_date_from and event_date_to FROM tb_event";
         $result = mysqli_query($conn, $sql);
       ?>
-      <div class="row mt-4">
         <div class="col-lg-4 mb-lg-0 mb-4">
           <div class="row">
               <div class="calendar-container">
@@ -191,7 +190,6 @@
           <script src="calendar/calendar-04/js/main.js"></script>
           <script src="http://localhost/project/pages/getEventCalendar.php"></script>
         </div>
-      </div>
       <!-- end calendar -->
 
         <!-- start ข้อมูลกิจกรรมจาก calendar -->

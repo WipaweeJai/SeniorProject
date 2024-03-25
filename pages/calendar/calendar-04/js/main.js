@@ -2,10 +2,11 @@
 
     "use strict";
 
+    // กำหนดตัวแปรระดับโปรแกรมเพื่อเก็บข้อมูลกิจกรรม
+    var savedEvents = [];
+
     // Setup the calendar with the current date
     $(document).ready(function () {
-
-        
         var date = new Date();
         var today = date.getDate();
         // Set click handlers for DOM elements
@@ -102,6 +103,27 @@
             return (monthEnd - monthStart) / (1000 * 60 * 60 * 24);
         }
 
+        // ฟังก์ชันดึงข้อมูลกิจกรรมจาก Server
+        function fetchEvents(callback) {
+            $.ajax({
+                url: '../pages/getEventCalendar.php',
+                method: 'GET',
+                success: function (response) {
+                    try {
+                        var events = JSON.parse(response);
+                        callback(events);
+                    } catch (error) {
+                        console.error("Error parsing JSON:", error);
+                        callback([]);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error:", error);
+                    callback([]);
+                }
+            });
+        }
+        
         // Event handler for when a date is clicked
         function date_click(event) {
             
@@ -113,7 +135,6 @@
         }
 
         // Event handler for when a month is clicked
-        
         function month_click(event) {
             $(".events-container").show(250);
             $("#dialog").hide(250);
@@ -122,16 +143,12 @@
             var date = event.data.date;
             var new_month = $(".month").index(this);
             date.setMonth(new_month);
-            // เรียกใช้ init_calendar โดยส่ง events ไปด้วย
-            console.log("Events when month clicked:", event.data.events);
-            init_calendar([
-                { start_date: '2024-03-27', end_date: '2024-03-28' }
-                ,
-                { start_date: '2024-05-16', end_date: '2024-05-25' }]); 
 
-                
-        
-        
+            // ดึงข้อมูลกิจกรรมใหม่จาก Server
+            fetchEvents(function (events) {
+                savedEvents = events;
+                init_calendar(events);
+            });
         }
 
         // Event handler for when the year right-button is clicked
@@ -141,7 +158,12 @@
             var new_year = date.getFullYear() + 1;
             $(".year").html(new_year);
             date.setFullYear(new_year);
-            init_calendar(events);
+            
+            // ดึงข้อมูลกิจกรรมใหม่จาก Server
+            fetchEvents(function (events) {
+                savedEvents = events;
+                init_calendar(events);
+            });
         }
         // Event handler for when the year left-button is clicked
         function prev_year(event) {
@@ -150,7 +172,12 @@
             var new_year = date.getFullYear() - 1;
             $(".year").html(new_year);
             date.setFullYear(new_year);
-            init_calendar(events);
+            
+            // ดึงข้อมูลกิจกรรมใหม่จาก Server
+            fetchEvents(function (events) {
+                savedEvents = events;
+                init_calendar(events);
+            });
         }
 
         // Display all events of the selected date in card views
