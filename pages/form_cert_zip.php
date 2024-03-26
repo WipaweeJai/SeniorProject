@@ -113,13 +113,13 @@
                                 </span>
                             </p>
                             <div class="divider"></div>
-                            <a class="btn bg-gradient-danger mb-3 text-sm" href="../assets/img/manual/manual.pdf" target="_blank">
+                            <a class="btn bg-gradient-success mb-3 text-sm font-weight-normal" href="../assets/img/manual/manual.pdf" target="_blank">
                                 คู่มือรายละเอียดการอัปโหลดไฟล์
                             </a>
 
                             <p class="text-dark text-lg font-weight-normal ">
                               อัปโหลดไฟล์รายชื่อผู้ผ่านกิจกรรม *
-                              <a class="btn bg-gradient-success btn-sm mt-3 font-weight-light" onclick="openModal('myModal1')">ข้อกำหนด</a>
+                              <a class="btn bg-gradient-info btn-sm mt-3 font-weight-normal" onclick="openModal('myModal1')">ข้อกำหนด</a>
                               <div id="myModal1" class="modal1">
                                 <div class="modal1-content-wrapper">
                                   <img class="modal1-content" id="img01" src="../assets/img/activity6.png" alt="">
@@ -134,7 +134,7 @@
 
                             <p class="text-dark text-lg font-weight-normal ">
                               อัปโหลดไฟล์ใบประกาศเข้าร่วมกิจกรรม *
-                              <a class="btn bg-gradient-success btn-sm mt-3 font-weight-light" onclick="openModal('myModal2')">ข้อกำหนด</a>
+                              <a class="btn bg-gradient-info btn-sm mt-3 font-weight-normal" onclick="openModal('myModal2')">ข้อกำหนด</a>
                               <div id="myModal2" class="modal1">
                                 <div class="modal1-content-wrapper">
                                   <img class="modal1-content" id="img02" src="../assets/img/activity7.png" alt="">

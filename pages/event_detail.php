@@ -98,7 +98,7 @@
                     $sql = "SELECT * FROM tb_event WHERE activity_id = '$activity_id'";
                     $result = mysqli_query($conn, $sql);
                     $row = mysqli_fetch_assoc($result);
-                  echo '<h5 class="mb-1">' . $row['event_name'] . '</h5>';
+                  echo '<h5 class="mb-1 text-dark">' . $row['event_name'] . '</h5>';
                   }
                 ?>
               </div>
@@ -109,7 +109,7 @@
                 <?php
                   if(isset($_GET['id'])) {
                       $activity_id = $_GET['id'];
-                      $sender_name = $_SESSION['name'];
+                      @$sender_name = $_SESSION['name'];
 
                       // Query to check if the name matches the activity_id
                       $sql = "SELECT sender_name FROM tb_event WHERE activity_id = '$activity_id'";
@@ -122,7 +122,7 @@
                               <li class="nav-item" style="padding-right: 10px;">
                                   <a class="nav-link mb-0 px-0 py-2 active" href="form_cert_zip.php?id=<?php echo $activity_id; ?>" role="tab">
                                       <i class="far fa-regular fa-paper-plane"></i>
-                                      <span class="ms-1">อัพโหลดใบประกาศ</span>
+                                      <span class="ms-1">อัปโหลดใบประกาศ</span>
                                   </a>
                               </li>
                   <?php
@@ -130,6 +130,7 @@
                       }
                   }
                   ?>
+                  <!-- **************** -->
                   <li class="nav-item">
                     <a class="nav-link mb-0 px-0 py-2 active "  href="https://www.camphub.in.th/basic-python-programming-for-health-data-science/" target ="_blank" role="tab">
                       <i class="far fa-regular fa-paper-plane"></i>
@@ -148,7 +149,7 @@
         <div>
           <div class="card mb-4">
             <div class="card-header pb-0 p-3">
-              <p class="text-dark">ข้อมูลเบื้องต้นของกิจกรรม</p>
+              <p class="text-dark text-lg font-weight-bolder ">ข้อมูลเบื้องต้นของกิจกรรม</p>
             </div>
             <div class="card-body p-3">
               <?php
@@ -159,23 +160,26 @@
                   $result = mysqli_query($conn, $sql);
                   $row = mysqli_fetch_assoc($result);
                   
-                  echo '<p class="text-uppercase text-body text-sm font-weight-bolder ">รูปแบบกิจกรรม :
+                  echo '<p class="text-body text-m font-weight-normal ">รูปแบบกิจกรรม :
                     <span class="text-dark ms-sm-2 font-weight-bold">' . $row['type'] . '</span></p>';
-                  echo '<p class="text-uppercase text-body text-sm font-weight-bolder ">วันที่จัดกิจกรรม : 
+                  echo '<p class="text-body text-m font-weight-normal ">วันที่จัดกิจกรรม : 
                     <span class="text-dark ms-sm-2 font-weight-bold">' . $row['event_date_from'] . '</span></p>';
-                  echo '<p class="text-uppercase text-body text-sm font-weight-bolder ">วันที่รับสมัครวันสุดท้าย : 
+                  echo '<p class="text-body text-m font-weight-normal ">วันที่รับสมัครวันสุดท้าย : 
                     <span class="text-dark ms-sm-2 font-weight-bold">' . $row['event_reg_to'] . '</span></p>';
-                  echo '<p class="text-uppercase text-body text-sm font-weight-bolder ">จำนวนที่รับ : 
+                  echo '<p class="text-body text-m font-weight-normal ">จำนวนที่รับ : 
                     <span class="text-dark ms-sm-2 font-weight-bold">' . $row['event_number'] . '</span></p>';
-                  echo '<p class="text-uppercase text-body text-sm font-weight-bolder ">ค่าใช้จ่าย : 
+                  echo '<p class="text-body text-m font-weight-normal ">ค่าใช้จ่าย : 
                     <span class="text-dark ms-sm-2 font-weight-bold">' . $row['event_fee'] . '</span></p>';
-                  echo '<p class="text-uppercase text-body text-sm font-weight-bolder ">คุณสมบัติ (ระดับการศึกษา/ช่วงอายุ/อื่นๆ) : 
+                  echo '<p class="text-body text-m font-weight-normal ">คุณสมบัติ (ระดับการศึกษา/ช่วงอายุ/อื่นๆ) : 
                     <span class="text-dark ms-sm-2 font-weight-bold">' . $row['requirements'] . '</span></p>';
-                  echo '<p class="text-uppercase text-body text-sm font-weight-bolder ">สถานที่จัดกิจกรรม : 
+                  echo '<p class="text-body text-m font-weight-normal ">สถานที่จัดกิจกรรม : 
                     <span class="text-dark ms-sm-2 font-weight-bold">' . $row['event_location'] . '</span></p>';
                   echo '<div class="divider"></div>';
-                  echo '<img src="' . $row['event_poster'] . '" width="40%" >';
-                  echo '<p class="mb-5">' . $row['event_detail_full'] . '</span></p>';
+                  echo '<div style="text-align: center;">';
+                  echo '<img src="' . $row['event_poster'] . '" style="width: 40%; border-radius: 5px; box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75); margin: auto;">';
+                  echo '</div>';
+                  echo '<br>';
+                  echo '<p class="mb-5 text-lg">' . $row['event_detail_full'] . '</span></p>';
                 }
               ?>
             </div>

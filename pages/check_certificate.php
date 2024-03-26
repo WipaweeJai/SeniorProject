@@ -118,8 +118,8 @@ if (isset($_GET['ref'])) {
     // ถ้ามีค่า ref ใน URL ให้ดึงข้อมูลจากฐานข้อมูล
     require_once('../backend/dbcon.php');
 
-    // คำสั่ง SQL สำหรับดึงข้อมูล cert_Ref, name, sur_name, และ event_name จากตาราง tb_certificate และ tb_event
-    $sql_cert_event = "SELECT c.cert_Ref, u.name, u.sur_name, e.event_name
+    // คำสั่ง SQL สำหรับดึงข้อมูล cert_Ref, name และ event_name จากตาราง tb_certificate และ tb_event
+    $sql_cert_event = "SELECT c.cert_Ref, u.name, e.event_name
                        FROM tb_certificate c
                        INNER JOIN tb_user u ON c.user_id = u.user_id
                        INNER JOIN tb_event e ON c.activity_id = e.activity_id
@@ -131,7 +131,6 @@ if (isset($_GET['ref'])) {
         $row_cert_event = mysqli_fetch_assoc($result_cert_event);
         $cert_Ref = $row_cert_event["cert_Ref"];
         $name = $row_cert_event["name"];
-        $sur_name = $row_cert_event["sur_name"];
         $event_name = $row_cert_event["event_name"];
 ?>
         <div id="resultRowFound" class="row">
@@ -146,7 +145,7 @@ if (isset($_GET['ref'])) {
                             <li class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg">
                                 <div class="d-flex flex-column">
                                   <span class="mb-2 text-sm">กิจกรรม : <span id="event_name" class="text-dark font-weight-bold ms-sm-2"><?= $event_name ?></span></span>
-                                  <span class="mb-2 text-sm">ชื่อ : <span id="name" class="text-dark font-weight-bold ms-sm-2"><?= $name . ' ' . $sur_name ?></span></span>
+                                  <span class="mb-2 text-sm">ชื่อ : <span id="name" class="text-dark font-weight-bold ms-sm-2"><?= $name ?></span></span>
                                 </div>
                             </li>
                         </ul>

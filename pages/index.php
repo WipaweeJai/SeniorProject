@@ -38,6 +38,7 @@
 <body class="g-sidenav-show  bg-gray-100">
   <?php
     include "layout/navbar.php";
+    require_once('../backend/dbcon.php');
   ?>
   <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
     <!-- Topbar -->
@@ -90,15 +91,40 @@
                 <button type="button" data-bs-target="#carouselCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
               </div>
               <div class="carousel-inner">
-                  <div class="carousel-item active">
-                    <img  src="../assets/img/upload_event/banner/banner_event1.png" class="d-block w-100 custom-rounded" alt="Image 1">
+              <?php
+                $sql = "SELECT event_banner 
+                        FROM tb_event 
+                        WHERE event_reg_to <= CURDATE() 
+                        AND event_reg_to >= DATE_SUB(CURDATE(), INTERVAL 10 DAY)";
+                $result = mysqli_query($conn, $sql);
+
+                $active = false; // ตั้งค่าให้ active เป็น false ที่นี่
+
+                if (mysqli_num_rows($result) > 0) {
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        $banner_path = $row["event_banner"];
+                ?>
+                      <div class="carousel-item <?php echo ($active ? 'active' : ''); ?>">
+                        <img src="<?php echo $banner_path; ?>" class="d-block w-100 custom-rounded" alt="Event Banner">
+                      </div>
+                <?php
+                        $active = true; // กำหนดให้ active เป็น true เมื่อเจอแบนเนอร์แรก
+                    }
+                } else {
+                    echo "ไม่พบข้อมูลแบนเนอร์ตามเงื่อนไขที่กำหนด";
+                }
+              ?>
+
+
+                  <!-- <div class="carousel-item active">
+                    <img  src="../assets/img/upload_event/banner/1034.png" class="d-block w-100 custom-rounded" alt="Image 1">
                   </div>
                   <div class="carousel-item">
-                    <img src="../assets/img/upload_event/banner/banner_event2.png" class="d-block w-100 custom-rounded" alt="Image 2">
+                    <img src="../assets/img/upload_event/banner/1032.png" class="d-block w-100 custom-rounded" alt="Image 2">
                   </div>
                   <div class="carousel-item">
-                    <img  src="../assets/img/upload_event/banner/banner_event3.png" class="d-block w-100 custom-rounded" alt="Image 3">
-                  </div>
+                    <img  src="../assets/img/upload_event/banner/1033.png" class="d-block w-100 custom-rounded" alt="Image 3">
+                  </div> -->
               </div>
 
               <button class="carousel-control-prev" type="button" data-bs-target="#carouselCaptions" data-bs-slide="prev">

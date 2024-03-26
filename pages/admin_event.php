@@ -40,9 +40,9 @@
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">หน้า</a></li>
-            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">กิจกรรม</li>
+            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">จัดการกิจกรรม</li>
           </ol>
-          <h6 class="font-weight-bolder mb-0">แก้ไขรายละเอียดกิจกรรม</h6>
+          <h6 class="font-weight-bolder mb-0">จัดการกิจกรรม</h6>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
@@ -125,7 +125,6 @@
                     echo '<p class="text-dark">ข้อมูลผู้ส่งข่าวกิจกรรม</p>';
                     echo '<p class="text-body text-sm font-weight-bolder ">ชื่อผู้ส่งข่าวกิจกรรม : <span class="font-weight-normal">' . $row['sender_name'] . '</span></p>';
                     echo '<p class="text-body text-sm font-weight-bolder ">อีเมล : <span class="font-weight-normal">' . $row['sender_email'] . '</p>';
-                    echo '<p class="text-body text-sm font-weight-bolder ">เบอร์โทรศัพท์ : <span class="font-weight-normal">' . $row['sender_tel'] . '</p>';
                 echo '</div>';
             }
             ?>
@@ -157,16 +156,16 @@
                         echo '<p class="text-uppercase text-body text-sm font-weight-bolder">วันที่จัดกิจกรรม : ';
                           if(isset($row['event_date_to'])) {
                             echo '<div class="d-flex">';
-                            echo '<input class="form-control custom-width mr-2" type="text" id="event_date_from" value="' . $row['event_date_from'] .'">';
-                            echo '<input class="form-control custom-width type="text" id="event_date_to" value="' . $row['event_date_to'] .'">';
+                            echo '<input class="form-control custom-width mr-2" type="date" id="event_date_from" value="' . $row['event_date_from'] .'">';
+                            echo '<input class="form-control custom-width" type="date" id="event_date_to" value="' . $row['event_date_to'] .'">';
                             echo '</div>';
                           } else {
                             // หรือหากไม่มีค่าใน event_date_to ให้แสดงเฉพาะ event_date_from
-                            echo '<input class="form-control custom-width col-5" type="text" id="event_date_from" value="' . $row['event_date_from'] . '">';
+                            echo '<input class="form-control custom-width col-5" type="date" id="event_date_from" value="' . $row['event_date_from'] . '">';
                           }
                         echo '</p>';                            
                         echo '<p class="text-uppercase text-body text-sm font-weight-bolder ">วันที่รับสมัครวันสุดท้าย : 
-                            <input class="form-control custom-width" type="text" id="event_reg_to" value="' . $row['event_reg_to'] . '">
+                            <input class="form-control custom-width" type="date" id="event_reg_to" value="' . $row['event_reg_to'] . '">
                             </p>';
                         echo '<p class="text-uppercase text-body text-sm font-weight-bolder ">จำนวนที่รับ : 
                             <input class="form-control custom-width" type="text" id="event_number" value="' . $row['event_number'] . '">

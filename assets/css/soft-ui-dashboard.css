@@ -24965,6 +24965,10 @@ p,
   font-size: 1.125rem !important;
 }
 
+.text-m {
+  font-size: 1.000rem !important;
+}
+
 .text-sm {
   font-size: 0.875rem !important;
 }
