@@ -98,7 +98,7 @@ while ($row = $result->fetch_assoc()) {
     $qrCodeFilePath = $activityFolderPath . '/' . $user_id . '.png';
 
     // สร้าง QR code ชื่อเป็นรหัสนิสิต
-    $targetURL = 'http://localhost/project/pages/check_certificate.php'; //สแกนคิวอาร์แล้วไปไหน?
+    $targetURL = 'https://97f0-158-108-228-143.ngrok-free.app/project/pages/check_certificate.php'; //สแกนคิวอาร์แล้วไปไหน?
     // $qrCodeFilePath = '../assets/img/qrcodes/' . $activity_id.'/' . $user_id . '.png';
     QRcode::png($targetURL . '?ref=' . urlencode($cert_Ref), $qrCodeFilePath, QR_ECLEVEL_L, 5, 2);
 

@@ -87,7 +87,6 @@ if(isset($_POST['btn_submit'])  && isset($_FILES['_fileup']['name']) && $_FILES[
 <?php
 // สร้างฟังก์ชั่นสำหรับจัดการกับข้อมุลที่เป็นค่าว่าง หรือไม่มีข้อมูลน้้น
 function prepare_data($data){
-    // กำหนดชื่อ filed ให้ตรงกับ $col_name ด้านบน
     $arr_field = array("user_id","name");
     if(is_array($data)){
         foreach($arr_field as $v){
