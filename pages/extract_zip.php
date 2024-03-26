@@ -149,10 +149,13 @@ if (isset($_FILES['excel_file']) && isset($_POST["upload_btn"])) {
                     $user_id = $sheet->getCellByColumnAndRow(0, $row)->getValue();
                     $name = $sheet->getCellByColumnAndRow(1, $row)->getValue();
 
+                    // เปลี่ยนการเก็บค่า user_id เป็นแบบ 'b$user_id'
+                    $user_id_modified = 'b' . $user_id;
+
                     // แสดงค่า user_id และ name ออกมาก่อนที่จะทำการบันทึกลงในฐานข้อมูล
                     echo "user_id: $user_id, name: $name <br>";
 
-                    $stmt->bind_param("ssss", $activity_id, $excel_target_file, $user_id, $name);
+                    $stmt->bind_param("ssss", $activity_id, $excel_target_file, $user_id_modified, $name);
                     $stmt->execute();
                 }
 
