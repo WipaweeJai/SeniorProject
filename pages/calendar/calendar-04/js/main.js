@@ -14,77 +14,78 @@
         // Set current month as active
         $(".months-row").children().eq(date.getMonth()).addClass("active-month");
         init_calendar(date);
-        var events = check_events(today, date.getMonth() + 1, date.getFullYear());
-        show_events(events, months[date.getMonth()], today);
-    });
-
-    $(document).ready(function () {
-        // เรียกใช้งาน API หรือไฟล์ PHP ที่มีข้อมูล start_date และ end_date
+    
         $.ajax({
             url: '../pages/getEventCalendar.php',
             method: 'GET',
-            success: function(response) {
-                // หลังจากที่ดึงข้อมูลสำเร็จ
-                // ทำการใช้ข้อมูลในการแสดงผลบนปฏิทิน
-                var start_date = response.start_date;
-                var end_date = response.end_date;
-    
-                // เรียกใช้ฟังก์ชัน show_events() เพื่อแสดงผลข้อมูลอีเวนต์ในปฏิทิน
-                show_events(start_date, end_date);
+            success: function (response) {
+                // แปลงข้อมูล JSON เป็นอาร์เรย์ JavaScript
+                var eventsArray = JSON.parse(response);
+                // เรียกใช้งาน init_calendar() ด้วยอาร์เรย์ของอ็อบเจ็กต์เหล่านี้
+                init_calendar(eventsArray);
+                // ตรวจสอบข้อมูลที่ได้รับ
+                checkResponse(eventsArray);
             },
-            error: function(xhr, status, error) {
-                // กรณีที่เกิดข้อผิดพลาดในการโหลดข้อมูล
+            error: function (xhr, status, error) {
                 console.log("Error:", error);
             }
         });
     });
+    
+    // สร้างฟังก์ชันเพื่อตรวจสอบข้อมูลที่ได้รับ
+    function checkResponse(response) {
+        // พิมพ์ข้อมูลที่ได้รับในรูปแบบออบเจกต์
+        console.log(response);
+    
+        // ตรวจสอบว่า response เป็นอาร์เรย์ของออบเจกต์หรือไม่
+        if (Array.isArray(response)) {
+            // ทำสิ่งที่ต้องการเมื่อข้อมูลถูกต้อง
+        } else {
+            // ทำสิ่งที่ต้องการเมื่อข้อมูลไม่ถูกต้อง
+        }
+    }
+    
 
     // Initialize the calendar by appending the HTML dates
-    function init_calendar(date) {
+    function init_calendar(events) {
         $(".tbody").empty();
         $(".events-container").empty();
         var calendar_days = $(".tbody");
+        var date = new Date();
         var month = date.getMonth();
         var year = date.getFullYear();
         var day_count = days_in_month(month, year);
         var row = $("<tr class='table-row'></tr>");
         var today = date.getDate();
-        // Set date to 1 to find the first day of the month
         date.setDate(1);
         var first_day = date.getDay();
-        // 35+firstDay is the number of date elements to be added to the dates table
-        // 35 is from (7 days in a week) * (up to 5 rows of dates in a month)
+
         for (var i = 0; i < 35 + first_day; i++) {
-            // Since some of the elements will be blank, 
-            // need to calculate actual date from index
             var day = i - first_day + 1;
-            // If it is a sunday, make a new row
             if (i % 7 === 0) {
                 calendar_days.append(row);
                 row = $("<tr class='table-row'></tr>");
             }
-            // if current index isn't a day in this month, make it blank
+
             if (i < first_day || day > day_count) {
                 var curr_date = $("<td class='table-date nil'>" + "</td>");
                 row.append(curr_date);
-            }
-            else {
+            } else {
                 var curr_date = $("<td class='table-date'>" + day + "</td>");
-                var events = check_events(day, month + 1, year);
+                var eventsForDay = check_events(day, month + 1, year, events);
                 if (today === day && $(".active-date").length === 0) {
                     curr_date.addClass("active-date");
-                    show_events(events, months[month], day);
+                    show_events(eventsForDay, months[month], day);
                 }
-                // If this date has any events, style it with .event-date
-                if (events.length !== 0) {
+
+                if (eventsForDay.length !== 0) {
                     curr_date.addClass("event-date");
                 }
-                // Set onClick handler for clicking a date
-                curr_date.click({ events: events, month: months[month], day: day }, date_click);
+                curr_date.click({ events: eventsForDay, month: months[month], day: day }, date_click);
                 row.append(curr_date);
             }
         }
-        // Append the last row and set the current year
+
         calendar_days.append(row);
         $(".year").text(year);
     }
@@ -126,7 +127,6 @@
         date.setFullYear(new_year);
         init_calendar(date);
     }
-
     // Event handler for when the year left-button is clicked
     function prev_year(event) {
         $("#dialog").hide(250);
@@ -139,23 +139,17 @@
 
     // Display all events of the selected date in card views
     function show_events(events, month, day) {
-        // Clear the dates container
         $(".events-container").empty();
         $(".events-container").show(250);
-        console.log(event_data["events"]);
-    
-        // Check if events is defined and not null
-        if (events && events.length > 0) { // ทำการตรวจสอบว่า events มีค่าและมีความยาวมากกว่า 0 หรือไม่
-            // Go through and add each event as a card to the events container
+
+        if (events && events.length > 0) {
             for (var i = 0; i < events.length; i++) {
                 var event_card = $("<div class='event-card'></div>");
-                var event_name = $("<div class='event-name'>" + events[i]["event_name"] + ":</div>");
                 var event_dates = $("<div class='event-dates'>From: " + events[i]["start_date"] + " To: " + events[i]["end_date"] + "</div>");
-                $(event_card).append(event_name).append(event_dates);
+                $(event_card).append(event_dates);
                 $(".events-container").append(event_card);
             }
         } else {
-            // If there are no events for this date, notify the user
             var event_card = $("<div class='event-card'></div>");
             var event_name = $("<div class='event-name'>There are no events planned for " + month + " " + day + ".</div>");
             $(event_card).css({ "border-left": "10px solid #FF1744" });
@@ -163,31 +157,22 @@
             $(".events-container").append(event_card);
         }
     }
-    
 
     // Checks if a specific date has any events
-    function check_events(day, month, year) {
-        var events = [];
-        for (var i = 0; i < event_data["events"].length; i++) {
-            var event = event_data["events"][i];
-            if (event["start_date"] <= year + "-" + pad(month, 2) + "-" + pad(day, 2) && event["end_date"] >= year + "-" + pad(month, 2) + "-" + pad(day, 2)) {
-                events.push(event);
-            }
+    function check_events(day, month, year, events) {
+        if (Array.isArray(events)) {
+            var eventsForDay = events.filter(function (event) {
+                // console.log("Start Date:", event["start_date"]);
+                return event["start_date"] <= year + "-" + pad(month, 2) + "-" + pad(day, 2) && event["end_date"] >= year + "-" + pad(month, 2) + "-" + pad(day, 2);
+            });
+            return eventsForDay;
+        } else {
+            // console.error("Events is not an array.");
+            return [];
         }
-        return events;
     }
 
     // Given data for events in JSON format
-    var event_data = {
-        "events": [
-            {
-                "event_name": " Repeated Test Event ",
-                "start_date": "2024-03-16",
-                "end_date": "2024-03-18"
-            }
-        ]
-    };
-
     const months = [
         "January",
         "February",
@@ -209,5 +194,5 @@
         return s;
     }
 
-})(jQuery);
 
+})(jQuery);
