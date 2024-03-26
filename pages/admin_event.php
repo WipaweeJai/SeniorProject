@@ -157,16 +157,16 @@
                         echo '<p class="text-uppercase text-body text-sm font-weight-bolder">วันที่จัดกิจกรรม : ';
                           if(isset($row['event_date_to'])) {
                             echo '<div class="d-flex">';
-                            echo '<input class="form-control custom-width mr-2" type="date" id="event_date_from" value="' . $row['event_date_from'] .'">';
-                            echo '<input class="form-control custom-width type="date" id="event_date_to" value="' . $row['event_date_to'] .'">';
+                            echo '<input class="form-control custom-width mr-2" type="text" id="event_date_from" value="' . $row['event_date_from'] .'">';
+                            echo '<input class="form-control custom-width type="text" id="event_date_to" value="' . $row['event_date_to'] .'">';
                             echo '</div>';
                           } else {
                             // หรือหากไม่มีค่าใน event_date_to ให้แสดงเฉพาะ event_date_from
-                            echo '<input class="form-control custom-width col-5" type="date" id="event_date_from" value="' . $row['event_date_from'] . '">';
+                            echo '<input class="form-control custom-width col-5" type="text" id="event_date_from" value="' . $row['event_date_from'] . '">';
                           }
                         echo '</p>';                            
                         echo '<p class="text-uppercase text-body text-sm font-weight-bolder ">วันที่รับสมัครวันสุดท้าย : 
-                            <input class="form-control custom-width" type="date" id="event_reg_to" value="' . $row['event_reg_to'] . '">
+                            <input class="form-control custom-width" type="text" id="event_reg_to" value="' . $row['event_reg_to'] . '">
                             </p>';
                         echo '<p class="text-uppercase text-body text-sm font-weight-bolder ">จำนวนที่รับ : 
                             <input class="form-control custom-width" type="text" id="event_number" value="' . $row['event_number'] . '">
