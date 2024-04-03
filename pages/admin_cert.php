@@ -170,7 +170,7 @@
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "generateQR.php", true);
     xhr.onload = function() {
-        console.log("Response:", xhr.responseText);  // เพิ่มบรรทัดนี้
+    console.log("Response:", xhr.responseText);
         if (xhr.status === 200) {
             // อัปเดตเรียบร้อย
             alert("สร้างคิวอาร์โค้ดเรียบร้อยแล้ว");
