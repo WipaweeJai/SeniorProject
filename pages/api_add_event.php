@@ -53,12 +53,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $event_download_url = $_POST['event_download_url'];
     $event_detail_full = $_POST['event_detail_full'];
 
+    // รับค่าจาก radio input
+    $event_type = $_POST['type'];
+
+    // ตรวจสอบและกำหนดค่าตาม value ของ radio input
+    if ($event_type == 1) {
+        $event_type_value = 'Online';
+    } elseif ($event_type == 2) {
+        $event_type_value = 'Onsite';
+    } else {
+        // ถ้าไม่มีการเลือกใน radio input หรือเกิดข้อผิดพลาด
+        $event_type_value = 'ไม่ได้ระบุ';
+    }
+
     // สร้างคำสั่ง SQL และบันทึกข้อมูล
     $sql_insert = "INSERT INTO tb_event(sender_name,sender_email,event_banner, event_poster, event_name, event_detail_short, event_date_from,
-    event_date_to, event_reg_to, event_number, event_fee, requirements, event_require, event_location, event_download_url, event_detail_full,status) 
+    event_date_to, event_reg_to, event_number, event_fee, requirements, event_require, event_location, event_download_url, event_detail_full,status, type) 
     VALUES ('$sender_name','$sender_email','{$uploadedFiles['event_banner']}', '{$uploadedFiles['event_poster']}', '$event_name', '$event_detail_short', '$event_date_from', '$event_date_to',
     '$event_reg_to', '$event_number', '$event_fee','$event_levels', '$event_require', '$event_location', '$event_download_url',
-    '$event_detail_full','Pending')";
+    '$event_detail_full','Pending','$event_type_value')";
 
     $result_insert = mysqli_query($conn, $sql_insert);
 

@@ -212,11 +212,11 @@
                                     สถานที่จัดกิจกรรม
                                     <span class="text-nddark ms-sm-2 font-weight-bold">
                                         <div class="form-check" style="display: block;">
-                                            <input class="form-check-input" type="radio" value= "ออนไลน์" id="online" name="type" >
+                                            <input class="form-check-input" type="radio" value= "1" id="online" name="type" >
                                             <label class="form-check-label" >ออนไลน์</label>
                                         </div>
                                         <div class="form-check" style="display: block;">
-                                            <input class="form-check-input" type="radio" value= "ออฟไลน์" id="onsite" name="type" >
+                                            <input class="form-check-input" type="radio" value= "2" id="onsite" name="type" >
                                             <label class="form-check-label" >ออนไซต์</label>
                                         </div>
                                         <input class="form-control custom-width" type="text" id="event_location" name="event_location"  placeholder="กรอกสถานที่จัดกิจกรรม หรือช่องทางทางออนไลน์ที่จัดกิจกรรม" required>
