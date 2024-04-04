@@ -159,7 +159,7 @@
                     </td>
                     <td>
                       <?php
-                        echo '<i class="far fa-trash-alt" onclick="deleteRow(' . $row['activity_id'] . ')"></i>';
+                        echo '<i class="far fa-trash-alt" style="color: #d50707;" onclick="deleteRow(' . $row['activity_id'] . ')"></i>';
                       ?>
                     </td>
                   </tr>

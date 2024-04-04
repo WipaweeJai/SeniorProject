@@ -137,8 +137,6 @@
                     <!-- ปุ่มส่งข้อมูลกิจกรรม -->
                     <div class="col-12 text-center mt-3">
                         <button class="btn bg-gradient-success mb-0 text-lg" type="submit" id="btn_create_cert"><i class="fas fa-plus"></i>&nbsp;&nbsp;สร้างคิวอาร์โค้ด</button>
-                        <!-- <button class="btn bg-gradient-dark mb-0 text-lg" type="submit" id="btn_edit_certtemp"><i class="fas fa-plus"></i>&nbsp;&nbsp;บันทึก</button> -->
-                        <!-- <button class="btn bg-gradient-danger mb-0 text-lg" type="submit" id="btn_delete_certtemp"><i class="far fa-trash-alt"></i>&nbsp;&nbsp;ลบ</button> -->
                     </div>
                 </form>
             </div>

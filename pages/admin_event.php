@@ -145,12 +145,6 @@
                         echo '<p class="text-uppercase text-body text-sm font-weight-bolder ">ชื่อกิจกรรม : 
                             <input class="form-control custom-width" type="text" id="event_name" value="' . $row['event_name'] . '">
                             </p>';
-                        echo '<p class="text-uppercase text-body text-sm font-weight-bolder ">สถานะกิจกรรม</p>
-                            <select id="status" class="form-select status-select" style="width: 50%" data-event-id="' . $row['activity_id'] . '">
-                                <option value="Approved"'; if ($row['status'] == 'Approved') echo "selected"; echo '>Approved</option>
-                                <option value="Pending"'; if ($row['status'] == 'Pending') echo "selected"; echo '>Pending</option>
-                                <option value="Closed"'; if ($row['status'] == 'Closed') echo "selected"; echo '>Closed</option>
-                            </select>';
                         echo '<p class="text-uppercase text-body text-sm font-weight-bolder ">รูปแบบกิจกรรม :
                             <input class="form-control custom-width" type="text" id="type" value="' . $row['type'] . '">';
                         echo '<p class="text-uppercase text-body text-sm font-weight-bolder">วันที่จัดกิจกรรม : ';
@@ -180,8 +174,17 @@
                             <input class="form-control custom-width" type="text" id="event_location" value="' . $row['event_location'] . '">
                             </p>';
                         echo '<div class="divider"></div>';
-                        echo '<img src="' . $row['event_poster'] . '" width="40%" >';
+                        echo '<div style="text-align: center;">';
+                        echo '<img src="' . $row['event_poster'] . '" style="width: 40%; border-radius: 5px; box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75); margin: auto;">';
+                        echo '</div>';
                         echo '<textarea class="form-control mt-3" id="event_detail_full" rows="3">' . $row['event_detail_full'] . '</textarea>';
+                        echo '<div class="divider"></div>';
+                        echo '<p class="text-uppercase text-body text-sm font-weight-bolder mt-3">สถานะกิจกรรม</p>
+                            <select id="status" class="form-select status-select" style="width: 50%" data-event-id="' . $row['activity_id'] . '">
+                                <option value="Approved"'; if ($row['status'] == 'Approved') echo "selected"; echo '>Approved</option>
+                                <option value="Pending"'; if ($row['status'] == 'Pending') echo "selected"; echo '>Pending</option>
+                                <option value="Closed"'; if ($row['status'] == 'Closed') echo "selected"; echo '>Closed</option>
+                            </select>';
                         }
                     ?>
                     <!-- ปุ่มส่งข้อมูลกิจกรรม -->
