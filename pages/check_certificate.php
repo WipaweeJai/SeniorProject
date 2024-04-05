@@ -72,6 +72,7 @@
     </nav>
     <!-- End Navbar -->
 
+  
     <div class="container-fluid py-4">
       <div class="row">
         <div class="col-lg-8">
@@ -84,23 +85,29 @@
                   </div>
                 </div>
               </div>
-              <div class="card-body p-3">
-                <div class="row">
+
+              <!-- <form method="post" action=""> -->
+                <div class="card-body p-3">
+                  <div class="row">
                   <?php
-                  $ref = '';
-                  if(isset($_GET['ref'])) {
-                      $ref = $_GET['ref'];
-                  }
-                  ?>
-                <div class="col-md-8 mb-md-0 mb-4">
-                    <input class="form-control" type="text" id="refInput" placeholder="กรอกหมายเลขใบประกาศ" value="<?= $ref ?>">
-                </div>
+                      $ref = '';
+                      if(isset($_GET['ref'])) {
+                          $ref = $_GET['ref'];
+                      } elseif (isset($_POST['refInput'])) {
+                          $ref = $_POST['refInput'];
+                      }
+                    ?>
                   
-                  <div class="col-2 text-end">
-                      <a id="checkBtn" class="btn bg-gradient-dark mb-0">ตรวจสอบ</a>
+                    <div class="col-md-8 mb-md-0 mb-4">
+                      <input class="form-control" type="text" name="refInput" id="refInput" placeholder="กรอกหมายเลขใบประกาศ" value="<?= $ref ?>">
+                    </div>
+                    <div class="col-2 text-end">
+                      <button type="submit" id="checkBtn" class="btn bg-gradient-dark mb-0">ตรวจสอบ</button>
+                    </div>
+
                   </div>
                 </div>
-              </div>
+              <!-- </form> -->
             </div>
           </div>
         </div>
@@ -137,6 +144,7 @@
                 $user_id_without_b = substr($user_id, 1);
                 $image_url = "https://d2a4-158-108-229-149.ngrok-free.app/project/assets/img/zip/{$activity_id}/modified/{$user_id_without_b}.png";
       ?>
+      <!--*********** resultRowFound -->
       <div id="resultRowFound" class="row">
           <div class="col-md-7 mt-4">
               <div class="card">
@@ -150,7 +158,7 @@
                             <div class="d-flex flex-column">
                                 <span class="mb-2 text-sm">กิจกรรม : <span id="event_name" class="text-dark font-weight-bold ms-sm-2"><?= $event_name ?></span></span>
                                 <span class="mb-2 text-sm">ชื่อ : <span id="name" class="text-dark font-weight-bold ms-sm-2"><?= $name ?></span></span>
-                                <a id="downloadLink" href="<?php echo $image_url; ?>" download>
+                                <a class="download-link" href="<?php echo $image_url; ?>" download>
                                     <button type="button" class="btn bg-gradient-info btn-sm font-weight-normal">ดาวน์โหลดใบประกาศ</button>
                                 </a>
                             </div>
@@ -213,6 +221,7 @@
 <script>
 $("#checkBtn").click(function() {
     var refInput = $("#refInput").val();
+    console.log(refInput);
     if (refInput != 0) {
         $.ajax({
             url: "function/api_checkCert.php",
@@ -221,6 +230,7 @@ $("#checkBtn").click(function() {
             success: function(response) {
                 if (jQuery.trim(response) == 'false') {
                     // หากไม่พบใบประกาศ
+                    console.log(response);
                     $("#resultRowFound").hide();
                     $("#resultRowNotFound").show();
                 } else {
@@ -228,12 +238,6 @@ $("#checkBtn").click(function() {
                     // หากพบใบประกาศ
                     $("#resultRowFound").show();
                     $("#resultRowNotFound").hide();
-                    // แปลงข้อมูลที่ได้จาก JSON เป็น Object
-                    // var data = JSON.parse(response);
-                    // // แสดงข้อมูลในแต่ละส่วน
-                    // $("#refInputValue").text(data.cert_Ref);
-                    // $("#name").text(data.name);
-                    // $("#activity").text(data.activity_id);
                 }
             },
             error: function(request, status, error) {
@@ -248,47 +252,33 @@ $("#checkBtn").click(function() {
     }
 });
 
+
+
+$(".download-link").click(function(event) {
+    event.preventDefault();
+    var fileUrl = $(this).attr('href');
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', fileUrl, true);
+    xhr.responseType = 'blob';
+
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            var downloadLink = document.createElement('a');
+            var url = window.URL.createObjectURL(xhr.response);
+            downloadLink.href = url;
+            downloadLink.setAttribute('download', fileUrl.split('/').pop());
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+        }
+    };
+    xhr.send();
+});
+
 </script>
 
 
-<script>
-    // เมื่อคลิกที่ปุ่ม "ดาวน์โหลดใบประกาศ"
-    document.getElementById("downloadLink").addEventListener("click", function(event) {
-        // หยุดการทำงานของเหตุการณ์เรียกคำสั่งเปิดลิงก์ในหน้าเว็บ
-        event.preventDefault();
 
-        // URL ของไฟล์ที่ต้องการดาวน์โหลด
-        var fileUrl = "<?php echo $image_url; ?>";
-
-        // สร้าง XMLHttpRequest สำหรับดาวน์โหลดไฟล์
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', fileUrl, true);
-        xhr.responseType = 'blob'; // ประเภทของข้อมูลที่จะรับ
-
-        xhr.onload = function() {
-            // เช็คสถานะของการดาวน์โหลด
-            if (xhr.status === 200) {
-                // สร้างลิงก์สำหรับดาวน์โหลดไฟล์
-                var downloadLink = document.createElement('a');
-                var url = window.URL.createObjectURL(xhr.response);
-                downloadLink.href = url;
-                downloadLink.setAttribute('download', fileUrl.split('/').pop());
-
-                // เพิ่มลิงก์ไปยังเอกสาร
-                document.body.appendChild(downloadLink);
-
-                // คลิกลิงก์ดาวน์โหลด
-                downloadLink.click();
-
-                // ลบลิงก์หลังจากใช้งาน
-                document.body.removeChild(downloadLink);
-            }
-        };
-
-        // เริ่มดาวน์โหลดไฟล์
-        xhr.send();
-    });
-</script>
 
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>

@@ -177,7 +177,8 @@
                       $cert_Ref = $row['cert_Ref'];
                       $event_name = $row['event_name'];
                       $event_banner = $row['event_banner'];
-                      $image_url = "http://localhost/project/assets/img/zip/{$activity_id}/modified/{$cert_Ref}.png";
+                      $user_id1 = substr($user_id, 1);
+                      $image_url = "http://localhost/project/assets/img/zip/{$activity_id}/modified/{$user_id1}.png";
               ?>
 
               <div class="col-xl-3 col-md-6 mb-xl-0 mb-4">
@@ -190,10 +191,11 @@
 
                   <div class="card-body px-1 pb-0">
                     <h6><?php echo $event_name; ?></h6>
+                    
                     <div class="d-flex align-items-center justify-content-between">
-                      <button type="button" class="btn btn-outline-info btn-sm mb-0" onclick="window.open('<?php echo $image_url; ?>', '_blank')">
-                        รายละเอียด
-                      </button>
+                      <a href="<?php echo $image_url; ?>" download>
+                        <button type="button" class="btn btn-outline-info btn-sm mb-0">ดาวน์โหลดใบประกาศ</button>
+                      </a>
                     </div>
                   </div>
                 </div>
