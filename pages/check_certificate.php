@@ -134,10 +134,17 @@
             // คำสั่ง SQL สำหรับดึงข้อมูล cert_Ref, name และ event_name จากตาราง tb_certificate และ tb_event
             $sql_cert_event = "SELECT c.cert_Ref, u.name, e.event_name, c.user_id, c.activity_id
                               FROM tb_certificate c
-                              INNER JOIN tb_user u ON c.user_id = u.user_id
+                              INNER JOIN tb_participants u ON SUBSTRING(c.user_id, 2) = u.user_id
                               INNER JOIN tb_event e ON c.activity_id = e.activity_id
                               WHERE c.cert_Ref = '$ref'";
             $result_cert_event = mysqli_query($conn, $sql_cert_event);
+
+            // $sql_cert_event = "SELECT c.cert_Ref, u.name, e.event_name, c.user_id, c.activity_id
+            //                   FROM tb_certificate c
+            //                   INNER JOIN tb_participants u ON c.user_id = u.user_id
+            //                   INNER JOIN tb_event e ON c.activity_id = e.activity_id
+            //                   WHERE c.cert_Ref = '$ref'";
+            // $result_cert_event = mysqli_query($conn, $sql_cert_event);
 
             // ตรวจสอบว่ามีผลลัพธ์จากคำสั่ง SQL
             if (mysqli_num_rows($result_cert_event) > 0) {

@@ -83,8 +83,8 @@
             <!-- จัดการกิจกรรม -->
             <div class="col-lg-6">
                 <a href="adminevent.php">
-                    <div class="card h-100 p-3" style="height: 1000px; background-image: url('../assets/img/13.jpg');">
-                        <h5 class="font-weight-bolder text-info text-gradient">จัดการกิจกรรม</h5>
+                    <div class="card h-100 p-3">
+                        <h5 class="font-weight-normal text-dark">จัดการกิจกรรม</h5>
                     </div>
                 </a>
             </div>
@@ -92,8 +92,8 @@
             <!-- จัดการรายชื่อและใบประกาศเข้าร่วมกิจกรรม -->
             <div class="col-lg-6">
                 <a href="admincert.php">
-                    <div class="card h-100 p-3" style="height: 1000px; background-image: url('../assets/img/13.jpg');">
-                        <h5 class="font-weight-bolder text-info text-gradient">จัดการรายชื่อและใบประกาศเข้าร่วมกิจกรรม</h5>
+                    <div class="card h-100 p-3">
+                        <h5 class="font-weight-normal text-dark">จัดการรายชื่อและใบประกาศเข้าร่วมกิจกรรม</h5>
                     </div>
                 </a>
             </div>
