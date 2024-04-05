@@ -107,7 +107,7 @@
                         <input type="text" id="sender_email" name="sender_email" value="<?php echo $email; ?>" hidden>
 
                         <p class="text-dark text-lg font-weight-normal">
-                            อัปโหลดภาพหัวข่าว ขนาด 1200 x 630 พิกเซล (ไม่เกิน 2MB)
+                            อัปโหลดภาพหัวข่าว ขนาด 1200 x 630 พิกเซล (ไม่เกิน 2MB) *
                             <a class="btn bg-gradient-info btn-sm mt-3 font-weight-normal" onclick="openModal('myModal1')">ข้อกำหนด</a>
                                 <div id="myModal1" class="modal1">
                                     <div class="modal2-content-wrapper">
@@ -121,14 +121,14 @@
                             <input class="form-control custom-width" type="file" id="event_banner" name="event_banner" required>
                         </div>
                         <p class="text-dark text-lg font-weight-normal ">
-                            ชื่อกิจกรรม
+                            ชื่อกิจกรรม *
                             <span class="text-dark ms-sm-2 font-weight-bold">
                                 <p class="text-sm font-weight-light ">จำกัดจำนวนตัวอักษร 60 ตัว</p>
                                 <input class="form-control custom-width" type="text" id="event_name" name="event_name" placeholder="กรุณาพิมพ์ชื่อกิจกรรม"  maxlength="60" required>
                             </span>
                         </p>
                         <p class="text-dark text-lg font-weight-normal ">
-                            คำโปรยของกิจกรรม
+                            คำโปรยของกิจกรรม *
                             <span class="text-dark ms-sm-2 font-weight-bold">
                                 <p class="text-sm font-weight-light ">จำกัดจำนวนตัวอักษร 120 ตัว</p>
                                 <textarea class="form-control custom-width" type="text" rows="3" id="event_detail_short" name="event_detail_short" placeholder="กรุณาพิมพ์คำอธิบายกิจกรรมคร่าว ๆ ที่เชิญชวนให้คนสนใจ"  maxlength="120" required></textarea>
@@ -145,30 +145,30 @@
                                 <p class="text-dark text-lg font-weight-normal ">
                                     วันที่จัดกิจกรรม
                                     <span class="text-dark ms-sm-2">
-                                        <p class="text-dark font-weight-bold ">วันที่เริ่มต้น</p>
+                                        <p class="text-dark font-weight-bold ">วันที่เริ่มต้น *</p>
                                         <input class="form-control custom-width" type="date" id="event_date_from" name="event_date_from" required>
                                     </span>
                                     <span class="text-dark ms-sm-2">
-                                        <p class="text-dark font-weight-bold ">วันที่สิ้นสุด</p>
+                                        <p class="text-dark font-weight-bold ">วันที่สิ้นสุด *</p>
                                         <input class="form-control custom-width" type="date" id="event_date_to" name="event_date_to" required>
                                     </span>
                                 </p>
                                 <p class="text-dark text-lg font-weight-normal ">
-                                    วันที่รับสมัครวันสุดท้าย
+                                    วันที่รับสมัครวันสุดท้าย *
                                     <span class="text-dark ms-sm-2">
                                         <input class="form-control custom-width" type="date" id="event_reg_to" name="event_reg_to" required>
                                     </span>
                                 </p>
                                 <div class="divider"></div>
                                 <p class="text-dark text-lg font-weight-normal">
-                                    จำนวนคนที่เปิดรับ
+                                    จำนวนคนที่เปิดรับ *
                                     <span class="text-nddark ms-sm-2 font-weight-bold">
                                         <input class="form-control custom-width" type="text" id="event_number" name="event_number"  placeholder="เช่น 50 คน , ไม่จำกัด" required>
                                     </span>
                                 </p>
                                 <div class="divider"></div>
                                 <p class="text-dark text-lg font-weight-normal">
-                                    ค่าใช้จ่าย
+                                    ค่าใช้จ่าย *
                                     <span class="text-nddark ms-sm-2 font-weight-bold">
                                         <p class="text-sm font-weight-light ">(กรุณากรอกเฉพาะราคาปกติต่อ 1 คน เท่านั้น)</p>
                                         <input class="form-control custom-width" type="text" id="event_fee" name="event_fee"  placeholder="เช่น 500 บาท , ฟรี" required>
@@ -176,7 +176,7 @@
                                 </p>
                                 <div class="divider"></div>
                                 <p class="text-dark text-lg font-weight-normal ">
-                                    คุณสมบัติ
+                                    คุณสมบัติ *
                                     <span class="text-nddark ms-sm-2 font-weight-bold">
                                         <div class="form-check">
                                             <input class="form-check-input" type="checkbox" value="ชั้นปี 1" id="event_level_1" name="event_levels[]">
@@ -201,7 +201,7 @@
                                     </span>
                                 </p>
                                 <p class="text-dark text-lg font-weight-normal ">
-                                    คุณสมบัติเพิ่มเติม
+                                    คุณสมบัติเพิ่มเติม *
                                     <span class="text-nddark ms-sm-2 font-weight-bold">
                                         <p class="text-sm font-weight-light ">(ข้อจำกัดต่าง ๆ เช่น อายุ สาขา เกรดเฉลี่ย)</p>
                                         <input class="form-control custom-width" type="text" id="event_require" name="event_require"  placeholder="คุณสมบัติเพิ่มเติม" required>
@@ -209,7 +209,7 @@
                                 </p>
                                 <div class="divider"></div>
                                 <p class="text-dark text-lg font-weight-normal ">
-                                    สถานที่จัดกิจกรรม
+                                    สถานที่จัดกิจกรรม *
                                     <span class="text-nddark ms-sm-2 font-weight-bold">
                                         <div class="form-check" style="display: block;">
                                             <input class="form-check-input" type="radio" value= "1" id="online" name="type" >
@@ -224,7 +224,7 @@
                                 </p>
                                 <div class="divider"></div>
                                 <p class="text-dark text-lg font-weight-normal ">
-                                    ลิงค์ดาวน์โหลดใบสมัคร/ลิงค์สมัครออนไลน์
+                                    ลิงค์ดาวน์โหลดใบสมัคร/ลิงค์สมัครออนไลน์ *
                                     <span class="text-nddark ms-sm-2 font-weight-bold">
                                         <input class="form-control custom-width" type="text" id="event_download_url" name="event_download_url"  placeholder="https://" required>
                                     </span>
@@ -238,7 +238,7 @@
                             </div>
                             <div class="card-body p-3">
                                 <p class="text-dark text-lg font-weight-normal">
-                                    อัปโหลดภาพโปสเตอร์เพิ่มเติม (ไม่เกิน 2MB)
+                                    อัปโหลดภาพโปสเตอร์เพิ่มเติม (ไม่เกิน 2MB) *
                                     <a class="btn bg-gradient-info btn-sm mt-3 font-weight-normal" onclick="openModal('myModal2')">ข้อกำหนด</a>
                                     <div id="myModal2" class="modal1">
                                         <div class="modal1-content-wrapper">
@@ -252,7 +252,7 @@
                                     </div>
                                 </p>
                                 <p class="text-dark text-lg font-weight-normal ">
-                                    รายละเอียดกิจกรรม
+                                    รายละเอียดกิจกรรม *
                                     <span class="text-dark ms-sm-2 font-weight-bold">
                                         <textarea class="form-control" id="event_detail_full" rows="3" name="event_detail_full"  placeholder="กรุณาระบุรายละเอียดของกิจกรรมทั้งหมด"></textarea>
                                     </span>
