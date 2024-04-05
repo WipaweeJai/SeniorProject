@@ -172,7 +172,7 @@
         if (xhr.status === 200) {
             // อัปเดตเรียบร้อย
             alert("สร้างคิวอาร์โค้ดเรียบร้อยแล้ว");
-            window.location.href = 'admin.php';
+            window.location.href = 'admincert.php';
         } else {
             // เกิดข้อผิดพลาดในการอัปเดต
             alert("เกิดข้อผิดพลาดในการสร้างข้อมูล");
@@ -217,31 +217,6 @@
     };
     xhr.send(formData);
   });
-  </script>
-
-  <!--ลบกิจกรรม-->
-  <script>
-    document.getElementById("btn_delete_certtemp").addEventListener("click", function(event){
-        event.preventDefault(); // ป้องกันการโหลดหน้าเว็บหลังจากการกดปุ่ม
-        // ยืนยันว่าผู้ใช้ต้องการลบกิจกรรม
-        var confirmation = confirm("คุณแน่ใจหรือไม่ว่าต้องการลบกิจกรรมนี้?");
-        if(confirmation) {
-            // ดึง ID ของกิจกรรม
-            var activityId = <?php echo $activity_id; ?>;
-            // ส่งคำขอ HTTP POST ไปยังไฟล์ PHP เพื่อลบข้อมูล
-            var xhr = new XMLHttpRequest();
-            xhr.open("POST", "delete_event.php", true);
-            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === 4 && xhr.status === 200) {
-                    // หลังจากลบข้อมูลเสร็จสิ้น ทำสิ่งที่คุณต้องการ เช่น รีโหลดหน้าเว็บหรือแสดงข้อความว่าลบสำเร็จ
-                    alert("ลบกิจกรรมเรียบร้อยแล้ว");
-                    window.location.href = "admin.php";
-                }
-            };
-            xhr.send("activity_id=" + activityId + "&status=Closed");
-        }
-    });
   </script>
 
 </body>

@@ -267,7 +267,7 @@
         if (xhr.status === 200) {
             // อัปเดตเรียบร้อย
             alert("อัปเดตข้อมูลเรียบร้อยแล้ว");
-            window.location.href = "admin.php";
+            window.location.href = "adminevent.php";
         } else {
             // เกิดข้อผิดพลาดในการอัปเดต
             alert("เกิดข้อผิดพลาดในการอัปเดตข้อมูล");
