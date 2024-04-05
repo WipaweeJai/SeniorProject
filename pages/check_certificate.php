@@ -72,7 +72,15 @@
     </nav>
     <!-- End Navbar -->
 
-  
+    <?php
+      $ref = '';
+      if(isset($_GET['ref'])) {
+          $ref = $_GET['ref'];
+      } elseif (isset($_POST['refInput'])) {
+          $ref = $_POST['refInput'];
+      }
+    ?>
+
     <div class="container-fluid py-4">
       <div class="row">
         <div class="col-lg-8">
@@ -89,13 +97,11 @@
               <!-- <form method="post" action=""> -->
                 <div class="card-body p-3">
                   <div class="row">
-                  <?php
-                      $ref = '';
-                      if(isset($_GET['ref'])) {
-                          $ref = $_GET['ref'];
-                      } elseif (isset($_POST['refInput'])) {
-                          $ref = $_POST['refInput'];
-                      }
+                    <?php
+                    $ref = '';
+                    if(isset($_GET['ref'])) {
+                        $ref = $_GET['ref'];
+                    }
                     ?>
                   
                     <div class="col-md-8 mb-md-0 mb-4">
@@ -144,7 +150,6 @@
                 $user_id_without_b = substr($user_id, 1);
                 $image_url = "https://d2a4-158-108-229-149.ngrok-free.app/project/assets/img/zip/{$activity_id}/modified/{$user_id_without_b}.png";
       ?>
-      <!--*********** resultRowFound -->
       <div id="resultRowFound" class="row">
           <div class="col-md-7 mt-4">
               <div class="card">
@@ -221,7 +226,7 @@
 <script>
 $("#checkBtn").click(function() {
     var refInput = $("#refInput").val();
-    console.log(refInput);
+    console.log(refInput)
     if (refInput != 0) {
         $.ajax({
             url: "function/api_checkCert.php",
