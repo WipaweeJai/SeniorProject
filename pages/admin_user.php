@@ -122,7 +122,9 @@
                     $row = mysqli_fetch_assoc($result);
                     
                     echo '<li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">รหัสบัญชีผู้ใช้ :</strong> &nbsp;' . $row['user_id'] . '</li>';
-                    echo '<li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">ชื่อ-นามสกุล :</strong> &nbsp;' . $row['name'] . '</li>';
+                    echo '<p class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">ชื่อ-นามสกุล : </strong>
+                      <input class="form-control custom-width" type="text" id="name" value="' . $row['name'] . '">
+                      </p>';
                     echo '<p class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Email : </strong>
                       <input class="form-control custom-width" type="text" id="email" value="' . $row['email'] . '">
                       </p>';
@@ -251,6 +253,7 @@
     event.preventDefault();
     var formData = new FormData(document.getElementById("admin_user_form"));
 
+    var name = document.getElementById("name").value;
     var email = document.getElementById("email").value;
     var password = document.getElementById("password").value;
  
@@ -260,6 +263,7 @@
     var user_id = <?php echo json_encode($_GET['id']); ?>;
     
     formData.append("user_id", user_id);
+    formData.append("name", name);
     formData.append("email", email);
     formData.append("password", password);
 
