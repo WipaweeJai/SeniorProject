@@ -66,13 +66,13 @@
                   <form role="form" class="font-weight-bolder"action="loginAction.php" method="post">
                     <label>อีเมล</label>
                     <div class="mb-3">
-                      <input type="text" id="email" name="email" class="form-control" placeholder="กรุณากรอกอีเมล" required>
+                      <input type="email" id="email" name="email" class="form-control" placeholder="กรุณากรอกอีเมล" required>
                     </div>
                     <label>รหัสผ่าน</label>
                     <div class="mb-3">
                       <input type="password" id="password" name="password" class="form-control" placeholder="รหัสผ่าน" required>
                     </div>
-                      <a href="resetPassword.php" class="text-info text-gradient font-weight-bold">ลืมรหัสผ่าน</a>
+                      <!-- <a href="resetPassword.php" class="text-info text-gradient font-weight-bold">ลืมรหัสผ่าน</a> -->
                     <div class="text-center">
                       <button type="submit" class="btn bg-gradient-info w-100 mt-4 mb-0">เข้าสู่ระบบ</button>
                     </div>
