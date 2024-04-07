@@ -284,7 +284,7 @@
         event.preventDefault(); // ป้องกันการโหลดหน้าเว็บหลังจากการกดปุ่ม
 
         // ยืนยันว่าผู้ใช้ต้องการลบกิจกรรม
-        var confirmation = confirm("คุณแน่ใจหรือไม่ว่าต้องการลบกิจกรรมนี้?");
+        var confirmation = confirm("ต้องการลบกิจกรรมนี้หรือไม่");
         if(confirmation) {
             // ดึง ID ของกิจกรรม
             var activityId = <?php echo $activity_id; ?>;
@@ -296,7 +296,7 @@
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === 4 && xhr.status === 200) {
                     // หลังจากลบข้อมูลเสร็จสิ้น ทำสิ่งที่คุณต้องการ เช่น รีโหลดหน้าเว็บหรือแสดงข้อความว่าลบสำเร็จ
-                    alert("ลบกิจกรรมเรียบร้อยแล้ว");
+                    alert("ลบกิจกรรมเสร็จสิ้น");
                     window.location.href = "admin.php";
                 }
             };

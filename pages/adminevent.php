@@ -168,7 +168,7 @@
                 <!-- ลบกิจกรรมถาวร -->
                 <script>
                   function deleteRow(activityId) {
-                    if (confirm('คุณต้องการลบกิจกรรมถาวรใช่หรือไม่?')) {
+                    if (confirm('ต้องการลบกิจกรรมถาวรใช่หรือไม่?')) {
                       $.ajax({
                         url: 'deleteRow.php', // เปลี่ยนเส้นทางไปยังไฟล์ PHP ที่ทำการลบข้อมูล
                         method: 'POST',
