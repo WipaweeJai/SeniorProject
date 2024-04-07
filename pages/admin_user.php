@@ -100,20 +100,12 @@
           ?>
           </div>
           <div class="col-lg-4 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3">
-              <!-- <div class="nav-wrapper position-relative end-0">
-                <ul class="nav nav-pills nav-fill p-1 bg-transparent justify-content-end" role="tablist">
-                    <button id="deleteBtn" class="btn mb-0 bg-outline-dark " href="#" >
-                      <i class="far fa-trash-alt"></i>
-                      <span class="ms-1">ลบบัญชีผู้ใช้งาน</span>
-                  </button>
-                </ul>
-              </div> -->
             </div>
         </div>
       </div>
     </div>
     <div class="container-fluid py-4">
-      <form id="admin_certtemp_form" method="post" enctype="multipart/form-data">
+      <form id="admin_user_form" method="post" enctype="multipart/form-data">
         <div class="row">
           <div class="col-12">
             <div class="card h-100">
@@ -131,8 +123,12 @@
                     
                     echo '<li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">รหัสบัญชีผู้ใช้ :</strong> &nbsp;' . $row['user_id'] . '</li>';
                     echo '<li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">ชื่อ-นามสกุล :</strong> &nbsp;' . $row['name'] . '</li>';
-                    echo '<li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Email :</strong> &nbsp;' . $row['email'] . '</li>';
-                    echo '<li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Password :</strong> &nbsp;' . $row['password'] . '</li>';
+                    echo '<p class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Email : </strong>
+                      <input class="form-control custom-width" type="text" id="email" value="' . $row['email'] . '">
+                      </p>';
+                    echo '<p class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Password : </strong>
+                      <input class="form-control custom-width" type="text" id="password" value="' . $row['password'] . '">
+                      </p>';
                     }
                   ?>
 
@@ -226,7 +222,7 @@
 
 </html>
 
-<!-- เมื่อกดปุ่มลบบัญชีผู้ใช้งาน -->
+<!-- ลบบัญชีผู้ใช้งาน -->
 <script>
  document.getElementById("btn_delete_user").addEventListener("click", function(event) {
     event.preventDefault(); // ป้องกันการโหลดหน้าเว็บหลังจากการกดปุ่ม
@@ -247,5 +243,48 @@
       xhr.send("user_id=" + user_id);
     }
   });
-
 </script>
+
+<!--แก้ไขบัญชีผู้ใช้งาน-->
+<script>
+    document.getElementById("btn_edit_user").addEventListener("click", function() {
+    event.preventDefault();
+    var formData = new FormData(document.getElementById("admin_user_form"));
+
+    var email = document.getElementById("email").value;
+    var password = document.getElementById("password").value;
+ 
+    
+
+    // เพิ่มค่าเข้าไปใน formData
+    var user_id = <?php echo json_encode($_GET['id']); ?>;
+    
+    formData.append("user_id", user_id);
+    formData.append("email", email);
+    formData.append("password", password);
+
+    console.log(formData);
+
+    // ตรวจสอบ key ที่ถูกส่งมา
+    formData.forEach(function(value, key) {
+        console.log(key, value);
+    });
+    
+    // ส่งข้อมูลโดยใช้ AJAX
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "update_user.php", true);
+    xhr.onload = function() {
+        console.log("Response:", xhr.responseText);  // เพิ่มบรรทัดนี้
+        if (xhr.status === 200) {
+            // อัปเดตเรียบร้อย
+            alert("อัปเดตข้อมูลเรียบร้อยแล้ว");
+            // window.location.href = "adminevent.php";
+        } else {
+            // เกิดข้อผิดพลาดในการอัปเดต
+            alert("เกิดข้อผิดพลาดในการอัปเดตข้อมูล");
+        }
+    };
+    
+    xhr.send(formData);
+  });
+  </script>
