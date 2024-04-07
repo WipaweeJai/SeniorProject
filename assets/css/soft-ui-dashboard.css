@@ -26912,3 +26912,47 @@ pre[class*="language-"] {
 
 
 
+
+
+.registration-box {
+  position: relative;
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #4CAF50; /* Green background color */
+  color: white;
+  font-weight: bold;
+  z-index: 1;
+}
+
+.registration-box::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -20px;
+  width: 0;
+  height: 0;
+  border-top: 20px solid transparent;
+  border-bottom: 20px solid transparent;
+  border-right: 20px solid #4CAF50; /* Green background color */
+  z-index: 0;
+}
+
+.registration-text {
+  position: relative;
+  z-index: 2;
+}
+
+
+.text-box {
+  padding: 6px 10px;
+  /* background-color: #4CAF50; */
+  font-weight: normal;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  transform: translate(0, 0);
+  color: white;
+  text-align: center;
+}
+
+
