@@ -93,7 +93,7 @@
               <thead>
                 <tr>
                   <th class="text-center text-secondary text-sm font-weight-bolder opacity-7">ชื่อผู้ใช้งาน</th>
-                  <th class="text-center text-secondary text-sm font-weight-bolder opacity-7">รหัสผู้ใช้งาน</th>
+                  <th class="text-center text-secondary text-sm font-weight-bolder opacity-7">รหัสบัญชีผู้ใช้งาน</th>
                   <th class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7">สถานะ</th>
                 </tr>
               </thead>
