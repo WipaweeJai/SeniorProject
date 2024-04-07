@@ -99,7 +99,7 @@
             </div>
 
             <!-- จัดการผู้ใช้งาน -->
-            <div class="col-lg-6">
+            <div class="col-lg-6 mt-3">
                 <a href="adminuser.php">
                     <div class="card h-100 p-3">
                         <h5 class="font-weight-normal text-dark">จัดการผู้ใช้งาน</h5>
