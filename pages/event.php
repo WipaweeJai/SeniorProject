@@ -58,7 +58,7 @@ session_start();
                     <option selected value="เลือกสถานะ">เลือกสถานะ</option>
                     <option value="เปิดรับสมัคร">เปิดรับสมัคร</option>
                     <option value="ปิดรับสมัคร">ปิดรับสมัคร</option>
-                    <!-- <option value="เสร็จสิ้น">เสร็จสิ้น</option> -->
+                    <option value="ใกล้ปิดรับสมัคร">ใกล้ปิดรับสมัคร</option>
                   </select>
                 </div>
               </div>
