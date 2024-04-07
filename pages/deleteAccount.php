@@ -6,7 +6,7 @@
     $user_id = $_POST['user_id'];
 
     // สร้างคำสั่ง SQL สำหรับลบข้อมูล
-    $sql = "DELETE FROM tb_user WHERE user_id = $user_id";
+    $sql = "DELETE FROM tb_user WHERE user_id = '$user_id'";
 
     // ทำการลบข้อมูล
     if (mysqli_query($conn, $sql)) {

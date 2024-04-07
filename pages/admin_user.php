@@ -241,7 +241,7 @@
       xhr.onreadystatechange = function() {
         if (xhr.readyState === 4 && xhr.status === 200) {
           alert("ลบบัญชีผู้ใช้เสร็จสิ้น");
-          // window.location.href = "admin_user.php"; // โดยปกติก็ควรเป็น "admin_user.php" หรือหน้าที่ต้องการให้เปิดหลังจากการลบ
+          window.location.href = "admin_user.php"; // โดยปกติก็ควรเป็น "admin_user.php" หรือหน้าที่ต้องการให้เปิดหลังจากการลบ
         }
       };
       xhr.send("user_id=" + user_id);
