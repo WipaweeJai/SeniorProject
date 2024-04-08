@@ -145,9 +145,14 @@
                         $date_sql = "SELECT update_date FROM tb_event WHERE activity_id = " . $row['activity_id'];
                         $date_result = mysqli_query($conn, $date_sql);
                         $date_row = mysqli_fetch_assoc($date_result);
-                        echo '<span class="text-secondary text-xs font-weight-bold">' . $date_row['update_date'] . '</span>';
+                        $thai_year = date("Y", strtotime($date_row['update_date'])) + 543;
+                        $thai_date = date("d-m-", strtotime($date_row['update_date'])) . $thai_year;
+                        $time = date("H:i:s", strtotime($date_row['update_date']));
+                        
+                        echo '<span class="text-secondary text-xs font-weight-bold">' . $thai_date . ' ' . $time . '</span>';
                       ?>
                     </td>
+
                     <td>
                       <?php
                         echo '<ul class="nav nav-pills nav-fill p-1 bg-transparent" role="tablist">';

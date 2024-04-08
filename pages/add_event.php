@@ -204,7 +204,7 @@
                                     คุณสมบัติเพิ่มเติม
                                     <span class="text-nddark ms-sm-2 font-weight-bold">
                                         <p class="text-sm font-weight-light ">(ข้อจำกัดต่าง ๆ เช่น อายุ สาขา เกรดเฉลี่ย)</p>
-                                        <input class="form-control custom-width" type="text" id="event_require" name="event_require"  placeholder="คุณสมบัติเพิ่มเติม" required>
+                                        <textarea class="form-control custom-width" type="text" rows="3" id="event_require" name="event_require" placeholder="คุณสมบัติเพิ่มเติม"  maxlength="120" required></textarea>
                                     </span>
                                 </p>
                                 <div class="divider"></div>

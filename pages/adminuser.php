@@ -143,26 +143,6 @@
                   </tr>
                 <?php } ?>
 
-                <!-- ลบกิจกรรมถาวร
-                <script>
-                  function deleteRow(activityId) {
-                    if (confirm('คุณต้องการลบกิจกรรมถาวรใช่หรือไม่?')) {
-                      $.ajax({
-                        url: 'deleteRow.php', // เปลี่ยนเส้นทางไปยังไฟล์ PHP ที่ทำการลบข้อมูล
-                        method: 'POST',
-                        data: { activityId: activityId },
-                        success: function(response) {
-                          console.log(response);
-                          // สามารถเพิ่มการรีเฟรชตารางหรือส่วนที่ต้องการให้ลบข้อมูลออกจาก DOM ได้ที่นี่
-                        },
-                        error: function(xhr, status, error) {
-                          console.error(xhr.responseText);
-                        }
-                      });
-                    }
-                  }
-                </script> -->
-
               </tbody>
             </table>
           </div>

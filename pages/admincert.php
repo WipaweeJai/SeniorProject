@@ -139,13 +139,18 @@
                       </td>
                       <!-- แสดงวันที่และลิงก์ Edit -->
                       <td class="align-middle text-center">
-                          <?php
+                        <?php
                           $upload_sql = "SELECT upload_date FROM tb_certificate_template WHERE activity_id = $activity_id";
                           $upload_result = mysqli_query($conn, $upload_sql);
                           $upload_row = mysqli_fetch_assoc($upload_result);
-                          echo '<span class="text-secondary text-xs font-weight-bold">' . $upload_row['upload_date'] . '</span>';
-                          ?>
+                          $thai_year = date("Y", strtotime($upload_row['upload_date'])) + 543; // บวกค่า 543 เพื่อเปลี่ยนให้เป็นปีไทย
+                          $thai_date = date("d-m-", strtotime($upload_row['upload_date'])) . $thai_year; // เชื่อมปีไทยกับวันที่และเดือน
+                          $time = date("H:i:s", strtotime($upload_row['upload_date']));
+                          
+                          echo '<span class="text-secondary text-xs font-weight-bold">' . $thai_date . ' ' . $time . '</span>';
+                        ?>
                       </td>
+
                       <td>
                           <?php
                           echo '<ul class="nav nav-pills nav-fill p-1 bg-transparent" role="tablist" onclick="saveStatus()">';
