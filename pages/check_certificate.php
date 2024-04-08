@@ -142,7 +142,7 @@ session_start();
           $activity_id = $row_cert_event["activity_id"];
           $user_id = $row_cert_event["user_id"];
           $user_id_without_b = substr($user_id, 1);
-          $image_url = "https://d2a4-158-108-229-149.ngrok-free.app/project/assets/img/zip/{$activity_id}/modified/{$user_id_without_b}.png";
+          $image_url = "http://localhost/project/assets/img/zip/{$activity_id}/modified/{$user_id_without_b}.png";
           ?>
           <div id="resultRowFound" class="row">
             <div class="col-md-7 mt-4">
@@ -227,37 +227,34 @@ session_start();
 
   <script>
     $("#checkBtn").click(function () {
-      var refInput = $("#refInput").val();
-      console.log(refInput)
-      if (refInput != 0) {
-        $.ajax({
-          url: "function/api_checkCert.php",
-          type: "POST",
-          data: { refInput },
-          success: function (response) {
-            if (jQuery.trim(response) == 'false') {
-              // หากไม่พบใบประกาศ
-              console.log(response);
-              $("#resultRowFound").hide();
-              $("#resultRowNotFound").show();
-            } else {
-              console.log(response);
-              // หากพบใบประกาศ
-              $("#resultRowFound").show();
-              $("#resultRowNotFound").hide();
-            }
-          },
-          error: function (request, status, error) {
-            console.log(request.responseText);
+    var refInput = $("#refInput").val();
+    if (refInput.trim() !== '') {
+      $.ajax({
+        url: "function/api_checkCert.php",
+        type: "POST",
+        data: { refInput: refInput },
+        success: function (response) {
+          if (response.trim() == 'false') {
+            console.log("ไม่พบใบประกาศดังกล่าว");
+            $("#resultRowFound").hide();
+            $("#resultRowNotFound").show();
+            window.location.href = "http://localhost/project/pages/check_certificate.php?ref=" + refInput;
+          } else {
+            console.log("พบใบประกาศดังกล่าว ที่ ref: " + refInput);
+            // เรียกใหม่อีกรอบด้วย ref ใหม่
+            window.location.href = "http://localhost/project/pages/check_certificate.php?ref=" + refInput;
           }
-        });
-        // กรณี ไม่ได้กรอกเลข จะซ่อนทั้งหมด
-      } else {
-        alert('กรุณากรอกหมายเลขใบประกาศ');
-        $("#resultRowFound").hide();
-        $("#resultRowNotFound").hide();
-      }
-    });
+        },
+        error: function (request, status, error) {
+          console.log(request.responseText);
+        }
+      });
+    } else {
+      alert('กรุณากรอกหมายเลขใบประกาศ');
+      $("#resultRowFound").hide();
+      $("#resultRowNotFound").hide();
+    }
+  });
 
 
 
