@@ -1,6 +1,6 @@
 <?php
     require_once('../backend/dbcon.php');
-    
+    var_dump($_POST);
     $activity_id = $_POST['activity_id'];
 
     // ********************** เพิ่มตัวอักษร b
@@ -32,19 +32,17 @@ foreach ($fileNames as $fileName) {
             $user_id = substr($row["user_id"], 1); // ตัดตัวอักษร b ออก --> b633 = 633 เพื่อเอาไปสร้างเลขเรฟต่อ
             $name = $row["name"];
             
-            $sql_activity_check = "SELECT * FROM tb_certificate_template WHERE activity_id = $activity_id";
-            $sql_activity_check .= " AND path_cert_temp LIKE '%$user_id.png'";
-
-            $result_activity_check = $conn->query($sql_activity_check);
+            $sql_certificate_template = "SELECT * FROM tb_certificate_template WHERE path_cert_temp LIKE '%$user_id.png'";
+            $result_certificate_template = $conn->query($sql_certificate_template);
             
-            if ($result_activity_check->num_rows > 0) {
-                
-                $row_certificate_template = $result_activity_check->fetch_assoc();
+            if ($result_certificate_template->num_rows > 0) {
+                // ดึงข้อมูล upload_date จาก tb_certificate_template
+                $row_certificate_template = $result_certificate_template->fetch_assoc();
                 $upload_date = $row_certificate_template['upload_date'];
                 $dateTime = new DateTime($upload_date);
                 $timestamp = $dateTime->getTimestamp();
 
-                // $timestamp = sort_time('2024-03-26 10:03:02');
+                //$timestamp = mktime(16, 2, 1, 2, 15, 2024);
                 
                 $referenceNumber = $activity_id . $timestamp . $user_id;
 
@@ -54,7 +52,7 @@ foreach ($fileNames as $fileName) {
                 
                 if ($conn->query($sql_insert_certificate) === TRUE) {
                     echo "Record inserted successfully";
-                
+                    // อัพเดต status เป็น complete
                     $updateSql = "UPDATE tb_certificate_template SET status = 'complete' WHERE activity_id = '$activity_id'";
                     if ($conn->query($updateSql) === TRUE) {
                         echo "Status updated successfully";
@@ -75,7 +73,6 @@ foreach ($fileNames as $fileName) {
         echo "0 results";
     }
 }
-
 
 
 
