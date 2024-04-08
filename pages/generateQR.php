@@ -1,6 +1,6 @@
 <?php
     require_once('../backend/dbcon.php');
-    var_dump($_POST);
+    
     $activity_id = $_POST['activity_id'];
 
     // ********************** เพิ่มตัวอักษร b
@@ -22,38 +22,39 @@
 *************************************/
 // วนลูปเพื่อดึงข้อมูลจากฐานข้อมูลโดยใช้ชื่อไฟล์ .png ดึง
 foreach ($fileNames as $fileName) {
-    // สร้างคำสั่ง SQL เพื่อดึงข้อมูล
+    
     $sql = "SELECT * FROM tb_participants WHERE user_id = '$fileName'";
     $result = $conn->query($sql);
-
-    // $sql = "SELECT * FROM tb_user WHERE user_id = '$fileName'";
-    // $result = $conn->query($sql);
-
-    // ตรวจสอบว่ามีข้อมูลหรือไม่
+    
     if ($result->num_rows > 0) {
         // วนลูปเพื่อแสดงข้อมูลที่ดึงมา
         while ($row = $result->fetch_assoc()) {
             $user_id = substr($row["user_id"], 1); // ตัดตัวอักษร b ออก --> b633 = 633 เพื่อเอาไปสร้างเลขเรฟต่อ
             $name = $row["name"];
-
-// เพิ่มเงื่อนไข ถ้ายังไม่มีเลขเรฟ ++
-
-            // $sql = "SELECT * FROM tb_certificate_template WHERE SUBSTRING_INDEX(path_cert_temp, '/', -1) = '$user_id';";
-            // $result = $conn->query($sql);
-            // $upload_date = $result['upload_date'];
-            // แปลง upload_date เป็น timestamp
-            // $timestamp = strtotime($upload_date);
-            $timestamp = mktime(16, 2, 1, 2, 15, 2024);
-            // สร้างรหัสอ้างอิง
-            $referenceNumber = $activity_id . $timestamp . $user_id;
             
-            // บันทึกข้อมูลลงในตาราง tb_certificate
-            $sql = "INSERT INTO tb_certificate (cert_Ref, activity_id, user_id) 
-            VALUES ('$referenceNumber', '$activity_id', 'b$user_id')";
-                // ทำการ execute คำสั่ง SQL
-                if ($conn->query($sql) === TRUE) {
+            $sql_activity_check = "SELECT * FROM tb_certificate_template WHERE activity_id = $activity_id";
+            $sql_activity_check .= " AND path_cert_temp LIKE '%$user_id.png'";
+
+            $result_activity_check = $conn->query($sql_activity_check);
+            
+            if ($result_activity_check->num_rows > 0) {
+                
+                $row_certificate_template = $result_activity_check->fetch_assoc();
+                $upload_date = $row_certificate_template['upload_date'];
+                $dateTime = new DateTime($upload_date);
+                $timestamp = $dateTime->getTimestamp();
+
+                // $timestamp = sort_time('2024-03-26 10:03:02');
+                
+                $referenceNumber = $activity_id . $timestamp . $user_id;
+
+                
+                $sql_insert_certificate = "INSERT INTO tb_certificate (cert_Ref, activity_id, user_id) 
+                    VALUES ('$referenceNumber', '$activity_id', 'b$user_id')";
+                
+                if ($conn->query($sql_insert_certificate) === TRUE) {
                     echo "Record inserted successfully";
-                    // อัพเดต status เป็น complete
+                
                     $updateSql = "UPDATE tb_certificate_template SET status = 'complete' WHERE activity_id = '$activity_id'";
                     if ($conn->query($updateSql) === TRUE) {
                         echo "Status updated successfully";
@@ -63,7 +64,10 @@ foreach ($fileNames as $fileName) {
                 } else {
                     echo "Error inserting record: " . $conn->error;
                 }
-
+            } else {
+                echo "No data found in tb_certificate_template";
+            }
+        
             // เพิ่มชื่อไฟล์ในอาร์เรย์ $fileNames ตามที่พบ
             $fileNames[] = $fileName;
         }
@@ -71,6 +75,8 @@ foreach ($fileNames as $fileName) {
         echo "0 results";
     }
 }
+
+
 
 
 /**************************************
